@@ -2,6 +2,7 @@
  * Test Shared Veneer.io Service APIs
  *
  *
+ * mocha test/unit/orm.js
  * mocha --watch test/unit/orm.js
  *
  * * site1.com - gets (site1.com)
@@ -24,150 +25,86 @@ module.exports = {
    */
   before: function () {
 
-    var Waterline = this.Waterline = require('waterline');
+    module.debug = require( 'debug' )( 'vproxy:unit' );
 
-    this.debug = require('debug')('vproxy:unit');
+    this.utility = require( '../../lib/common/utility' );
 
-    this.utility = require('../../lib/common/utility');
+    this.dummyData = require( './fixtures/containers-detail.json' );
 
-    this.hostData = require('./fixtures/containers-detail.json');
-
-    this.orm = new Waterline();
-
-    this.config = {
-      tableName: 'vproxy',
-      connections: {
-        diskAdapter: {
-          adapter: 'disk'
-        },
-        memoryAdapter: {
-          adapter: 'memory'
-        }
-      },
-      adapters: {
-        disk: require('sails-disk'),
-        memory: require('sails-memory')
-      },
-      config: {
-        filePath: '/tmp/vProxy',
-        schema: false,
-        interfaces: [
-          "semantic",
-          "queryable",
-          "associations"
-        ]
-      }
-    };
+    this.containerModel = require( '../../lib/orm/container' );
 
   },
 
   "vProxy ORM": {
 
-    "can inititilize collection.": function (done) {
+    "can inititilize collection.": function ( done ) {
 
-      this.timeout(10000);
+      this.containerModel.initialize( function ormReady( error, containerModel ) {
+        // console.log( 'ormReady', Model.container );
 
-      var self = this;
+        module.exports.containerModel = containerModel;
 
-      this.Container = this.Waterline.Collection.extend({
-        identity: 'container',
-        connection: 'memoryAdapter',
-        attributes: {
-          ID: {
-            type: 'string',
-            index: true
-          },
-          Name: {
-            type: 'string',
-            required: false,
-            minLength: 5,
-            maxLength: 100
-          },
-          Config: {
-            type: 'object'
-          },
-          Image: {
-            type: 'string',
-            required: false,
-            minLength: 5,
-            maxLength: 100
-          }
-        }
-      });
+        containerModel.should.have.property( 'connections' );
+        containerModel.should.have.property( 'waterline' );
+        containerModel.should.have.property( 'adapter' );
+        containerModel.should.have.property( 'definition' );
 
-      this.orm.loadCollection(this.Container);
-
-      this.orm.initialize(this.config, function initializationComplete(error, _models) {
-
-        self.models = _models && _models.collections ? _models.collections : self.models || null;
-
-        if (error && error.message === 'Connection is already registered') {
-          return done();
-        }
-
-        self.models.should.have.property('container');
-
-        self.models.container.should.have.property('connections');
-        self.models.container.should.have.property('waterline');
-        self.models.container.should.have.property('adapter');
-        self.models.container.should.have.property('definition');
+        containerModel.connections.should.have.property( 'memoryAdapter' );
 
         done();
 
-      });
+      } );
 
     },
 
-    'can add multiple objects from JSON file.': function (done) {
+    'can add multiple objects from JSON file.': function ( done ) {
 
-      var debug = this.debug;
+      module.exports.containerModel.createEach( this.dummyData, function ( error, model ) {
 
-      this.models.container.createEach(this.hostData, function (error, model) {
-
-        debug('createEach', model.map(function (data) {
+        module.debug( 'createEach', model.map( function ( data ) {
           return data.Name
-        }));
+        } ) );
 
         done();
 
-      });
+      } );
 
     },
 
-    'can find api.site1.com': function (done) {
+    'can find api.site1.com': function ( done ) {
 
-      this.models.container.findOne().where({Domain: 'api.site1.com'}).exec(function (error, result) {
+      module.exports.containerModel.findOne().where( { Domain: 'api.site1.com' } ).exec( function ( error, result ) {
 
-        result.should.have.property('ID');
+        result.should.have.property( 'ID' );
 
         done();
 
-      });
+      } );
 
     },
 
-    'can find www.site2.com': function (done) {
+    'can find www.site2.com': function ( done ) {
 
-      this.models.container.findOne().where({Domain: 'www.site2.com'}).exec(function (error, result) {
+      module.exports.containerModel.findOne().where( { Domain: 'www.site2.com' } ).exec( function ( error, result ) {
 
-        result.should.have.property('ID');
+        result.should.have.property( 'ID' );
 
         done();
 
-      });
+      } );
 
     },
 
-    'can NOT find www.site100.com': function (done) {
+    'can NOT find www.site100.com': function ( done ) {
 
-      this.models.container.findOne().where({Domain: 'www.site100.com'}).exec(function (error, result) {
+      module.exports.containerModel.findOne().where( { Domain: 'www.site100.com' } ).exec( function ( error, result ) {
 
         (error === null).should.be.true;
         (result === undefined).should.be.true;
 
         done();
 
-      });
+      } );
 
     }
 

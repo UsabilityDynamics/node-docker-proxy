@@ -89,14 +89,9 @@ module.exports = function( grunt ) {
       }
     },
 
-    // Remove Dynamic/Cache Files.
     clean: {
       modules: [
-        "node_modules/abstract",
-        "node_modules/ghost",
-        "node_modules/auto",
-        "node_modules/object-*",
-        "node_modules/veneer-*"
+        "/tmp/docker-proxy"
       ]
     },
 
@@ -104,10 +99,7 @@ module.exports = function( grunt ) {
     shell: {
       install: {},
       update: {}
-    },
-
-    // Setup Symbolic Links.
-    symlink: {}
+    }
 
   });
 
@@ -127,15 +119,6 @@ module.exports = function( grunt ) {
 
   // Build Assets
   grunt.registerTask( 'default', [  'markdown', 'yuidoc', 'mochacli' ] );
-
-  // Install environment
-  grunt.registerTask( 'install', [ 'shell:pull', 'shell:install', 'yuidoc'  ] );
-
-  // Update Environment
-  grunt.registerTask( 'update', [ 'shell:pull', 'shell:update', 'yuidoc'   ] );
-
-  // Prepare distribution
-  grunt.registerTask( 'dist', [ 'clean', 'yuidoc', 'markdown'  ] );
 
   // Update Documentation
   grunt.registerTask( 'doc', [ 'yuidoc', 'markdown' ] );
