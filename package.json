@@ -1,0 +1,115 @@
+{
+  "name": "docker-proxy",
+  "version": "0.1.0",
+  "description": "Docker Proxy.",
+  "main": "./lib/docker-proxy.js",
+  "directories": {
+    "doc": "static/codex",
+    "etc": "static/etc",
+    "public": "static/public",
+    "bin": "bin",
+    "lib": "lib"
+  },
+  "bin": {
+    "docker-proxy": "./bin/docker-proxy.js"
+  },
+  "scripts": {
+    "start": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/proxy.json",
+    "restart": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/processes.json",
+    "stop": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/processes.json"
+  },
+  "repository": {
+    "url": "git@github.com:UsabilityDynamics/node-docker-proxy.git",
+    "type": "git"
+  },
+  "preferGlobal": true,
+  "dependencies": {
+    "async": "~0.2.9",
+    "auto": "~0.1.2",
+    "debug": "^0.7.4",
+    "deep-extend": "^0.2.11",
+    "docker-events": "git://github.com/andypotanin/docker-events",
+    "docker-remote-api": "^2.2.0",
+    "docker.io": "^0.9.8",
+    "dockerode": "^2.0.3",
+    "dockers-ps": "^1.0.0",
+    "express": "^3.16.7",
+    "extend": "^1.3.0",
+    "findup-sync": "~0.1.2",
+    "html-minifier": "~0.5.6",
+    "http-proxy": "^1.0.3",
+    "is-running": "~1.0.5",
+    "jade": "~1.3.0",
+    "js-yaml": "^3.1.0",
+    "json2json": "git://github.com/joelvh/json2json",
+    "lodash": "^2.4.1",
+    "merge-descriptors": "0.0.2",
+    "nconf": "~0.6.9",
+    "nexpect": "~0.3.0",
+    "node-uuid": "~1.4.1",
+    "object-emitter": "0.0.5",
+    "object-settings": "^0.2.0",
+    "pm2": "^0.9.6",
+    "portscanner": "~0.2.2",
+    "request": "~2.29.0",
+    "sails-disk": "^0.10.3",
+    "sails-memory": "^0.10.2",
+    "sprintf": "~0.1.3",
+    "statsd": "~0.7.1",
+    "stream-to-json": "0.0.1",
+    "string": "~1.7.0",
+    "usage": "~0.3.9",
+    "utile": "~0.2.1",
+    "watch": "^0.11.0",
+    "watchr": "^2.4.11",
+    "waterline": "^0.10.8",
+    "which": "~1.0.5",
+    "wilson": "0.0.5",
+    "with": "~2.0.0",
+    "yaml-config": "~0.3.0",
+    "yaml-js": "0.0.8"
+  },
+  "optionalDependencies": {
+    "connect": "^3.1.0",
+    "express": "^3.5.3",
+    "fastcgi": "^0.1.3",
+    "fastcgi-parser": "^0.1.5",
+    "node-cgi": "git://github.com/lrsjng/node-cgi",
+    "serve-php": "git://github.com/UsabilityDynamics/node-serve-php"
+  },
+  "devDependencies": {
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-less": "~0.8.1",
+    "grunt-contrib-symlink": "~0.2.0",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-yuidoc": "~0.5.0",
+    "grunt-jscoverage": "~0.0.3",
+    "grunt-markdown": "~0.4.0",
+    "grunt-mocha-cli": "~1.3.0",
+    "grunt-requirejs": "~0.4.0",
+    "grunt-shell": "~0.5.0",
+    "jscoverage": "~0.3.8",
+    "mocha": "^1.21.4",
+    "request": "~2.29.0",
+    "serve-php": "git://github.com/UsabilityDynamics/node-serve-php",
+    "should": "~2.1.1"
+  },
+  "readmeFilename": "readme.md",
+  "bugs": {
+    "url": "https://github.com/UsabilityDynamics/node-docker-proxy/issues"
+  },
+  "keywords": [
+    "docker",
+    "proxy",
+    "varnish",
+    "router"
+  ],
+  "engines": {
+    "node": ">=0.10.21"
+  },
+  "private": true,
+  "author": "UD <team@usabilitydynamics.com>",
+  "license": "BSD"
+}

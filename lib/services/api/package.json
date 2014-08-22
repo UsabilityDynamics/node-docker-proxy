@@ -1,0 +1,14 @@
+{
+  "name": "veneer-proxy-api",
+  "product": "api",
+  "description": "Veneer Proxy API Daemon.",
+  "platform": "veneer-proxy",
+  "main": "daemon",
+  "version": "1.2.2",
+  "broker": {
+    "url": "broker.uds.io:11100",
+    "host": "veneer.io",
+    "username": "vproxy@veneer.io",
+    "password": "dtksbokyqiljyvqq"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "service": "router",
+  "description": "Veneer Proxy API.",
+  "main": "router.js"
+}
