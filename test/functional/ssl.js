@@ -14,7 +14,7 @@ module.exports = {
       json: true
     });
 
-    this.looksValid = function looksValid( backend, done ) {
+    this.seemsValid = function seemsValid( backend, done ) {
 
       return function validateResponse( error, res, body ) {
 
@@ -27,7 +27,8 @@ module.exports = {
         }
 
         //body.should.have.properties( 'ok', 'message' );
-        //res.headers[ 'x-server' ].should.equal( 'veneer/v3' );
+        //res.headers[ 'x-server' ].should.equal( 'docker-proxy/v3' );
+
         done();
       }
 
@@ -36,25 +37,18 @@ module.exports = {
   },
 
   "basic proxy works": {
-    'usabilitydynamics.com': function( done ) { this.request( 'http://usabilitydynamics.com', this.looksValid( 'wpCloud', done ) ); },
-    'www.usabilitydynamics.com': function( done ) { this.request( 'http://www.usabilitydynamics.com', this.looksValid( 'wpCloud', done ) ); },
-    'www.tandemproperties.com': function( done ) { this.request( 'http://tandemproperties.com', this.looksValid( 'wpCloud', done ) ); },
-    'www.dodapps.com': function( done ) { this.request( 'http://www.dodapps.com', this.looksValid( 'dodApps', done ) ); },
-    'dodapps.com': function( done ) { this.request( 'http://dodapps.com', this.looksValid( 'dodApps', done ) ); },
+    'usabilitydynamics.com': function( done ) { this.request( 'http://usabilitydynamics.com', this.seemsValid( 'wpCloud', done ) ); },
+    'www.usabilitydynamics.com': function( done ) { this.request( 'http://www.usabilitydynamics.com', this.seemsValid( 'wpCloud', done ) ); }
   },
 
   "backends work": {
-    'wpCloud.net': function( done ) { this.request( 'http://wpCloud.net', this.looksValid( 'wpCloud', done ) ); },
-    'dodApps.net': function( done ) { this.request( 'http://dodApps.net', this.looksValid( 'dodApps', done ) ); }
+    'wpCloud.net': function( done ) { this.request( 'http://wpCloud.net', this.seemsValid( 'wpCloud', done ) ); },
+    'dodApps.net': function( done ) { this.request( 'http://dodApps.net', this.seemsValid( 'dodApps', done ) ); }
   },
 
   "SSL works": {
-    //'usabilitydynamics.com': function( done ) { this.request( 'https://usabilitydynamics.com', this.looksValid( 'wpCloud', done ) ); },
-    //'www.usabilitydynamics.com': function( done ) { this.request( 'https://www.usabilitydynamics.com', this.looksValid( 'wpCloud', done ) ); },
-    //'www.tandemproperties.com': function( done ) { this.request( 'http://tandemproperties.com', this.looksValid( 'wpCloud', done ) ); },
-    'dodapps.com': function( done ) { this.request( 'https://www.dodapps.com', this.looksValid( 'dodApps', done ) ); },
-    //'cp.dodapps.com': function( done ) { this.request( 'https://cp.dodapps.com', this.looksValid( 'wpCloud', done ) ); },
-    //'dodapps.com': function( done ) { this.request( 'https://dodapps.com', this.looksValid( 'wpCloud', done ) ); },
+    //'www.usabilitydynamics.com': function( done ) { this.request( 'https://www.usabilitydynamics.com', this.seemsValid( 'wpCloud', done ) ); },
+    //'www.tandemproperties.com': function( done ) { this.request( 'http://tandemproperties.com', this.seemsValid( 'wpCloud', done ) ); }
   }
 
 };

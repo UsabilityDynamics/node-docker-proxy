@@ -14,13 +14,13 @@ module.exports = {
       json: true
     });
 
-    this.veneerPowered = function veneerPowered( done ) {
+    this.hasHeaders = function hasHeaders( done ) {
 
       return function validateResponse( error, res, body ) {
         body.should.have.properties( 'ok', 'message' );
         res.headers.should.have.properties( 'x-server', 'x-powered-by', 'x-status' );
-        res.headers[ 'x-server' ].should.equal( 'veneer.io/v2' );
-        res.headers[ 'x-powered-by' ].should.equal( 'veneer.io' );
+        res.headers[ 'x-server' ].should.equal( 'docker-proxy/v2' );
+        res.headers[ 'x-powered-by' ].should.equal( 'docker-proxy' );
         done();
       }
 

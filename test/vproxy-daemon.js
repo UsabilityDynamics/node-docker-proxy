@@ -19,8 +19,6 @@ module.exports = {
       port: process.env.DOCKER_PORT || '2375'
     };
 
-    this.utility = require( '../lib/common/utility' );
-
     this.docker = require('docker.io')( options );
 
   },

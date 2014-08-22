@@ -1,8 +1,0 @@
-{
-  "status": {
-    "methods": [ "GET" ],
-    "url": {
-      "path": "/status"
-    }
-  }
-}

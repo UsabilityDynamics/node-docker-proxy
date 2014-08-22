@@ -77,10 +77,6 @@ startHHVM cdn.site1.com
 startHHVM cdn.site2.com
 startHHVM cdn.site3.com
 
-startHHVM temp.site1.com
-startHHVM temp.site2.com
-startHHVM temp.site3.com
-
 startExpress api.site1.com
 startExpress api.site2.com
 startExpress api.site3.com

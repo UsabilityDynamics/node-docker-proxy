@@ -1,8 +1,8 @@
 /**
- * Test Shared Veneer.io Service APIs
  *
+ * DOCKER_HOST=http://fallujah DOCKER_PORT=16423 mocha test/functional/docker.js
  *
- * DOCKER_HOST=fallujah DOCKER_PORT=16423  mocha test/functional/events.js
+ * DOCKER_HOST=http://fallujah DOCKER_PORT=16423 mocha --watch
  *
  */
 module.exports = {
@@ -16,24 +16,15 @@ module.exports = {
     var Docker = require('dockerode');
     var DockerEvents = require('docker-events');
 
-    var options = {
-      socketPath: false,
-      host: process.env.DOCKER_HOST.replace( 'tcp://', '' ) || 'localhost',
-      protocol: 'http',
-      port: process.env.DOCKER_PORT || '2375'
-    };
-
-    console.log( require( 'util').inspect( options, { colors: true , depth:5, showHidden: false } ) );
+    this.dockernode = new Docker( options );
 
     this.emitter = new DockerEvents({
-      docker: new Docker(options)
+      docker: this.dockernode
     });
-
-    this.dockernode = new Docker( options );
 
   },
 
-  "dockerProxy events": {
+  "Docker Proxy": {
 
     'can listContainers': function( done ) {
 
@@ -74,7 +65,7 @@ module.exports = {
 
     },
 
-    'can events': function( done ) {
+    'can monitor events': function( done ) {
 
       var emitter = this.emitter;
 
@@ -130,6 +121,43 @@ module.exports = {
         data.req.on( 'data', console.log );
         //console.log( 'events', data.req.res );
 
+
+      });
+
+    },
+
+    'can get Docker images': function( done ) {
+
+      this.docker.images.list(function( error, images ) {
+        // console.log( require( 'util').inspect( images, { colors: true , depth:5, showHidden: false } ) );
+
+        done();
+
+      });
+
+    },
+
+    'can get Docker containers': function( done ) {
+
+      this.docker.containers.list(function( error, containers ) {
+
+        console.log( require( 'util').inspect( containers, { colors: true , depth:5, showHidden: false } ) );
+
+        done();
+
+      });
+
+    },
+
+    'can inspect container changes': function( done ) {
+
+      this.timeout( 500000 );
+
+      this.docker.containers.inspectChanges( '2c67fc4452cd030348b27cd8b15c5bd52f24470e2b2aa1d190c7b840e4e2d844', function( error, containers ) {
+
+        console.log( require( 'util').inspect( containers, { colors: true , depth:5, showHidden: false } ) );
+
+        done();
 
       });
 

@@ -15,7 +15,6 @@
  * * www.site2.com - should get (site2.com) because we strip out "www"
  * * api.site2.com - should fail because there is wildcard support on site2.com
  *
- *
  */
 module.exports = {
 
