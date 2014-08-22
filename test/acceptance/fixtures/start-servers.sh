@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 ##
 ## curl http://fallujah:16423/v1.7/containers/json
 ## curl http://fallujah:16423/v1.7/containers/site1.com/json
@@ -15,11 +16,31 @@ stopServers () {
 }
 
 ##
+## Start Express Server
+##
+startExpress () {
+
+  ID=$(docker run -itd \
+    --name=$1 \
+    --hostname=${2-$1} \
+    --publish=80 \
+    --workdir=/root/express-server \
+    --volume=/var/log/ \
+    --env=NODE_ENV=production \
+    --entrypoint=/usr/local/bin/startServer \
+    andypotanin/express /bin/bash
+  )
+
+  echo "Starting Express Server $1 on ${2-*.$1}, ID $ID";
+
+}
+
+##
 ## Start HHVM Server
 ##
 ## --hostname=${2-*.$1} \
 ##
-startServer () {
+startHHVM () {
 
   ID=$(docker run -itd \
     --name=$1 \
@@ -38,7 +59,7 @@ startServer () {
     andypotanin/hhvm /bin/bash
   )
 
-  echo "Starting $1 on ${2-*.$1}, ID $ID";
+  echo "Starting HHVM Server $1 on ${2-*.$1}, ID $ID";
 
 }
 
@@ -46,21 +67,25 @@ startServer () {
 stopServers
 
 # Start Fake Servers
-startServer site1.com *.site1.com
-startServer site2.com *.site2.com
-startServer site3.com *.site3.com
-startServer site4.com site4.com
-startServer site5.com site4.com
+startHHVM site1.com *.site1.com
+startHHVM site2.com *.site2.com
+startHHVM site3.com *.site3.com
+startHHVM site4.com site4.com
+startHHVM site5.com site4.com
 
-startServer api.site1.com
-startServer api.site2.com
-startServer api.site3.com
+startHHVM cdn.site1.com
+startHHVM cdn.site2.com
+startHHVM cdn.site3.com
 
-startServer cdn.site1.com
-startServer cdn.site2.com
-startServer cdn.site3.com
+startHHVM temp.site1.com
+startHHVM temp.site2.com
+startHHVM temp.site3.com
 
-startServer temp.site1.com
-startServer temp.site2.com
-startServer temp.site3.com
+startExpress api.site1.com
+startExpress api.site2.com
+startExpress api.site3.com
+startExpress api.site4.com
+startExpress api.site5.com
+startExpress api.site6.com
+startExpress api.site7.com
 

@@ -27,7 +27,7 @@
     "Created": 1407561867,
     "Id": "a285b37debe15d9676a426c7c74136515d5f49347746b0e1c6d41ec0eecd5bc8",
     "ParentId": "5545d86274990acc22dca9c2d9e16a62c5d1fc65a96fba0337f4b6eb194794f5",
-    "RepoTags": ["andypotanin/vproxy:latest"],
+    "RepoTags": ["andypotanin/docker-proxy:latest"],
     "Size": 86985251,
     "VirtualSize": 3110101374
   },
@@ -35,7 +35,7 @@
     "Created": 1407254004,
     "Id": "ac62a49324c34a5bf127f8a3cbe1ad436ed315e2c409b8f771072d7280e280fc",
     "ParentId": "7c5de2bb2638a15dd06bd02bfe4c0699f68c88b9d84262e5f06d77d79cbd89d5",
-    "RepoTags": ["andypotanin/vproxy:2.0.0"],
+    "RepoTags": ["andypotanin/docker-proxy:2.0.0"],
     "Size": 87582,
     "VirtualSize": 757823500
   },

@@ -25,7 +25,7 @@ module.exports = {
 
   },
 
-  "vProxy": {
+  "dockerProxy": {
 
     'can get Docker images': function( done ) {
 

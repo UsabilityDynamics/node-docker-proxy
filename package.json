@@ -14,9 +14,9 @@
     "docker-proxy": "./bin/docker-proxy.js"
   },
   "scripts": {
-    "start": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/proxy.json",
-    "restart": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/processes.json",
-    "stop": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/processes.json"
+    "start": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/startup-processes.json",
+    "restart": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/startup-processes.json",
+    "stop": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/startup-processes.json"
   },
   "repository": {
     "url": "git@github.com:UsabilityDynamics/node-docker-proxy.git",

@@ -61,7 +61,7 @@ module.exports = {
 
   },
 
-  "vProxy utility matches domains": {
+  "dockerProxy utility matches domains": {
 
     'site1.com': function (done) {
 

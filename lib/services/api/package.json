@@ -8,7 +8,7 @@
   "broker": {
     "url": "broker.uds.io:11100",
     "host": "veneer.io",
-    "username": "vproxy@veneer.io",
+    "username": "docker-proxy@veneer.io",
     "password": "dtksbokyqiljyvqq"
   }
 }

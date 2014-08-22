@@ -33,7 +33,7 @@ module.exports = {
 
   },
 
-  "vProxy events": {
+  "dockerProxy events": {
 
     'can listContainers': function( done ) {
 

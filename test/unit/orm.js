@@ -25,7 +25,7 @@ module.exports = {
    */
   before: function () {
 
-    module.debug = require( 'debug' )( 'vproxy:unit' );
+    module.debug = require( 'debug' )( 'docker-proxy:unit' );
 
     this.utility = require( '../../lib/common/utility' );
 
@@ -35,7 +35,7 @@ module.exports = {
 
   },
 
-  "vProxy ORM": {
+  "dockerProxy ORM": {
 
     "can inititilize collection.": function ( done ) {
 
