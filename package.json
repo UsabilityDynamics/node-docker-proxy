@@ -30,7 +30,6 @@
     "deep-extend": "^0.2.11",
     "docker-events": "git://github.com/andypotanin/docker-events",
     "docker-remote-api": "^2.2.0",
-    "docker.io": "^0.9.8",
     "dockerode": "^2.0.3",
     "dockers-ps": "^1.0.0",
     "express": "^3.16.7",

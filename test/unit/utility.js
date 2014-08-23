@@ -13,10 +13,6 @@ module.exports = {
     this.dockerUtility = require( '../../lib/common/docker' );
     this.utility = require( '../../lib/common/utility' );
 
-  },
-
-  "Docker Proxy utility": {
-
   }
 
 };

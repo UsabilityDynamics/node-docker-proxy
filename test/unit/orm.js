@@ -34,79 +34,76 @@ module.exports = {
 
   },
 
-  "dockerProxy ORM": {
 
-    "can inititilize collection.": function ( done ) {
+  "can inititilize collection.": function ( done ) {
 
-      this.containerModel.initialize( function ormReady( error, containerModel ) {
-        // console.log( 'ormReady', Model.container );
+    this.containerModel.initialize( function ormReady( error, containerModel ) {
+      // console.log( 'ormReady', Model.container );
 
-        module.exports.containerModel = containerModel;
+      module.exports.containerModel = containerModel;
 
-        containerModel.should.have.property( 'connections' );
-        containerModel.should.have.property( 'waterline' );
-        containerModel.should.have.property( 'adapter' );
-        containerModel.should.have.property( 'definition' );
+      containerModel.should.have.property( 'connections' );
+      containerModel.should.have.property( 'waterline' );
+      containerModel.should.have.property( 'adapter' );
+      containerModel.should.have.property( 'definition' );
 
-        containerModel.connections.should.have.property( 'memoryAdapter' );
+      containerModel.connections.should.have.property( 'memoryAdapter' );
 
-        done();
+      done();
 
-      } );
+    } );
 
-    },
+  },
 
-    'can add multiple objects from JSON file.': function ( done ) {
+  'can add multiple objects from JSON file.': function ( done ) {
 
-      module.exports.containerModel.createEach( this.dummyData, function ( error, model ) {
+    module.exports.containerModel.createEach( this.dummyData, function ( error, model ) {
 
-        module.debug( 'createEach', model.map( function ( data ) {
-          return data.Name
-        } ) );
+      module.debug( 'createEach', model.map( function ( data ) {
+        return data.Name
+      } ) );
 
-        done();
+      done();
 
-      } );
+    } );
 
-    },
+  },
 
-    'can find api.site1.com': function ( done ) {
+  'can find api.site1.com': function ( done ) {
 
-      module.exports.containerModel.findOne().where( { Domain: 'api.site1.com' } ).exec( function ( error, result ) {
+    module.exports.containerModel.findOne().where( { Domain: 'api.site1.com' } ).exec( function ( error, result ) {
 
-        result.should.have.property( 'ID' );
+      result.should.have.property( 'ID' );
 
-        done();
+      done();
 
-      } );
+    } );
 
-    },
+  },
 
-    'can find www.site2.com': function ( done ) {
+  'can find www.site2.com': function ( done ) {
 
-      module.exports.containerModel.findOne().where( { Domain: 'www.site2.com' } ).exec( function ( error, result ) {
+    module.exports.containerModel.findOne().where( { Domain: 'www.site2.com' } ).exec( function ( error, result ) {
 
-        result.should.have.property( 'ID' );
+      result.should.have.property( 'ID' );
 
-        done();
+      done();
 
-      } );
+    } );
 
-    },
+  },
 
-    'can NOT find www.site100.com': function ( done ) {
+  'can NOT find www.site100.com': function ( done ) {
 
-      module.exports.containerModel.findOne().where( { Domain: 'www.site100.com' } ).exec( function ( error, result ) {
+    module.exports.containerModel.findOne().where( { Domain: 'www.site100.com' } ).exec( function ( error, result ) {
 
-        (error === null).should.be.true;
-        (result === undefined).should.be.true;
+      (error === null).should.be.true;
+      (result === undefined).should.be.true;
 
-        done();
-
-      } );
-
-    }
+      done();
+    } );
 
   }
+
 
 };
