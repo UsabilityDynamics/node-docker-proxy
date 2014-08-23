@@ -31,6 +31,7 @@ module.exports = {
     this.dummyData = require( './fixtures/containers-detail.json' );
 
     this.containerModel = require( '../../lib/orm/container' );
+    this.routeModel = require( '../../lib/orm/route' );
 
   },
 
@@ -47,7 +48,7 @@ module.exports = {
       containerModel.should.have.property( 'adapter' );
       containerModel.should.have.property( 'definition' );
 
-      containerModel.connections.should.have.property( 'memoryAdapter' );
+      //containerModel.connections.should.have.property( 'memoryAdapter' );
 
       done();
 
@@ -71,9 +72,12 @@ module.exports = {
 
   'can find api.site1.com': function ( done ) {
 
-    module.exports.containerModel.findOne().where( { Domain: 'api.site1.com' } ).exec( function ( error, result ) {
+    module.exports.containerModel.findOne({ Domain: 'api.site1.com' }, function searchCallback( error, result ) {
 
       result.should.have.property( 'ID' );
+      result.should.have.property( 'NetworkSettings' );
+      result.should.have.property( 'State' );
+      result.should.have.property( 'Image' );
 
       done();
 
@@ -83,9 +87,15 @@ module.exports = {
 
   'can find www.site2.com': function ( done ) {
 
-    module.exports.containerModel.findOne().where( { Domain: 'www.site2.com' } ).exec( function ( error, result ) {
+    module.exports.containerModel.findOne()
+      .where( { Domain: 'www.site2.com' } )
+      .sort( 'priority' )
+      .exec( function ( error, result ) {
 
       result.should.have.property( 'ID' );
+      result.should.have.property( 'NetworkSettings' );
+      result.should.have.property( 'State' );
+      result.should.have.property( 'Image' );
 
       done();
 

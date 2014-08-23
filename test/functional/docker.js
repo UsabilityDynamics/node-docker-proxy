@@ -26,7 +26,6 @@ module.exports = {
 
     var Docker = require( 'dockerode' );
     var DockerEvents = require( 'docker-events' );
-
     this.docker = new Docker( options );
 
     this.emitter = new DockerEvents( {
@@ -34,7 +33,6 @@ module.exports = {
     } );
 
   },
-
 
   'can list containers.': function ( done ) {
 
@@ -58,7 +56,7 @@ module.exports = {
 
     docker.listContainers( function ( err, containers ) {
 
-      console.log( require( 'util').inspect( containers, { colors: true , depth:5, showHidden: false } ) );
+      // console.log( require( 'util').inspect( containers, { colors: true , depth:5, showHidden: false } ) );
 
       containers.forEach( function ( containerInfo ) {
 
@@ -77,53 +75,51 @@ module.exports = {
 
   'can monitor': {
 
-    "create event": function ( done ) {
-
-      var emitter = this.emitter;
+    "connect event": function ( done ) {
 
       this.timeout( 100000 );
 
       this.emitter.start();
 
       this.emitter.on( "connect", function () {
-        console.log( "connected to docker api" );
+        // console.log( "connected to docker api" );
 
-        setTimeout( done, 2000 );
+        done();
+
+        //setTimeout( done, 2000 );
 
       } );
 
-      emitter.on( "disconnect", function () {
+      this.emitter.on( "disconnect", function () {
         console.log( "disconnected to docker api; reconnecting" );
       } );
 
-      emitter.on( "_message", function ( message ) {
+      this.emitter.on( "_message", function ( message ) {
         console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
       } );
 
-      emitter.on( "create", function ( message ) {
+      this.emitter.on( "create", function ( message ) {
         console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
       } );
 
-      emitter.on( "start", function ( message ) {
+      this.emitter.on( "start", function ( message ) {
         console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
       } );
 
-      emitter.on( "stop", function ( message ) {
+      this.emitter.on( "stop", function ( message ) {
         console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
       } );
 
-      emitter.on( "die", function ( message ) {
+      this.emitter.on( "die", function ( message ) {
         console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
       } );
 
-      emitter.on( "destroy", function ( message ) {
+      this.emitter.on( "destroy", function ( message ) {
         console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
       } );
 
     }
 
   }
-
-
 
 };
