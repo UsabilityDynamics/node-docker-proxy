@@ -26,9 +26,19 @@ In most cases Docker Proxy would be bound to port 80/443 on a public IP address 
 ### Proxy Headers
 Docker Proxy attempts to mimic HAProxy when possible and the following request headers are added to requests before being proxied to a backend.
 
+* x-real-ip
+* x-forwarded-protocol
+* x-forwarded-proto
+* x-forwarded-port
 * x-forwarded-for
 * x-forwarded-host
 * x-forwarded-server
+* x-debug-backend-url
+* x-debug-backend-id
+* x-debug-vhost
+* x-debug-frontend-key
+* x-debug-time-total
+* x-debug-time-backend
 
 ### Environment Variables
 
