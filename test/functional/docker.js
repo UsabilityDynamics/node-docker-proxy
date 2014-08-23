@@ -13,7 +13,7 @@ module.exports = {
    * Prepare Request Client and Shared Validation Method(s).
    *
    */
-  before: function () {
+  before: function ( ready ) {
 
     var _host = process.env.DOCKER_HOST.replace( 'tcp://', '' ) || 'http://localhost';
 
@@ -28,19 +28,65 @@ module.exports = {
     var DockerEvents = require( 'docker-events' );
     this.docker = new Docker( options );
 
-    this.emitter = new DockerEvents( {
+    this.emitter = new DockerEvents({
       docker: this.docker
+    }).start();
+
+    this.emitter.on( "error", function ( error ) {
+      // console.log( "error", arguments );
+
+      if( error.code === 'ECONNREFUSED' ) {
+        return ready( new Error( 'Unable to connect to Docker, verify host/port is valid.' ) );
+      }
+
+      ready( error.message );
+
+    });
+
+    this.emitter.on( "connect", function () {
+      // console.log( "connected to docker api" );
+
+      ready();
+
+    });
+
+    this.emitter.on( "_message", function ( message ) {
+      console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
+    } );
+
+    this.emitter.on( "create", function ( message ) {
+      console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
+    } );
+
+    this.emitter.on( "start", function ( message ) {
+      console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
+    } );
+
+    this.emitter.on( "restart", function ( message ) {
+      console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
+    } );
+
+    this.emitter.on( "stop", function ( message ) {
+      console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
+    } );
+
+    this.emitter.on( "die", function ( message ) {
+      console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
+    } );
+
+    this.emitter.on( "destroy", function ( message ) {
+      console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
     } );
 
   },
 
-  'can list containers.': function ( done ) {
+  'can list active containers.': function ( done ) {
 
     this.timeout( 100000 );
 
     var docker = this.docker;
 
-    docker.listContainers( function ( err, containers ) {
+    docker.listContainers( { all: 0 }, function ( err, containers ) {
 
       done();
 
@@ -56,14 +102,16 @@ module.exports = {
 
     docker.listContainers( function ( err, containers ) {
 
+      console.log( require( 'util').inspect( containers, { colors: true , depth:5, showHidden: false } ) );
+
       containers.forEach( function ( containerInfo ) {
 
-        docker.getContainer( containerInfo.Id ).stop(function() {
-          // console.log( 'stopped' );
-        });
+        //console.log( require( 'util').inspect( containerInfo, { colors: true , depth:5, showHidden: false } ) );
 
+        docker.getContainer( containerInfo.Id ).stop( done );
 
       } );
+
 
       done();
 
@@ -71,7 +119,7 @@ module.exports = {
 
   },
 
-  'can restart containers.': function ( done ) {
+  'can list all containers and restart containers.': function ( done ) {
 
     this.timeout( 100000 );
 
@@ -95,48 +143,15 @@ module.exports = {
 
   'can monitor': {
 
-    "connect event": function ( done ) {
+    "create event": function ( done ) {
 
       this.timeout( 100000 );
-
-      this.emitter.start();
-
-      this.emitter.on( "connect", function () {
-        // console.log( "connected to docker api" );
-
-        done();
-
-        //setTimeout( done, 2000 );
-
-      } );
 
       this.emitter.on( "disconnect", function () {
         console.log( "disconnected to docker api; reconnecting" );
       } );
 
-      this.emitter.on( "_message", function ( message ) {
-        console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
-      } );
-
-      this.emitter.on( "create", function ( message ) {
-        console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
-      } );
-
-      this.emitter.on( "start", function ( message ) {
-        console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
-      } );
-
-      this.emitter.on( "stop", function ( message ) {
-        console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
-      } );
-
-      this.emitter.on( "die", function ( message ) {
-        console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
-      } );
-
-      this.emitter.on( "destroy", function ( message ) {
-        console.log( require( 'util' ).inspect( message, { colors: true, depth: 5, showHidden: false } ) );
-      } );
+      done();
 
     }
 
