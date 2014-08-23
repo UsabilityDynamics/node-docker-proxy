@@ -49,6 +49,8 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 
 * Waterline ORM is used to store Containers, Routes, etc. in a structure manner. Multiple backends could be used.
 * PM2 is used to start/restart/scale workers.
+* lru-cache - Caching routes in-memory.
+* hipache & http-proxy - Certain routing logic.
 
 
 ### Starting Docker Container
