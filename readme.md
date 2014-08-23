@@ -39,6 +39,12 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 * /var/log/dproxy/ - Log are stored here.
 * /var/run/docker-proxy/ - PIDs and Unix Sock file.
 
+### Terminology
+
+* Container - A running Docker container.
+* Backend - A specific port on an active container. Backends are computed based on published ports.
+* Route - A {protocol}://{hostname}:{port}/{path} entry to corresponds to Backend(s). Routes are stored in run-time memory.
+
 ### Technologies Used
 
 * Waterline ORM is used to store Containers, Routes, etc. in a structure manner. Multiple backends could be used.

@@ -26,15 +26,12 @@ module.exports = {
 
     module.debug = require( 'debug' )( 'docker-proxy:unit' );
 
-    this.utility = require( '../../lib/common/utility' );
-
     this.dummyData = require( './fixtures/containers-detail.json' );
 
     this.containerModel = require( '../../lib/orm/container' );
     this.routeModel = require( '../../lib/orm/route' );
 
   },
-
 
   "can inititilize collection.": function ( done ) {
 
@@ -105,15 +102,15 @@ module.exports = {
 
   'can NOT find www.site100.com': function ( done ) {
 
-    module.exports.containerModel.findOne().where( { Domain: 'www.site100.com' } ).exec( function ( error, result ) {
+    module.exports.containerModel.findOne( { Domain: 'api.site19.com' }, function ( error, result ) {
 
-      (error === null).should.be.true;
+      (error === undefined).should.be.true;
       (result === undefined).should.be.true;
 
       done();
+
     } );
 
   }
-
 
 };

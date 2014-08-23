@@ -56,20 +56,40 @@ module.exports = {
 
     docker.listContainers( function ( err, containers ) {
 
-      // console.log( require( 'util').inspect( containers, { colors: true , depth:5, showHidden: false } ) );
-
       containers.forEach( function ( containerInfo ) {
 
-        //console.log( require( 'util').inspect( containerInfo, { colors: true , depth:5, showHidden: false } ) );
+        docker.getContainer( containerInfo.Id ).stop(function() {
+          // console.log( 'stopped' );
+        });
 
-        docker.getContainer( containerInfo.Id ).stop( done );
 
       } );
-
 
       done();
 
     } );
+
+  },
+
+  'can restart containers.': function ( done ) {
+
+    this.timeout( 100000 );
+
+    var docker = this.docker;
+
+    docker.listContainers( { all: 1 }, function ( err, containers ) {
+
+      containers.forEach( function ( containerInfo ) {
+
+        docker.getContainer( containerInfo.Id ).restart(function() {
+          // console.log( 'restarted' );
+        });
+
+      });
+
+      done();
+
+    });
 
   },
 

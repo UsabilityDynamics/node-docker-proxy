@@ -2,10 +2,13 @@
 
 
 ##
-## curl http://fallujah:16423/v1.7/containers/json
-## curl http://fallujah:16423/v1.7/containers/site1.com/json
-## curl http://fallujah:16423/v1.7/containers/api.site1.com/json
-## curl http://fallujah:16423/v1.7/containers/7344833403aa/json
+## curl http://fallujah:2375/v1.7/containers/json
+## curl http://fallujah:2375/v1.7/containers/site1.com/json
+## curl http://fallujah:2375/v1.7/containers/site2.com/json
+## curl http://fallujah:2375/v1.7/containers/site3.com/json
+## curl http://fallujah:2375/v1.7/containers/updates.site1.com/json
+## curl http://fallujah:2375/v1.7/containers/api.site1.com/json
+## curl http://fallujah:2375/v1.7/containers/7344833403aa/json
 ##
 
 ##
@@ -72,6 +75,8 @@ startHHVM site2.com *.site2.com
 startHHVM site3.com *.site3.com
 startHHVM site4.com site4.com
 startHHVM site5.com site4.com
+
+startHHVM updates.site1.com updates.site1.com
 
 startHHVM cdn.site1.com
 startHHVM cdn.site2.com
