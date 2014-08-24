@@ -1,0 +1,58 @@
+[
+  {
+    "Created": 1408738878,
+    "Id": "576e373181abd113ae05d4840e2bd0b061993081af438db467c885c2f3c0787f",
+    "ParentId": "ef0e95b2da2154bf6b669694fa27d3de8c610ee8e420fd34b039cf562ef4c726",
+    "RepoTags": ["andypotanin/hhvm:latest"],
+    "Size": 2616290,
+    "VirtualSize": 2008398439
+  },
+  {
+    "Created": 1407583146,
+    "Id": "8f3157cd9ee75d258c32b7f80ed8051af8d4883c5a4dbe40b8266c72aaf15955",
+    "ParentId": "44feb45ecb77d36f2b447ae2755323eb85d6a9c5d0659c55911c86fa55537897",
+    "RepoTags": ["andypotanin/sshd:latest"],
+    "Size": 154554,
+    "VirtualSize": 662973925
+  },
+  {
+    "Created": 1407574401,
+    "Id": "18f3a3f31e1fc191102b1f051b81608012745e4dde42eb8f816312250e5e0f63",
+    "ParentId": "1a05968c542b5dedf7f47f65d21c9ec230123c5ec3fadd5533bb43ff27509c3b",
+    "RepoTags": ["blackbox/wpcloud:latest"],
+    "Size": 1879205,
+    "VirtualSize": 1252755496
+  },
+  {
+    "Created": 1407561867,
+    "Id": "a285b37debe15d9676a426c7c74136515d5f49347746b0e1c6d41ec0eecd5bc8",
+    "ParentId": "5545d86274990acc22dca9c2d9e16a62c5d1fc65a96fba0337f4b6eb194794f5",
+    "RepoTags": ["andypotanin/docker-proxy:latest"],
+    "Size": 86985251,
+    "VirtualSize": 3110101374
+  },
+  {
+    "Created": 1407254004,
+    "Id": "ac62a49324c34a5bf127f8a3cbe1ad436ed315e2c409b8f771072d7280e280fc",
+    "ParentId": "7c5de2bb2638a15dd06bd02bfe4c0699f68c88b9d84262e5f06d77d79cbd89d5",
+    "RepoTags": ["andypotanin/docker-proxy:2.0.0"],
+    "Size": 87582,
+    "VirtualSize": 757823500
+  },
+  {
+    "Created": 1406766678,
+    "Id": "969903d35b2dc5d08bd5a29e9aaef26a332d0b9478602369efe557e1ca2c7216",
+    "ParentId": "5b175d37c7013afd744af66ea8874e81d31111ade5a6d0106be427ba7cecd86f",
+    "RepoTags": ["veneer/storage:0.1.0"],
+    "Size": 177149,
+    "VirtualSize": 2089857762
+  },
+  {
+    "Created": 1406692947,
+    "Id": "970ebf0451d7f7249fafcb614e0a580dd7dd4a1b0ffef3e9206418d477c2cee1",
+    "ParentId": "2d3b00e63d6886193b29041a0306ffb4d54fde9ab28383ecd6f3d739dca39a7b",
+    "RepoTags": ["andypotanin/hhvm:0.1.0"],
+    "Size": 3052306,
+    "VirtualSize": 908124407
+  }
+]

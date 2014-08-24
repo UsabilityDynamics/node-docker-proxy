@@ -1,0 +1,39 @@
+{
+  "data": {
+    "route": []
+  },
+  "schema": {
+    "route": {
+      "name": {
+        "type": "string"
+      },
+      "hostname": {
+        "type": "string"
+      },
+      "path": {
+        "type": "string"
+      },
+      "config": {
+        "type": "json"
+      },
+      "priority": {
+        "type": "integer"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "route": {}
+  }
+}
