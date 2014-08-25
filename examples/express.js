@@ -57,7 +57,7 @@ exports.use( serveStatic( './public', {
   index: [ 'index.html' ]
 } ));
 
-exports.listen( process.env.PORT || 8080, process.env.HOST || '0.0.0.0', function() {
+exports.listen( process.env.DOCKER_PROXY_PORT || 8080, process.env.DOCKER_PROXY_HOSTNAME || '0.0.0.0', function() {
   console.log( 'Docker Proxy example server started on %s:%s.', this.address().address, this.address().port );
 });
 

@@ -1,3 +1,12 @@
-#!/usr/bin/env node
 
-console.log( 'docker-proxy' );
+var dockerProxy = require( '../' );
+
+dockerProxy.start(function serviceStarted( error, server )  {
+  this.debug( 'dockerProxy' );
+
+
+
+});
+
+
+

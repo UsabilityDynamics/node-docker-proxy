@@ -9,11 +9,9 @@ module.exports = {
 
   'Docker Proxy': {
 
-    'ORM': require( './unit/orm' ),
-
     'Utility': require( './unit/utility' ),
 
-    'Docker Daemon': require( './functional/docker' )
+    'Waterline': require( './functional/waterline' ),
 
   }
 

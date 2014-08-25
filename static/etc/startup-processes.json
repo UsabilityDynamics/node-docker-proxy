@@ -1,32 +1,11 @@
 [
   {
-    "name"             : "vproxy.sock",
-    "script"           : "lib/services/sock/sock.js",
+    "name"             : "docker-proxy",
+    "script"           : "bin/docker-proxy.js",
     "log_date_format"  : "YYYY-MM-DD HH:mm Z",
-    "error_file"       : "/var/log/docker-proxy/docker-proxy.sock.error.log",
-    "out_file"         : "/var/log/docker-proxy/sock.log",
-    "pid_file"         : "/var/run/docker-proxy/docker-proxy.sock.pid",
-    "run_as_user"      : "docker",
-    "run_as_group"     : "docker",
-    "instances"        : 1,
-    "watch"            : false,
-    "merge_logs"       : "true",
-    "exec_interpreter" : "node",
-    "exec_mode"        : "cluster_mode",
-    "env": {
-      "NODE_ENV": "production",
-      "DOCKER_PROXY_UNIX_SOCK_PATH": "/var/run/docker-proxy/docker-proxy.sock"
-    }
-  },
-  {
-    "name"             : "docker-proxy.router",
-    "script"           : "lib/services/router/router.js",
-    "log_date_format"  : "YYYY-MM-DD HH:mm Z",
-    "error_file"       : "/var/log/docker-proxy/docker-proxy.router.error.log",
+    "error_file"       : "/var/log/docker-proxy/docker-proxy.error.log",
     "out_file"         : "/var/log/docker-proxy/router.log",
-    "pid_file"         : "/var/run/docker-proxy/docker-proxy.router.pid",
-    "run_as_user"      : "docker",
-    "run_as_group"     : "docker",
+    "pid_file"         : "/var/run/docker-proxy/docker-proxy.pid",
     "instances"        : 3,
     "watch"            : false,
     "merge_logs"       : "true",

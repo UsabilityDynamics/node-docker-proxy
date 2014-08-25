@@ -23,6 +23,7 @@ connectToRedis = (cb) ->
     cb()
   redis.on 'error', redisFailed
 
+
 # Helpers
 # ------------------------------------------------------------------------------
 

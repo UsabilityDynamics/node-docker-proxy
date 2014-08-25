@@ -65,29 +65,5 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 
 ### Starting Docker Container
 
-  docker run -itd \
-    --name=_dproxy \
-    --hostname=vproxy \--publish=80:80 \
-    --publish=443:443 \
-    --expose=22 \
-    --entrypoint=/usr/local/lib/node_modules/vproxy-daemon/bin/bash/entrypoint.sh \
-    --volume=/home/core/dockerfiles/vproxy/src/vproxy-daemon:/usr/local/lib/node_modules/vproxy-daemon \
-    --volume=/home/root/.ssh:/root/.ssh \
-    --volume=/home/core/.ssh:/home/vproxy/.ssh \
-    --volume=/home/core/.ssh:/home/root/.ssh \
-    --volume=/home/vproxy/.pm2 \
-    --volume=/var/log \
-    --volume=/var/run \
-    --env=HOME=/root \
-    --env=DOCKER_HOST=tcp://172.17.42.1:2375 \
-    --env=DOCKER_PROXY_ADDRESS=208.52.164.213:80 \
-    --env=DOCKER_PROXY_DIR=/etc/vproxy \
-    --env=DOCKER_PROXY_SSL_DIR=/etc/ssl/crt \
-    --env=VPROXY_VARNISH_VCL=/etc/varnish/default.vcl \
-    --env=VPROXY_VARNISH_CACHE_SIZE=3G \
-    --env=VARNISH_CACHE_SIZE=3G \
-    --env=VARNISH_VCL=/etc/varnish/default.vcl \
-    --workdir=/usr/local/lib/node_modules/vproxy-daemon \
-    andypotanin/vproxy /bin/bash
-  docker attach _dproxy
+
 
