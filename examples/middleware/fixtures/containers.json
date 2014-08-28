@@ -50,7 +50,7 @@
       ],
       "Cmd": [ "/bin/bash" ],
       "Image": "andypotanin/hhvm",
-      "Volumes": { "/var/log": { }, "/var/www": { }, "/var/www/wp-content/cache": { } },
+      "Volumes": { "/var/log": { }, "/var/www": { } },
       "WorkingDir": "/var/www",
       "Entrypoint": [ "/etc/entrypoints/hhvm" ],
       "NetworkDisabled": false,
@@ -84,10 +84,9 @@
     "Volumes": {
       "/etc/entrypoints": "/home/core/entrypoints",
       "/var/log": "/var/lib/docker/vfs/dir/bba84c11dbf24e6818e4dd428d2fd7c3078bff9d27542e6c5489f78b4d22deea",
-      "/var/www": "/home/core/tmp/www",
-      "/var/www/wp-content/cache": "/var/lib/docker/vfs/dir/6371a487d2f42f1e5ee3399ac16f6c6c4240780e30e584087a5ffa649c537b97"
+      "/var/www": "/home/core/tmp/www"
     },
-    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true, "/var/www/wp-content/cache": true },
+    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true },
     "HostConfig": {
       "Binds": [
         "/home/core/entrypoints:/etc/entrypoints",
@@ -156,7 +155,7 @@
       ],
       "Cmd": [ "/bin/bash" ],
       "Image": "andypotanin/hhvm",
-      "Volumes": { "/var/log": { }, "/var/www": { }, "/var/www/wp-content/cache": { } },
+      "Volumes": { "/var/log": { }, "/var/www": { } },
       "WorkingDir": "/var/www",
       "Entrypoint": [ "/etc/entrypoints/hhvm" ],
       "NetworkDisabled": false,
@@ -190,10 +189,9 @@
     "Volumes": {
       "/etc/entrypoints": "/home/core/entrypoints",
       "/var/log": "/var/lib/docker/vfs/dir/9dd36ecfc8c1bc5e786d80a2bc86a11f1b5e43003c0287bc715d9a3f505651e5",
-      "/var/www": "/home/core/tmp/www",
-      "/var/www/wp-content/cache": "/var/lib/docker/vfs/dir/0966e565ff232343da0254b9d6e1608e083ec534e7eafc23eade2ccd3d5aaf11"
+      "/var/www": "/home/core/tmp/www"
     },
-    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true, "/var/www/wp-content/cache": true },
+    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true },
     "HostConfig": {
       "Binds": [
         "/home/core/entrypoints:/etc/entrypoints",
@@ -262,7 +260,7 @@
       ],
       "Cmd": [ "/bin/bash" ],
       "Image": "andypotanin/hhvm",
-      "Volumes": { "/var/log": { }, "/var/www": { }, "/var/www/wp-content/cache": { } },
+      "Volumes": { "/var/log": { }, "/var/www": { } },
       "WorkingDir": "/var/www",
       "Entrypoint": [ "/etc/entrypoints/hhvm" ],
       "NetworkDisabled": false,
@@ -296,10 +294,9 @@
     "Volumes": {
       "/etc/entrypoints": "/home/core/entrypoints",
       "/var/log": "/var/lib/docker/vfs/dir/b52aae7142f9f3e0fb71310a5ae3ca6f2f328e863c889eec53c47c21603f705b",
-      "/var/www": "/home/core/tmp/www",
-      "/var/www/wp-content/cache": "/var/lib/docker/vfs/dir/a1162ca351453be4d9066b79d882458852af7846b5c571ffb422bd8dc4a7ea0d"
+      "/var/www": "/home/core/tmp/www"
     },
-    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true, "/var/www/wp-content/cache": true },
+    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true },
     "HostConfig": {
       "Binds": [
         "/home/core/entrypoints:/etc/entrypoints",
@@ -367,7 +364,7 @@
       ],
       "Cmd": [ "/bin/bash" ],
       "Image": "andypotanin/hhvm",
-      "Volumes": { "/var/log": { }, "/var/www": { }, "/var/www/wp-content/cache": { } },
+      "Volumes": { "/var/log": { }, "/var/www": { } },
       "WorkingDir": "/var/www",
       "Entrypoint": [ "/etc/entrypoints/hhvm" ],
       "NetworkDisabled": false,
@@ -401,10 +398,9 @@
     "Volumes": {
       "/etc/entrypoints": "/home/core/entrypoints",
       "/var/log": "/var/lib/docker/vfs/dir/09819f833978344cbdec56420abc9009129d01cf655cdb81dc7849f55e944c5f",
-      "/var/www": "/home/core/tmp/www",
-      "/var/www/wp-content/cache": "/var/lib/docker/vfs/dir/6162455f9d23873401c830022e38bf51b15ad91c91e190bf43fe0421da2b06c8"
+      "/var/www": "/home/core/tmp/www"
     },
-    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true, "/var/www/wp-content/cache": true },
+    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true },
     "HostConfig": {
       "Binds": [
         "/home/core/entrypoints:/etc/entrypoints",
@@ -472,7 +468,7 @@
       ],
       "Cmd": [ "/bin/bash" ],
       "Image": "andypotanin/hhvm",
-      "Volumes": { "/var/log": { }, "/var/www": { }, "/var/www/wp-content/cache": { } },
+      "Volumes": { "/var/log": { }, "/var/www": { } },
       "WorkingDir": "/var/www",
       "Entrypoint": [ "/etc/entrypoints/hhvm" ],
       "NetworkDisabled": false,
@@ -506,10 +502,9 @@
     "Volumes": {
       "/etc/entrypoints": "/home/core/entrypoints",
       "/var/log": "/var/lib/docker/vfs/dir/286b059631c4a85266e013afc14fb5c711d2ea0e9967ad25a05c12c36c774156",
-      "/var/www": "/home/core/tmp/www",
-      "/var/www/wp-content/cache": "/var/lib/docker/vfs/dir/f050d7ab3ef01af8ab1bd780aa0dbc87ad134ffa7580a1e43f8ea7333d0ec469"
+      "/var/www": "/home/core/tmp/www"
     },
-    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true, "/var/www/wp-content/cache": true },
+    "VolumesRW": { "/etc/entrypoints": true, "/var/log": true, "/var/www": true },
     "HostConfig": {
       "Binds": [
         "/home/core/entrypoints:/etc/entrypoints",

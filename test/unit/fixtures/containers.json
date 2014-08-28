@@ -13,6 +13,7 @@
     "Created": 1408739810,
     "Id": "447882dcfb0a9458b54682716fdc6e9ec7a5ea2a78aab56ab71d2a19d29bf4b7",
     "Image": "andypotanin/hhvm:latest",
+    "Name": "temp.site2.com",
     "Names": ["/temp.site2.com"],
     "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49165, "Type": "tcp"}],
     "Status": "Up 5 seconds"

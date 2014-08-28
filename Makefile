@@ -7,7 +7,7 @@ ORGANIZATION		= usabilitydynamics
 NAME						= docker-proxy
 VERSION					= 0.1.0
 
-default: build
+default: image
 
 image:
 	docker build -t $(ORGANIZATION)/$(NAME):$(VERSION) --rm .

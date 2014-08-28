@@ -26,26 +26,38 @@ module.exports = {
 
     module.debug = require( 'debug' )( 'docker-proxy:unit' );
 
-    this.dummyData = require( './fixtures/containers-detail.json' );
+    module.dummyData = require( './fixtures/containers.json' );
+    module.containerModel = require( '../../lib/models/container' );
 
-    this.containerModel = require( '../../lib/orm/container' );
-    this.routeModel = require( '../../lib/orm/route' );
+    module.Waterline = require( 'waterline' );
+    module.orm = module.Waterline();
+
+    module.waterlineConfig = {
+      adapters: {
+        memory: require( 'sails-memory' ),
+      },
+      collections: {
+        container: module.containerModel
+      },
+      connections: {
+        memory: {
+          adapter: 'memory'
+        }
+      }
+    }
 
   },
 
   "can inititilize collection.": function ( done ) {
 
-    this.containerModel.initialize( function ormReady( error, containerModel ) {
+    module.orm.initialize( module.waterlineConfig, function ormReady( error, ormInstance ) {
       // console.log( 'ormReady', Model.container );
 
-      module.exports.containerModel = containerModel;
+      ormInstance.should.have.property( 'collections' );
+      ormInstance.should.have.property( 'connections' );
 
-      containerModel.should.have.property( 'connections' );
-      containerModel.should.have.property( 'waterline' );
-      containerModel.should.have.property( 'adapter' );
-      containerModel.should.have.property( 'definition' );
-
-      //containerModel.connections.should.have.property( 'memoryAdapter' );
+      module.exports.models = ormInstance.collections;
+      module.exports.connections = ormInstance.connections;
 
       done();
 
@@ -55,25 +67,21 @@ module.exports = {
 
   'can add multiple objects from JSON file.': function ( done ) {
 
-    module.exports.containerModel.createEach( this.dummyData, function ( error, model ) {
-
-      module.debug( 'createEach', model.map( function ( data ) {
-        return data.Name
-      } ) );
+    module.exports.models.container.createEach( module.dummyData, function( error, model ) {
 
       done();
 
-    } );
+    });
 
   },
 
   'can find api.site1.com': function ( done ) {
 
-    module.exports.containerModel.findOne({ Domain: 'api.site1.com' }, function searchCallback( error, result ) {
+    module.exports.models.container.findOne({ Name: "temp.site2.com" }, function searchCallback( error, result ) {
 
-      result.should.have.property( 'ID' );
+      result.should.have.property( 'Id' );
       result.should.have.property( 'NetworkSettings' );
-      result.should.have.property( 'State' );
+      result.should.have.property( 'Status' );
       result.should.have.property( 'Image' );
 
       done();
@@ -84,14 +92,14 @@ module.exports = {
 
   'can find www.site2.com': function ( done ) {
 
-    module.exports.containerModel.findOne()
-      .where( { Domain: 'www.site2.com' } )
-      .sort( 'priority' )
+    module.exports.models.container.findOne()
+      .where( { Domain: 'cdn.site3.com' } )
+      .sort( 'updatedAt' )
       .exec( function ( error, result ) {
 
-      result.should.have.property( 'ID' );
+      result.should.have.property( 'Id' );
       result.should.have.property( 'NetworkSettings' );
-      result.should.have.property( 'State' );
+      result.should.have.property( 'Status' );
       result.should.have.property( 'Image' );
 
       done();
@@ -102,7 +110,7 @@ module.exports = {
 
   'can NOT find www.site100.com': function ( done ) {
 
-    module.exports.containerModel.findOne( { Domain: 'api.site19.com' }, function ( error, result ) {
+    module.exports.models.container.findOne( { Domain: 'api.site19.com' }, function ( error, result ) {
 
       (error === undefined).should.be.true;
       (result === undefined).should.be.true;

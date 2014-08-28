@@ -24,8 +24,8 @@ exports.use( waterline.Middleware({
     server: require( 'connect-proxy-models' ).Server,
     route: require( 'connect-proxy-models' ).Route,
     backend: require( 'connect-proxy-models' ).Backend,
-    container: require( '../lib/models/container' ),
-    image: require( '../lib/models/image' )
+    container: require( '../../lib/models/container' ),
+    image: require( '../../lib/models/image' )
   },
   connections: {
     clusterStore: {

@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 ##
 ## curl http://fallujah:2375/v1.7/containers/json
 ## curl http://fallujah:2375/v1.7/containers/site1.com/json

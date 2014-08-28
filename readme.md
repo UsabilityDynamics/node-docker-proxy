@@ -42,7 +42,10 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 
 ### Environment Variables
 
+* DOCKER_PROXY_PORT
+* DOCKER_PROXY_HOSTNAME
 * DOCKER_PROXY_CONFIG_PATH - Defaults to /etc/docker-proxy/docker-proxy.yaml
+* DOCKER_PROXY_WORKER_LIMIT
 
 ### Directories of Note
 
@@ -61,6 +64,17 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 * PM2 is used to start/restart/scale workers.
 * lru-cache - Caching routes in-memory.
 * hipache & http-proxy - Certain routing logic.
+
+
+### Userful Docker Commands
+
+* docker restart $(docker ps -q)
+
+### Methods
+
+* proxy.listen
+* proxy.debug
+* proxy.log
 
 
 ### Starting Docker Container
