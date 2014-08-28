@@ -28,6 +28,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "auto": "~0.1.2",
+    "colors": "^0.6.2",
     "commander": "^2.3.0",
     "debug": "^0.7.4",
     "deep-extend": "^0.2.11",
@@ -40,6 +41,7 @@
     "js-yaml": "^3.1.0",
     "lodash": "^2.4.1",
     "lru-cache": "^2.5.0",
+    "node-noop": "0.0.1",
     "object-emitter": "0.0.5",
     "object-settings": "^0.2.0",
     "pm2": "^0.10.1",
@@ -53,7 +55,8 @@
     "watch": "^0.11.0",
     "watchr": "^2.4.11",
     "waterline": "^0.10.9",
-    "wilson": "0.0.5"
+    "wilson": "0.0.5",
+    "winston": "^0.7.3"
   },
   "optionalDependencies": {},
   "devDependencies": {

@@ -6,34 +6,29 @@
 var dockerProxy = require( '../' );
 var commander  = require( 'commander' );
 
-commander._name = 'docker-proxy';
+commander._name = require( '../package' ).name;
 
-commander.version( require( '../package' ).version )
+commander
+  .version( require( '../package' ).version )
   .option('-q', 'quiet')
 
 commander.command( 'start' )
-  .option('-f', 'foreground')
-  .option( '-p, --port [port]', 'Which port use', '9000' )
+  .option( '-f', 'foreground')
+  .option( '-p, --port [port]', 'Which port use', process.env.DOCKER_PROXY_PORT || 8080 )
+  .option( '-h, --host [host]', 'Which host use', process.env.DOCKER_PROXY_HOST || '0.0.0.0' )
   .option( '-l, --limit [limit]', 'limit of cputs', process.env.DOCKER_PROXY_WORKER_LIMIT = process.env.DOCKER_PROXY_WORKER_LIMIT || require('os').cpus().length )
-  .action( startService );
+  .action( require( '../lib/tasks/start' ) );
+
+commander.command( 'daemon' )
+  .option( '-f', 'foreground')
+  .option( '-p, --port [port]', 'Which port use', process.env.DOCKER_PROXY_PORT || 8080 )
+  .option( '-h, --host [host]', 'Which host use', process.env.DOCKER_PROXY_HOST || '0.0.0.0' )
+  .option( '-l, --limit [limit]', 'limit of cputs', process.env.DOCKER_PROXY_WORKER_LIMIT = process.env.DOCKER_PROXY_WORKER_LIMIT || require('os').cpus().length )
+  .action( require( '../lib/tasks/daemon' ) );
+
+if( process.argv.length === 2 ) {
+  commander.emit( '--help' );
+}
 
 commander.parse( process.argv );
-
-function startService() {
-
-  // Ignore SIGUSR
-  process.on('SIGUSR1', function () {});
-  process.on('SIGUSR2', function () {});
-
-  dockerProxy.start( function serviceStarted( error, proxy )  {
-    proxy.debug( 'serviceStarted' );
-
-    proxy.listen( 80, '0.0.0.0', function serverReady() {
-      console.log( 'serverReady' );
-      proxy.log( 'Docker Proxy started on %s:%s.', this.address().address, this.address().port );
-    });
-
-  });
-
-}
 
