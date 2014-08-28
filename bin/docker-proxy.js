@@ -10,7 +10,8 @@ commander._name = require( '../package' ).name;
 
 commander
   .version( require( '../package' ).version )
-  .option('-q', 'quiet')
+  .option( '-q', 'quiet' )
+  .option( '-d, --docker [docker]', 'url or path to docker daemon ', process.env.DOCKER_HOST )
 
 commander.command( 'start' )
   .option( '-f', 'foreground')
