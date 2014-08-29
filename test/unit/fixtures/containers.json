@@ -6,6 +6,26 @@
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/temp.site3.com"],
     "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49166, "Type": "tcp"}],
+    "HostConfig": {
+      "Binds": null,
+      "ContainerIDFile": "",
+      "Dns": null,
+      "DnsSearch": null,
+      "Links": null,
+      "LxcConf": [],
+      "NetworkMode": "bridge",
+      "PortBindings": {
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "49165"
+          }
+        ]
+      },
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "VolumesFrom": null
+    },
     "Status": "Up 4 seconds"
   },
   {
@@ -40,8 +60,8 @@
     "Command": "/etc/entrypoints/hhvm /bin/bash",
     "Created": 1408739804,
     "Id": "91585c6c328c8805581e6d58c88dcaea36e1ffed4bb5e74d877148f86e607d8f",
-    "Image": "andypotanin/hhvm:latest",
-    "Names": ["/cdn.site2.com"],
+    "Image": "andypotanin/express:latest",
+    "Names": ["/api.site1.com"],
     "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49162, "Type": "tcp"}],
     "Status": "Up 11 seconds"
   },
@@ -71,15 +91,6 @@
     "Names": ["/api.site2.com"],
     "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49159, "Type": "tcp"}],
     "Status": "Up 15 seconds"
-  },
-  {
-    "Command": "/etc/entrypoints/hhvm /bin/bash",
-    "Created": 1408739798,
-    "Id": "fcba952fa6e7ef8c32d01c007453c22180f5c91610ea66b0f8515567de16d877",
-    "Image": "andypotanin/hhvm:latest",
-    "Names": ["/api.site1.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49158, "Type": "tcp"}],
-    "Status": "Up 16 seconds"
   },
   {
     "Command": "/etc/entrypoints/hhvm /bin/bash",
@@ -121,7 +132,7 @@
     "Command": "/etc/entrypoints/hhvm /bin/bash",
     "Created": 1408739791,
     "Id": "8e2c65b2d7c7e77bb67a19ab4442d0e17b073729d01e60ab20caed11595cfab1",
-    "Image": "andypotanin/hhvm:latest",
+    "Image": "andypotanin/express:latest",
     "Names": ["/site1.com"],
     "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49153, "Type": "tcp"}],
     "Status": "Up 24 seconds"

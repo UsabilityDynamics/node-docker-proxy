@@ -1,6 +1,6 @@
 {
   "name": "docker-proxy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Docker Proxy.",
   "main": "./lib/docker-proxy.js",
   "directories": {
@@ -12,7 +12,7 @@
   },
   "bin": {
     "docker-proxy": "./bin/docker-proxy.js",
-    "docker-proxy-entrypoint": "./bin/bash/docker-entrypoint.sh"
+    "docker-proxy.entrypoint": "./bin/bash/docker-entrypoint.sh"
   },
   "scripts": {
     "start": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/startup-processes.json",

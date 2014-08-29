@@ -49,7 +49,8 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 
 ### Directories of Note
 
-* /var/log/dproxy/ - Log are stored here.
+* /var/log/docker-proxy/ - Log are stored here.
+* /var/lib/docker-proxy/ - Log are stored here.
 * /var/run/docker-proxy/ - PIDs and Unix Sock file.
 
 ### Terminology

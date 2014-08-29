@@ -1,0 +1,106 @@
+{
+  "Args": [
+    "/bin/bash"
+  ],
+  "Config": {
+    "AttachStderr": false,
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "Cmd": [
+      "/bin/bash"
+    ],
+    "CpuShares": 0,
+    "Cpuset": "",
+    "Domainname": "site4.com",
+    "Entrypoint": [
+      "/usr/local/bin/startServer"
+    ],
+    "Env": [
+      "NODE_ENV=production",
+      "HOME=/root",
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ],
+    "ExposedPorts": {
+      "80/tcp": {}
+    },
+    "Hostname": "api",
+    "Image": "andypotanin/express",
+    "Memory": 0,
+    "MemorySwap": 0,
+    "NetworkDisabled": false,
+    "OnBuild": null,
+    "OpenStdin": true,
+    "PortSpecs": null,
+    "StdinOnce": false,
+    "Tty": true,
+    "User": "",
+    "Volumes": {
+      "/data": {},
+      "/var/log": {}
+    },
+    "WorkingDir": "/root/express-server"
+  },
+  "Created": "2014-08-28T17:37:28.307389052Z",
+  "Driver": "btrfs",
+  "ExecDriver": "native-0.2",
+  "HostConfig": {
+    "Binds": null,
+    "ContainerIDFile": "",
+    "Dns": null,
+    "DnsSearch": null,
+    "Links": null,
+    "LxcConf": [],
+    "NetworkMode": "bridge",
+    "PortBindings": {
+      "80/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "49165"
+        }
+      ]
+    },
+    "Privileged": false,
+    "PublishAllPorts": false,
+    "VolumesFrom": null
+  },
+  "HostnamePath": "/var/lib/docker/containers/f1cd5638e0c2021aa7776aa9742619a4d593b7e392f3cb49cd932a47636ac993/hostname",
+  "HostsPath": "/var/lib/docker/containers/f1cd5638e0c2021aa7776aa9742619a4d593b7e392f3cb49cd932a47636ac993/hosts",
+  "Id": "f1cd5638e0c2021aa7776aa9742619a4d593b7e392f3cb49cd932a47636ac993",
+  "Image": "761473236b7a46c41e9801db8a9af85b613de76d15af9f12010c58722bff8a41",
+  "MountLabel": "",
+  "Name": "/api.site4.com",
+  "NetworkSettings": {
+    "Bridge": "docker0",
+    "Gateway": "172.17.42.1",
+    "IPAddress": "172.17.0.60",
+    "IPPrefixLen": 16,
+    "PortMapping": null,
+    "Ports": {
+      "80/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "49165"
+        }
+      ]
+    }
+  },
+  "Path": "/usr/local/bin/startServer",
+  "ProcessLabel": "",
+  "ResolvConfPath": "/etc/resolv.conf",
+  "State": {
+    "ExitCode": 0,
+    "FinishedAt": "2014-08-28T18:14:03.150695887Z",
+    "Paused": false,
+    "Pid": 8182,
+    "Running": true,
+    "StartedAt": "2014-08-28T18:14:03.481912842Z"
+  },
+  "Volumes": {
+    "/data": "/var/lib/docker/vfs/dir/ea5d65791ae8273206c8bd98df361ccba6eebd0149d0f693dce2ed1c9e14a65b",
+    "/var/log": "/var/lib/docker/vfs/dir/b12f93ef1c95766ae832079073be4489181987dace616cee815651b5c07766d3"
+  },
+  "VolumesRW": {
+    "/data": true,
+    "/var/log": true
+  }
+}

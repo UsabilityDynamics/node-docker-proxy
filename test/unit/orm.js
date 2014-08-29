@@ -44,6 +44,12 @@ module.exports = {
         container: require( '../../lib/models/container' )
       },
       connections: {
+        memory: {
+          adapter: 'memory'
+        },
+        disk: {
+          adapter: 'disk'
+        },
         persistent: {
           adapter: 'disk'
         },
@@ -107,8 +113,7 @@ module.exports = {
       "Id": "12345",
       "Image": "andypotanin/express",
       "Names": ["/site10000.com"],
-      "Ports": [ {"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49155, "Type": "tcp"} ],
-      "Status": "Up 21 seconds"
+      "Ports": [ {"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49155, "Type": "tcp"} ]
     }, done );
 
   },
@@ -138,7 +143,6 @@ module.exports = {
 
       result.should.have.property( 'Id' );
       result.should.have.property( 'NetworkSettings' );
-      result.should.have.property( 'Status' );
       result.should.have.property( 'Image' );
 
       done();
@@ -150,13 +154,12 @@ module.exports = {
   'can find www.site2.com': function ( done ) {
 
     module.models.container.findOne()
-      .where( { Domain: 'cdn.site3.com' } )
+      .where( { Name: '/cdn.site3.com' } )
       .sort( 'updatedAt' )
       .exec( function ( error, result ) {
 
       result.should.have.property( 'Id' );
       result.should.have.property( 'NetworkSettings' );
-      result.should.have.property( 'Status' );
       result.should.have.property( 'Image' );
 
       done();
@@ -180,15 +183,15 @@ module.exports = {
 
   'can populate Image association model for Containers': function( done ) {
 
-    module.models.container.find( {'Name': 'site1.com' }).populate( 'Image' ).exec( function(error, containers) {
+    module.models.container.find( {'Name': '/site1.com' }).populate( 'Image' ).exec( function(error, containers) {
 
-        containers[0].should.have.property( 'Name' );
-        containers[0].should.have.property( 'Image' );
-        containers[0].Image.should.have.property( 'VirtualSize' );
+      containers[0].should.have.property( 'Name' );
+      containers[0].should.have.property( 'Image' );
+      containers[0].Image.should.have.property( 'VirtualSize' );
 
-        return done( error );
+      return done( error );
 
-      });
+    });
 
   },
 
@@ -231,7 +234,6 @@ module.exports = {
   },
 
   'change events': {
-
 
     'asdf': function() {
 
