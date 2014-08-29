@@ -26,8 +26,10 @@ module.exports = {
 
     module.debug = require( 'debug' )( 'docker-proxy:unit' );
 
-    module.dummyData = require( './fixtures/containers.json' );
-    module.containerModel = require( '../../lib/models/container' );
+    module.dummyData = {
+      containers: require( './fixtures/containers' ),
+      images: require( './fixtures/images' )
+    };
 
     module.Waterline = require( 'waterline' );
     module.orm = module.Waterline();
@@ -35,12 +37,17 @@ module.exports = {
     module.waterlineConfig = {
       adapters: {
         memory: require( 'sails-memory' ),
+        disk: require( 'sails-disk' )
       },
       collections: {
-        container: module.containerModel
+        image: require( '../../lib/models/image' ),
+        container: require( '../../lib/models/container' )
       },
       connections: {
-        memory: {
+        persistent: {
+          adapter: 'disk'
+        },
+        runtime: {
           adapter: 'memory'
         }
       }
@@ -56,8 +63,8 @@ module.exports = {
       ormInstance.should.have.property( 'collections' );
       ormInstance.should.have.property( 'connections' );
 
-      module.exports.models = ormInstance.collections;
-      module.exports.connections = ormInstance.connections;
+      module.models = ormInstance.collections;
+      module.connections = ormInstance.connections;
 
       done();
 
@@ -65,19 +72,28 @@ module.exports = {
 
   },
 
-  'can add multiple objects from JSON file.': function ( done ) {
+  "can search through collection.": function ( done ) {
 
-    module.exports.models.container.createEach( module.dummyData, function( error, model ) {
+    module.models.container.find( function eachFound( error, containers ) {
 
       done();
 
     });
 
+
+  },
+
+  'can add multiple Image objects from JSON file.': function ( done ) {
+    module.models.image.createEach( module.dummyData.images, done );
+  },
+
+  'can add multiple Container objects from JSON file.': function ( done ) {
+    module.models.container.createEach( module.dummyData.containers, done );
   },
 
   'can find api.site1.com': function ( done ) {
 
-    module.exports.models.container.findOne({ Name: "temp.site2.com" }, function searchCallback( error, result ) {
+    module.models.container.findOne({ Name: "temp.site2.com" }, function searchCallback( error, result ) {
 
       result.should.have.property( 'Id' );
       result.should.have.property( 'NetworkSettings' );
@@ -92,7 +108,7 @@ module.exports = {
 
   'can find www.site2.com': function ( done ) {
 
-    module.exports.models.container.findOne()
+    module.models.container.findOne()
       .where( { Domain: 'cdn.site3.com' } )
       .sort( 'updatedAt' )
       .exec( function ( error, result ) {
@@ -110,7 +126,7 @@ module.exports = {
 
   'can NOT find www.site100.com': function ( done ) {
 
-    module.exports.models.container.findOne( { Domain: 'api.site19.com' }, function ( error, result ) {
+    module.models.container.findOne( { Domain: 'api.site19.com' }, function ( error, result ) {
 
       (error === undefined).should.be.true;
       (result === undefined).should.be.true;
@@ -118,6 +134,58 @@ module.exports = {
       done();
 
     } );
+
+  },
+
+  'can populate Image association model for Containers': function( done ) {
+
+    module.models.container.find( {'Name': 'site1.com' }).populate( 'Image' ).exec( function(error, containers) {
+
+        containers[0].should.have.property( 'Name' );
+        containers[0].should.have.property( 'Image' );
+        containers[0].Image.should.have.property( 'VirtualSize' );
+
+        return done( error );
+
+      });
+    
+  },
+
+  'can destroy stored Container collection': function( done ) {
+
+    module.models.container.find( function eachFound( error, containers ) {
+
+      containers.forEach( function( container ) {
+
+        container.destroy( function( error, containerList ) {
+          // console.log( 'Destroyed %d items.', containerList.length );
+        });
+
+      });
+
+      // Not sure if there is a way to destroyEach with shared cb.
+      setTimeout( done, 500 );
+
+    });
+
+  },
+
+  'can destroy stored Image collection': function( done ) {
+
+    module.models.image.find( function eachFound( error, images ) {
+
+      images.forEach( function( image ) {
+
+        image.destroy( function( error, imageList ) {
+          // console.log( 'Destroyed %d items.', containerList.length );
+        });
+
+      });
+
+      // Not sure if there is a way to destroyEach with shared cb.
+      setTimeout( done, 500 );
+
+    });
 
   }
 

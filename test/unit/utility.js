@@ -10,7 +10,6 @@ module.exports = {
 
   before: function() {
 
-    this.dockerUtility = require( '../../lib/common/docker' );
     this.utility = require( '../../lib/common/utility' );
 
   }

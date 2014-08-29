@@ -47,6 +47,7 @@
     "pm2": "^0.10.1",
     "portscanner": "~0.2.2",
     "request": "^2.40.0",
+    "sails-disk": "^0.10.3",
     "sails-memory": "^0.10.2",
     "serve-static": "^1.5.3",
     "sprintf": "~0.1.3",
