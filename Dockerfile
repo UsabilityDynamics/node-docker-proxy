@@ -25,12 +25,13 @@ RUN           \
               mkdir /home/docker-proxy/.ssh
 
 RUN           \
+              DEBIAN_FRONTEND=noninteractive && \
               apt-get install --reinstall ca-certificates apt-transport-https && \
               apt-get install -y python-software-properties && \
               apt-get -y update && apt-get -y upgrade
 
 RUN           \
-              DEBIAN_FRONTEND=noninteractive \
+              DEBIAN_FRONTEND=noninteractive && \
               apt-get -y -q install nano && \
               apt-get -y -q install supervisor
 
@@ -54,7 +55,7 @@ RUN           \
               mkdir -p /etc/docker-proxy && \
               mkdir -p /var/lib/docker-proxy && \
               mkdir -p /var/log/docker-proxy && \
-              npm link /usr/local/src/docker-proxy && \
+              npm link /usr/local/src/docker-proxy
 
 RUN           \
               chgrp docker-proxy /var/log && \

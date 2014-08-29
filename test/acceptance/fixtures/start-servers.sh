@@ -26,6 +26,8 @@ startExpress () {
     --name=$1 \
     --hostname=${2-$1} \
     --publish=80 \
+    --publish=8080 \
+    --expose=11000 \
     --workdir=/root/express-server \
     --volume=/var/log/ \
     --env=NODE_ENV=production \
@@ -89,4 +91,5 @@ startExpress api.site5.com
 startExpress api.site6.com
 startExpress api.site7.com
 startExpress api.site8.com
+startExpress api.site9.com api.site9.com
 

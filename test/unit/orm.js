@@ -41,7 +41,8 @@ module.exports = {
       },
       collections: {
         image: require( '../../lib/models/image' ),
-        container: require( '../../lib/models/container' )
+        container: require( '../../lib/models/container' ),
+        backend: require( '../../lib/models/backend' ),
       },
       connections: {
         memory: {
@@ -111,9 +112,38 @@ module.exports = {
       "Command": "/etc/entrypoints/hhvm /bin/bash",
       "Created": 1408739794,
       "Id": "12345",
+      "Config": {
+        "Domainname": "site9.com",
+        "Hostname": "api"
+      },
       "Image": "andypotanin/express",
-      "Names": ["/site10000.com"],
-      "Ports": [ {"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49155, "Type": "tcp"} ]
+      "Names": ["/cdn.site9.com"],
+      "Ports": [
+        { "IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49169, "Type": "tcp" },
+        { "IP": "0.0.0.0", "PrivatePort": 8080, "PublicPort": 49170, "Type": "tcp" },
+      ],
+      "NetworkSettings": {
+        "Bridge": "docker0",
+        "Gateway": "172.17.42.1",
+        "IPAddress": "172.17.0.93",
+        "IPPrefixLen": 16,
+        "PortMapping": null,
+        "Ports": {
+          "11000/tcp": null,
+          "80/tcp": [
+            {
+              "HostIp": "0.0.0.0",
+              "HostPort": "49169"
+            }
+          ],
+          "8080/tcp": [
+            {
+              "HostIp": "0.0.0.0",
+              "HostPort": "49170"
+            }
+          ]
+        }
+      }
     }, done );
 
   },
@@ -151,20 +181,40 @@ module.exports = {
 
   },
 
-  'can find www.site2.com': function ( done ) {
+  'can find /cdn.site9.com by Name.': function ( done ) {
 
-    module.models.container.findOne()
-      .where( { Name: '/cdn.site3.com' } )
-      .sort( 'updatedAt' )
-      .exec( function ( error, result ) {
+    module.models.container.findOne().where( { Name: '/cdn.site9.com' } ).sort( 'updatedAt' ).exec( function ( error, container ) {
 
-      result.should.have.property( 'Id' );
-      result.should.have.property( 'NetworkSettings' );
-      result.should.have.property( 'Image' );
+      container.should.have.property( 'Id' );
+      container.should.have.property( 'NetworkSettings' );
+      container.should.have.property( 'Image' );
+
+      container.should.have.property( '_backends' );
 
       done();
 
-    } );
+    });
+
+  },
+
+  'can find cdn.site9.com by backend hostname.': function ( done ) {
+
+    return done();
+
+    module.models.container.findOne().where({
+    } ).sort( 'updatedAt' ).exec( function ( error, container ) {
+
+      console.log( require( 'util').inspect( container, { colors: true , depth:5, showHidden: false } ) );
+
+      container.should.have.property( 'Id' );
+      container.should.have.property( 'NetworkSettings' );
+      container.should.have.property( 'Image' );
+
+      container.should.have.property( '_backends' );
+
+      done();
+
+    });
 
   },
 
@@ -183,11 +233,57 @@ module.exports = {
 
   'can populate Image association model for Containers': function( done ) {
 
-    module.models.container.find( {'Name': '/site1.com' }).populate( 'Image' ).exec( function(error, containers) {
+    module.models.container.find({ 'Name': '/site1.com' }).populate( 'Image' ).exec( function(error, containers) {
 
       containers[0].should.have.property( 'Name' );
       containers[0].should.have.property( 'Image' );
       containers[0].Image.should.have.property( 'VirtualSize' );
+
+      return done( error );
+
+    });
+
+  },
+
+  'can create Backends.': function( done ) {
+
+
+    return done();
+
+    var Container = module.models.container;
+    var Backend = module.models.backend;
+
+    Backend.insert({
+      container: "/site1.com",
+      domain: "asdsdf.com",
+      hostname: "com",
+      order: 100,
+      port: 80
+    }, function() {
+
+      console.log( require( 'util').inspect( arguments, { colors: true , depth:5, showHidden: false } ) );
+
+      //Container.update("/site1.com", { pet: pet.id }).exec(function(err, user) {});
+
+      done()
+    } );
+
+
+  },
+
+  'can populate Backends association model for Containers': function( done ) {
+
+    return done();
+
+    module.models.container.find({ 'Name': '/site1.com' }).populate( '_backends' ).exec( function(error, containers) {
+
+      // console.log( require( 'util').inspect( containers, { colors: true , depth:5, showHidden: false } ) );
+
+      containers[0].should.have.property( 'Name' );
+      containers[0].should.have.property( '_backends' );
+      containers[0].should.have.property( '_frontends' );
+
+      // containers[0].Backends[0].should.have.property( 'VirtualSize' );
 
       return done( error );
 

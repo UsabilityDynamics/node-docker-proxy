@@ -12,7 +12,7 @@
   },
   "bin": {
     "docker-proxy": "./bin/docker-proxy.js",
-    "docker-proxy.entrypoint": "./bin/bash/docker-entrypoint.sh"
+    "docker-proxy.entrypoint": "./bin/bash/docker-proxy.entrypoint.sh"
   },
   "scripts": {
     "start": "./node_modules/pm2/bin/pm2 startOrRestart static/etc/startup-processes.json",

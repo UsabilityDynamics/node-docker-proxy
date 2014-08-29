@@ -1,0 +1,122 @@
+{
+  "Args": [
+    "/bin/bash"
+  ],
+  "Config": {
+    "AttachStderr": false,
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "Cmd": [
+      "/bin/bash"
+    ],
+    "CpuShares": 0,
+    "Cpuset": "",
+    "Domainname": "site9.com",
+    "Entrypoint": [
+      "/usr/local/bin/startServer"
+    ],
+    "Env": [
+      "NODE_ENV=production",
+      "HOME=/root",
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ],
+    "ExposedPorts": {
+      "11000/tcp": {},
+      "80/tcp": {},
+      "8080/tcp": {}
+    },
+    "Hostname": "api",
+    "Image": "andypotanin/express",
+    "Memory": 0,
+    "MemorySwap": 0,
+    "NetworkDisabled": false,
+    "OnBuild": null,
+    "OpenStdin": true,
+    "PortSpecs": null,
+    "StdinOnce": false,
+    "Tty": true,
+    "User": "",
+    "Volumes": {
+      "/data": {},
+      "/var/log": {}
+    },
+    "WorkingDir": "/root/express-server"
+  },
+  "Created": "2014-08-29T04:41:59.433737686Z",
+  "Driver": "btrfs",
+  "ExecDriver": "native-0.2",
+  "HostConfig": {
+    "Binds": null,
+    "ContainerIDFile": "",
+    "Dns": null,
+    "DnsSearch": null,
+    "Links": null,
+    "LxcConf": [],
+    "NetworkMode": "bridge",
+    "PortBindings": {
+      "11000/tcp": null,
+      "80/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "49169"
+        }
+      ],
+      "8080/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "49170"
+        }
+      ]
+    },
+    "Privileged": false,
+    "PublishAllPorts": false,
+    "VolumesFrom": null
+  },
+  "HostnamePath": "/var/lib/docker/containers/fa694d5d0c9e9352fe23db1df91c84c67e3c5b65ac8b66ead60f6aea137c23f7/hostname",
+  "HostsPath": "/var/lib/docker/containers/fa694d5d0c9e9352fe23db1df91c84c67e3c5b65ac8b66ead60f6aea137c23f7/hosts",
+  "Id": "fa694d5d0c9e9352fe23db1df91c84c67e3c5b65ac8b66ead60f6aea137c23f7",
+  "Image": "761473236b7a46c41e9801db8a9af85b613de76d15af9f12010c58722bff8a41",
+  "MountLabel": "",
+  "Name": "/api.site9.com",
+  "NetworkSettings": {
+    "Bridge": "docker0",
+    "Gateway": "172.17.42.1",
+    "IPAddress": "172.17.0.93",
+    "IPPrefixLen": 16,
+    "PortMapping": null,
+    "Ports": {
+      "11000/tcp": null,
+      "80/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "49169"
+        }
+      ],
+      "8080/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "49170"
+        }
+      ]
+    }
+  },
+  "Path": "/usr/local/bin/startServer",
+  "ProcessLabel": "",
+  "ResolvConfPath": "/etc/resolv.conf",
+  "State": {
+    "ExitCode": 0,
+    "FinishedAt": "0001-01-01T00:00:00Z",
+    "Paused": false,
+    "Pid": 11982,
+    "Running": true,
+    "StartedAt": "2014-08-29T04:42:00.681092812Z"
+  },
+  "Volumes": {
+    "/data": "/var/lib/docker/vfs/dir/ff370bca287498a4f0284ac52d8bda47fc4133419add55c7d18d2a03385cd908",
+    "/var/log": "/var/lib/docker/vfs/dir/bd8b0c238d87a8589d65dead87bc7c29fd98b3baa8d32c19e2e158356979eb5f"
+  },
+  "VolumesRW": {
+    "/data": true,
+    "/var/log": true
+  }
+}
