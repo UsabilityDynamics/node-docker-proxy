@@ -1,18 +1,12 @@
 /**
- * Test Shared Veneer.io Service APIs
+ * Docker Proxy default tests.
  *
- *
- * DOCKER_HOST=http://fallujah DOCKER_PORT=16423  mocha --watch
+ * DOCKER_HOST=http://fallujah DOCKER_PORT=16423 mocha --watch
  *
  */
 module.exports = {
-
-  'Docker Proxy': {
-
-    'Utility': require( './unit/utility' ),
-
-    'Waterline': require( './functional/waterline' ),
-
-  }
-
+  Collection: require( './unit/orm.collection' ),
+  Backend: require( './unit/orm.backend' ),
+  // Image: require( './unit/orm.image' ),
+  Server: require( './unit/orm.backend' )
 };

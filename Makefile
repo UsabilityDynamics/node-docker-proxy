@@ -23,17 +23,19 @@ start:
 
 run:
 	docker run -itd \
-		--name=docker-proxy \
-		--hostname=docker-proxy \
+		--name=docker-proxy.internal \
+		--hostname=docker-proxy.internal \
+		--expose=22 \
 		--publish=80:80 \
 		--publish=443:443 \
-		--expose=22 \
 		--entrypoint=/usr/local/bin/docker-proxy.entrypoint.sh \
 		--volume=/var/log \
 		--volume=/var/run \
 		--env=HOME=/home/docker-proxy \
-		--env=DOCKER_HOSTNAME=172.17.42.1 \
-		--env=DOCKER_HOST=2375 \
+		--env=DOCKER_PROXY_PORT=80 \
+		--env=DOCKER_PROXY_HOSTNAME=docker-proxy.internal \
+		--env=DOCKER_PROXY_WORKER_LIMIT=8 \
+		--env=DOCKER_HOST=172.17.42.1:2375 \
 		$(ORGANIZATION)/$(NAME):$(VERSION) /bin/bash
 
 release:

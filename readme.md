@@ -33,19 +33,21 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 * x-forwarded-for
 * x-forwarded-host
 * x-forwarded-server
-* x-debug-backend-url
-* x-debug-backend-id
-* x-debug-vhost
-* x-debug-frontend-key
+* x-debug-backend
 * x-debug-time-total
 * x-debug-time-backend
 
 ### Environment Variables
 
-* DOCKER_PROXY_PORT
-* DOCKER_PROXY_HOSTNAME
+* DOCKER_PROXY_PORT - If not set, will check PORT, otherwise default to 8080.
+* DOCKER_PROXY_HOSTNAME - If not set will check HOST, otherwise default to 0.0.0.0
 * DOCKER_PROXY_CONFIG_PATH - Defaults to /etc/docker-proxy/docker-proxy.yaml
-* DOCKER_PROXY_WORKER_LIMIT
+* DOCKER_PROXY_WORKER_LIMIT - Will default to number of CPUs.
+* DOCKER_PROXY_WORKER_SILENT - Will not include worker log output into master logs.
+* DOCKER_PROXY_PID_PATH - Path to PID file.
+* DOCKER_PROXY_SSL_PATH - Path to SSL certificate files.
+* DOCKER_HOST - TCP address of Docker Daemon.
+* DOCKER_SOCK_PATH - Pat to Docker Unix Sock file.
 
 ### Directories of Note
 
@@ -77,6 +79,17 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 * proxy.debug
 * proxy.log
 
+
+### Port Fowarding
+
+On a mac, create a ~/etc/pf.conf with following contents:
+
+    rdr on lo0 proto tcp from any to any port 80 -> 127.0.0.1 port 8080
+    rdr on lo0 proto tcp from any to any port 443 -> 127.0.0.1 port 8080
+
+Then run:
+
+    sudo pfctl -ef ~/etc/pf.conf
 
 ### Starting Docker Container
 
