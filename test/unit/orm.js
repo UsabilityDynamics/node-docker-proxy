@@ -72,6 +72,47 @@ module.exports = {
 
   },
 
+  "can call class methods.": function ( done ) {
+
+    var Container = module.models.container;
+
+    // Default Properties.
+    Container.should.have.property( 'meta' );
+    Container.should.have.property( 'syncable' );
+    Container.should.have.property( 'adapterDictionary' );
+    Container.should.have.property( 'primaryKey', 'Name' );
+    Container.should.have.property( 'migrate', 'safe' );
+    Container.should.have.property( 'hasSchema', true );
+    Container.should.have.property( 'defaults' );
+    Container.should.have.property( 'adapter' );
+    Container.should.have.property( 'waterline' );
+
+    // Adapter Methods. (standard)
+    Container.adapterDictionary.should.have.property( 'identity' );
+    Container.adapterDictionary.should.have.property( 'registerConnection' );
+    Container.adapterDictionary.should.have.property( 'define' );
+    Container.adapterDictionary.should.have.property( 'describe' );
+    Container.adapterDictionary.should.have.property( 'destroy' );
+    Container.adapterDictionary.should.have.property( 'createEach' );
+
+    // Custom Methods.
+    Container.should.have.property( 'changeEvent' );
+    Container.should.have.property( 'remove' );
+    Container.should.have.property( 'insert' );
+
+    // Try using the custom "insert" method.
+    Container.insert({
+      "Command": "/etc/entrypoints/hhvm /bin/bash",
+      "Created": 1408739794,
+      "Id": "12345",
+      "Image": "andypotanin/express",
+      "Names": ["/site10000.com"],
+      "Ports": [ {"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49155, "Type": "tcp"} ],
+      "Status": "Up 21 seconds"
+    }, done );
+
+  },
+
   "can search through collection.": function ( done ) {
 
     module.models.container.find( function eachFound( error, containers ) {
@@ -148,7 +189,7 @@ module.exports = {
         return done( error );
 
       });
-    
+
   },
 
   'can destroy stored Container collection': function( done ) {
@@ -186,6 +227,18 @@ module.exports = {
       setTimeout( done, 500 );
 
     });
+
+  },
+
+  'change events': {
+
+
+    'asdf': function() {
+
+      // Container.changeEvent({});
+
+
+    }
 
   }
 
