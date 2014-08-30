@@ -1,5 +1,9 @@
+/**
+ *
+ *
+ * @type {{client/docker: {can accept messages from Docker Daemon.: 'can accept messages from Docker Daemon.'}}}
+ */
 module.exports = {
-
 
   "client/docker": {
 
@@ -12,7 +16,7 @@ module.exports = {
       DockerEvents.should.have.property( 'create' );
 
       DockerEvents.create({
-        host: process.env.DOCKER_HOSTNAME,
+        host: process.env.DOCKER_HOSTNAME || 'localhost',
         port: process.env.DOCKER_PORT
       }).on( '_message', done )
 

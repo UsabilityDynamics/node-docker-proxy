@@ -27,8 +27,9 @@ module.exports = {
     module.debug = require( 'debug' )( 'docker:proxy:unit' );
 
     module.dummyData = {
-      containers: require( './fixtures/containers' ),
-      images: require( './fixtures/images' )
+      image: require( 'waterline' ).Collection.extend(require( '../../lib/models/image' )),
+      container: require( 'waterline' ).Collection.extend(require( '../../lib/models/container' )),
+      backend: require( 'waterline' ).Collection.extend(require( '../../lib/models/backend' )),
     };
 
     module.Waterline = require( 'waterline' );

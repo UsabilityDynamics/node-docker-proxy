@@ -26,8 +26,6 @@ startExpress () {
     --name=$1 \
     --hostname=${2-$1} \
     --publish=80 \
-    --publish=8080 \
-    --expose=11000 \
     --workdir=/root/express-server \
     --volume=/var/log/ \
     --env=NODE_ENV=production \
@@ -71,7 +69,7 @@ startHHVM () {
 stopServers
 
 # Start Fake Servers
-startHHVM site1.com *.site1.com
+startHHVM site1.com site1.com
 startHHVM site2.com *.site2.com
 startHHVM site3.com *.site3.com
 startHHVM site4.com site4.com
@@ -83,6 +81,15 @@ startHHVM cdn.site1.com
 startHHVM cdn.site2.com
 startHHVM cdn.site3.com
 
+startExpress usabilitydynamics.com
+startExpress www.usabilitydynamics.com
+startExpress sites.usabilitydynamics.com
+startExpress api.usabilitydynamics.com
+
+startExpress www.site1.com
+startExpress www.site2.com
+startExpress www.site3.com
+
 startExpress api.site1.com
 startExpress api.site2.com
 startExpress api.site3.com
@@ -93,6 +100,13 @@ startExpress api.site7.com
 startExpress api.site8.com
 startExpress api.site9.com api.site9.com
 
+ ##   DB_NAME=/web2/db
+ ##   DB_PORT=tcp://172.17.0.5:5432
+ ##   DB_PORT_5000_TCP=tcp://172.17.0.5:5432
+ ##   DB_PORT_5000_TCP_PROTO=tcp
+ ##   DB_PORT_5000_TCP_PORT=5432
+ ##   DB_PORT_5000_TCP_ADDR=172.17.0.5
+##
 
 ## docker run -d \
 ##   --name=stacy \

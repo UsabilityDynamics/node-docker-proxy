@@ -40,9 +40,9 @@ module.exports = {
         disk: require( 'sails-disk' )
       },
       collections: {
-        image: require( '../../lib/models/image' ),
-        container: require( '../../lib/models/container' ),
-        backend: require( '../../lib/models/backend' ),
+        image: require( 'waterline' ).Collection.extend(require( '../../lib/models/image' )),
+        container: require( 'waterline' ).Collection.extend(require( '../../lib/models/container' )),
+        backend: require( 'waterline' ).Collection.extend(require( '../../lib/models/backend' )),
       },
       connections: {
         memory: {
