@@ -102,6 +102,7 @@ module.exports = {
       Container.should.have.property( 'defaults' );
       Container.should.have.property( 'adapter' );
       Container.should.have.property( 'waterline' );
+      Container.should.have.property( 'findOrCreateEach' );
 
       // Adapter Methods. (standard)
       Container.adapterDictionary.should.have.property( 'identity' );
@@ -114,7 +115,8 @@ module.exports = {
       Container.adapterDictionary.should.have.property( 'createEach' );
 
       // Custom Methods.
-      Container.should.have.property( 'changeEvent' );
+      Container.should.have.property( 'stateChange' );
+      Container.should.have.property( 'fetchUpstream' );
       Container.should.have.property( 'remove' );
       Container.should.have.property( 'insert' );
 
@@ -174,9 +176,19 @@ module.exports = {
       module.models.container.createEach( module.dummyData.containers, done );
     },
 
+    'can find all objects': function ( done ) {
+
+      module.models.container.find( function eachFound( error, containers ) {
+        // @todo Add check for array count.
+        done();
+
+      });
+
+    },
+
     'can find api.site1.com': function ( done ) {
 
-      module.models.container.findOne({ Name: "temp.site2.com" }, function searchCallback( error, result ) {
+      module.models.container.findOne({ Name: "/temp.site1.com" }, function searchCallback( error, result ) {
 
         result.should.have.property( 'Id' );
         result.should.have.property( 'NetworkSettings' );
@@ -217,6 +229,11 @@ module.exports = {
 
     },
 
+    'can add several new containers': function( done ) {
+
+      module.models.container.findOrCreateEach( [ 'Name' ], module.dummyData.containers, done );
+
+    },
 
     'can destroy stored Container collection': function( done ) {
 
@@ -256,6 +273,12 @@ module.exports = {
 
     },
 
+    'can fetchUpstream': function( done ) {
+
+      module.models.container.fetchUpstream( null, done );
+
+    },
+
     'change events': {
 
       'asdf': function() {
@@ -267,6 +290,6 @@ module.exports = {
 
     }
 
-    }
+  }
 
 };

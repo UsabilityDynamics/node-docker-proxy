@@ -1,16 +1,20 @@
 ##
 #
-#
+# $(git branch | sed -n '/\* /s///p')
 ##
 
-BUILD_ORGANIZATION		= usabilitydynamics
-BUILD_REPOSITORY		  = docker-proxy
-BUILD_VERSION					= 0.1.2
-BUILD_BRANCH		      = $(git branch | sed -n '/\* /s///p')
+BUILD_ORGANIZATION		?=usabilitydynamics
+BUILD_REPOSITORY		  ?=docker-proxy
+BUILD_VERSION					?=0.1.2
+BUILD_BRANCH		      ?=master
 
-RUN_NAME			  = docker-proxy.internal
-RUN_HOSTNAME	  = docker-proxy.internal
-RUN_ENTRYPOINT	= /usr/local/bin/docker-proxy.entrypoint.sh
+RUN_NAME			        ?=docker-proxy.internal
+RUN_HOSTNAME	        ?=docker-proxy.internal
+RUN_ENTRYPOINT	      ?=/usr/local/bin/docker-proxy.entrypoint
+
+DOCKER_PROXY_PORT	    ?=80
+DOCKER_PROXY_HOSTNAME	?=docker-proxy.internal
+DOCKER_PROXY_WORKER_LIMIT	?=docker-proxy.internal
 
 default: image
 
@@ -28,21 +32,24 @@ start:
 	run
 
 run:
-	docker run -itd \
+	@echo "Running ${RUN_NAME}."
+	@echo "Checking for previous runtime. $(shell docker rm -f ${RUN_NAME} 2>/dev/null; true)"
+	@docker run -itd \
 		--name=${RUN_NAME} \
-		--hostname={RUN_HOSTNAME} \
+		--hostname=${RUN_HOSTNAME} \
 		--entrypoint=${RUN_ENTRYPOINT} \
+		--publish=80 \
+		--publish=443 \
 		--expose=22 \
-		--publish=80:80 \
-		--publish=443:443 \
 		--volume=/var/log \
 		--volume=/var/run \
 		--env=HOME=/home/docker-proxy \
-		--env=DOCKER_PROXY_PORT=${DOCKER_PROXY_PORT:-80} \
-		--env=DOCKER_PROXY_HOSTNAME=${DOCKER_PROXY_HOSTNAME:-docker-proxy.internal} \
-		--env=DOCKER_PROXY_WORKER_LIMIT=${DOCKER_PROXY_WORKER_LIMIT:-8} \
-		--env=DOCKER_HOST=${DOCKER_HOST:-172.17.42.1:2375} \
-		$(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION) /bin/bash
+		--env=NODE_ENV=staging \
+		--env=DOCKER_PROXY_PORT=${DOCKER_PROXY_PORT} \
+		--env=DOCKER_PROXY_HOSTNAME=${DOCKER_PROXY_HOSTNAME} \
+		--env=DOCKER_PROXY_WORKER_LIMIT=${DOCKER_PROXY_WORKER_LIMIT} \
+		--env=DOCKER_HOST=${DOCKER_HOST} \
+		$(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION)
 
 release:
 	docker push $(REPOSITORY)

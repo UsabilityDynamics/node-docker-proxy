@@ -14,6 +14,7 @@ USER          root
 VOLUME        /tmp
 VOLUME        /var/log
 VOLUME        /var/run
+VOLUME        /var/lib
 VOLUME        /var/cache
 
 ONBUILD       rm -rf /tmp/**
@@ -51,7 +52,6 @@ ADD           static/etc/init.d/docker-proxy.sh     /etc/init.d/docker-proxy
 ADD           static/etc/supervisord.conf           /etc/supervisor/supervisord.conf
 
 RUN           \
-              mkdir -p /home/docker-proxy && \
               mkdir -p /etc/docker-proxy && \
               mkdir -p /var/lib/docker-proxy && \
               mkdir -p /var/log/docker-proxy && \
