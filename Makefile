@@ -6,6 +6,8 @@
 ORGANIZATION		= usabilitydynamics
 REPOSITORY		  = docker-proxy
 VERSION					= 0.1.2
+BRANCH		      = $(git rev-parse --abbrev-ref HEAD)
+
 RUN_NAME			  = docker-proxy.internal
 RUN_HOSTNAME	  = docker-proxy.internal
 RUN_ENTRYPOINT	= /usr/local/bin/docker-proxy.entrypoint.sh
