@@ -46,8 +46,6 @@
     "node-uuid": "^1.4.1",
     "object-emitter": "0.0.5",
     "object-settings": "^0.2.0",
-    "pm2": "^0.10.1",
-    "portscanner": "~0.2.2",
     "request": "^2.40.0",
     "sails-disk": "^0.10.3",
     "sails-memory": "^0.10.2",
@@ -61,8 +59,6 @@
   },
   "optionalDependencies": {},
   "devDependencies": {
-    "cluster-master": "^0.2.0",
-    "cluster2": "^0.4.26",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-less": "~0.8.1",
@@ -77,7 +73,6 @@
     "grunt-shell": "~0.5.0",
     "jscoverage": "~0.3.8",
     "mocha": "^1.21.4",
-    "recluster": "^0.3.7",
     "should": "~2.1.1"
   },
   "readmeFilename": "readme.md",
