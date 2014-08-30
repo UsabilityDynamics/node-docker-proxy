@@ -42,6 +42,7 @@
     "lodash": "^2.4.1",
     "lru-cache": "^2.5.0",
     "node-noop": "0.0.1",
+    "node-uuid": "^1.4.1",
     "object-emitter": "0.0.5",
     "object-settings": "^0.2.0",
     "pm2": "^0.10.1",

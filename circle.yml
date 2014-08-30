@@ -13,6 +13,7 @@ test:
     - mocha test/unit
     - mocha test/functional
     - mocha test/integration
+    - make image
     - make run; sleep 10
     - mocha test/acceptance
 
@@ -20,6 +21,5 @@ deployment:
   hub:
     branch: master
     commands:
-      - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" \
-          < .dockercfg.template > ~/.dockercfg
+      - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" < .dockercfg.template > ~/.dockercfg
       - docker push usabilitydynamics/docker-proxy:latest
