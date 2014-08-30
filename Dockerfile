@@ -28,7 +28,6 @@ RUN           \
 RUN           \
               DEBIAN_FRONTEND=noninteractive && \
               apt-get install --reinstall ca-certificates apt-transport-https && \
-              apt-get install -y python-software-properties && \
               apt-get -y update && apt-get -y upgrade
 
 RUN           \
@@ -38,7 +37,7 @@ RUN           \
 
 RUN           \
               NODE_ENV=production \
-              npm install --silent -g pm2-web --unsafe-perm
+              npm install --silent -g pm2-web grunt-cli mocha should --unsafe-perm
 
 ADD           bin                                   /usr/local/src/docker-proxy/bin
 ADD           lib                                   /usr/local/src/docker-proxy/lib
@@ -55,9 +54,12 @@ RUN           \
               mkdir -p /etc/docker-proxy && \
               mkdir -p /var/lib/docker-proxy && \
               mkdir -p /var/log/docker-proxy && \
+              touch /var/run/docker-proxy.pid && \
+              NODE_ENV=production \
               npm link /usr/local/src/docker-proxy
 
 RUN           \
+              chown docker-proxy /var/run/docker-proxy.pid && \
               chgrp docker-proxy /var/log && \
               chgrp docker-proxy /var/lib && \
               chgrp docker-proxy /var/cache && \
