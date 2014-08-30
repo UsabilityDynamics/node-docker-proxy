@@ -93,3 +93,21 @@ startExpress api.site7.com
 startExpress api.site8.com
 startExpress api.site9.com api.site9.com
 
+
+## docker run -d \
+##   --name=stacy \
+##   -e BACKEND_PORT=49154 \
+##   -e BACKEND_ADDR=172.17.42.1 \
+##   -p 8080:80 zenedith/varnish
+##
+## docker run -d \
+##   --name=becky \
+##   --link=site3.com:backend \
+##   -p 8081:80 zenedith/varnish
+##
+## docker run -d \
+##   -e BACKEND_PORT_80_TCP_ADDR=example.com \
+##   -e BACKEND_ENV_PORT=80 \
+##   -p 8080:80 zenedith/varnish
+##
+

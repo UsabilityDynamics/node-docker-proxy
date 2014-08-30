@@ -14,7 +14,7 @@ module.exports = {
         service.should.have.properties( 'apiMiddleware', 'routerMiddleware', 'staticMiddleware' );
         service.should.have.properties( '_models', '_connections', '_middleware' );
 
-        service.should.have.properties( 'startORM', 'startServer' );
+        //service.should.have.properties( 'startORM', 'startServer' );
 
         service.settings.should.have.properties( 'get' );
         service.settings.should.have.properties( 'set' );
