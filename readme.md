@@ -1,6 +1,18 @@
 Docker Proxy is a Node.js module that attempts to simplify traffic routing to multiple Docker Containers running on a host.
 In most cases Docker Proxy would be bound to port 80/443 on a public IP address and serve as the primary point-of-entry for all web traffic on a host.
 
+***
+[![Issues - Bug](https://badge.waffle.io/usabilitydynamics/node-docker-proxy.png?label=bug&title=Bugs)](http://waffle.io/usabilitydynamics/node-docker-proxy)
+[![Issues - Backlog](https://badge.waffle.io/usabilitydynamics/node-docker-proxy.png?label=backlog&title=Backlog)](http://waffle.io/usabilitydynamics/node-docker-proxy/)
+[![Issues - Active](https://badge.waffle.io/usabilitydynamics/node-docker-proxy.png?label=in progress&title=Active)](http://waffle.io/usabilitydynamics/node-docker-proxy/)
+***
+[![Dependency Status](https://gemnasium.com/UsabilityDynamics/node-docker-proxy.svg)](https://gemnasium.com/UsabilityDynamics/node-docker-proxy)
+[![CodeClimate](http://img.shields.io/codeclimate/github/UsabilityDynamics/node-docker-proxy.svg)](https://codeclimate.com/github/UsabilityDynamics/node-docker-proxy)
+[![CodeClimate Coverage](http://img.shields.io/codeclimate/coverage/github/UsabilityDynamics/node-docker-proxy.svg)](https://codeclimate.com/github/UsabilityDynamics/node-docker-proxy)
+[![NPM Version](http://img.shields.io/npm/v/object-settings.svg)](https://www.npmjs.org/package/object-settings)
+[![CircleCI](https://circleci.com/gh/UsabilityDynamics/node-docker-proxy.png?circle-token=822abc09fd13abaf818fdb0623f3185185599ca5)](https://circleci.com/gh/UsabilityDynamics/node-docker-proxy)
+***
+
 ### What Docker Proxy Does
 
 * Attempts to connect to a Docker Daemon either via TCP or Unix Socket.

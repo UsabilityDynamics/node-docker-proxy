@@ -43,7 +43,7 @@
     "Created": 1406766678,
     "Id": "969903d35b2dc5d08bd5a29e9aaef26a332d0b9478602369efe557e1ca2c7216",
     "ParentId": "5b175d37c7013afd744af66ea8874e81d31111ade5a6d0106be427ba7cecd86f",
-    "RepoTags": ["veneer/storage:0.1.0"],
+    "RepoTags": ["Docker/storage:0.1.0"],
     "Size": 177149,
     "VirtualSize": 2089857762
   },

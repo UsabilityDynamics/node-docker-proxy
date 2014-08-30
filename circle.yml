@@ -1,0 +1,25 @@
+machine:
+  node:
+    version: v0.11.13
+  services:
+    - docker
+
+dependencies:
+  override:
+    - npm install
+
+test:
+  override:
+    - mocha test/unit
+    - mocha test/functional
+    - mocha test/integration
+    - make run; sleep 10
+    - mocha test/acceptance
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" \
+          < .dockercfg.template > ~/.dockercfg
+      - docker push usabilitydynamics/docker-proxy:latest

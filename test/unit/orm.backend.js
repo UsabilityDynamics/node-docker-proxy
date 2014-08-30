@@ -1,5 +1,5 @@
 /**
- * Test Shared Veneer.io Service APIs
+ * Test Shared Docker.io Service APIs
  *
  *
  * mocha test/unit/orm.js
