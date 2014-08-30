@@ -26,3 +26,5 @@ ssl
 *~
 nbproject
 .waterline
+logs
+pids

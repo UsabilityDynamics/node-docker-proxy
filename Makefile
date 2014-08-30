@@ -5,7 +5,7 @@
 
 BUILD_ORGANIZATION		?=usabilitydynamics
 BUILD_REPOSITORY		  ?=docker-proxy
-BUILD_VERSION					?=0.1.2
+BUILD_VERSION					?=0.1.3
 BUILD_BRANCH		      ?=master
 
 RUN_NAME			        ?=docker-proxy.internal

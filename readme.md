@@ -26,6 +26,12 @@ In most cases Docker Proxy would be bound to port 80/443 on a public IP address 
 * Routes are associated with Containers, and if a Container goes offline, a static error/notice template will be displayed.
 * Monitors for changes made to the /etc/dproxy.yml configuration, and changes will be applied if configuration file appears to validate.
 
+### API Example
+
+* http://localhost:16000/service/balancer/start
+* http://localhost:16000/service/balancer/stop
+* http://localhost:16000/service/balancer/resize?size=30
+
 ### What Docker Proxy Does Not Do
 
 * In attempts to keep things simple this module avoids some "intelligent" routing logic available in some other Node.js modules. We focus on getting public traffic to a Docker container, your middleware is expected to handle more advanced routing decisions.

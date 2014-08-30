@@ -3,7 +3,7 @@
 ##
 ## docker build -t usabilitydynamics/docker-proxy --rm .
 ##
-## @ver 0.1.1
+## @ver 0.1.3
 ## @author potanin@UD
 #################################################################
 
@@ -54,15 +54,16 @@ RUN           \
               mkdir -p /etc/docker-proxy && \
               mkdir -p /var/lib/docker-proxy && \
               mkdir -p /var/log/docker-proxy && \
-              touch /var/run/docker-proxy.pid && \
+              mkdir -p /var/cache/docker-proxy && \
+              mkdir -p /var/run/docker-proxy && \
               NODE_ENV=production \
               npm link /usr/local/src/docker-proxy
 
 RUN           \
-              chown docker-proxy /var/run/docker-proxy.pid && \
-              chgrp docker-proxy /var/log && \
-              chgrp docker-proxy /var/lib && \
-              chgrp docker-proxy /var/cache && \
+              chgrp docker-proxy /var/log/docker-proxy && \
+              chgrp docker-proxy /var/lib/docker-proxy && \
+              chgrp docker-proxy /var/run/docker-proxy && \
+              chgrp docker-proxy /var/cache/docker-proxy && \
               chgrp docker-proxy /tmp
 
 RUN           \

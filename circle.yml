@@ -14,8 +14,8 @@ test:
     - mocha test/unit
     - mocha test/functional
     - mocha test/integration
-    - make image
-    - make run; sleep 10
+    - make image; sleep 5
+    - make run; sleep 5
     - mocha test/acceptance
 
 deployment:
