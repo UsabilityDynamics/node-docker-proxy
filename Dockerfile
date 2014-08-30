@@ -63,9 +63,10 @@ RUN           \
               chgrp docker-proxy /var/cache && \
               chgrp docker-proxy /tmp
 
-RUN           npm cache clean && apt-get autoremove && apt-get autoclean && apt-get clean
-RUN           rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN           chmod +x /etc/init.d/**
+RUN           \
+              npm cache clean && apt-get autoremove && apt-get autoclean && apt-get clean && \
+              rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+              chmod +x /etc/init.d/**
 
 EXPOSE        80
 
