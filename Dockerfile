@@ -28,21 +28,16 @@ RUN           \
 RUN           \
               DEBIAN_FRONTEND=noninteractive && \
               apt-get install --reinstall ca-certificates apt-transport-https && \
-              apt-get -y update && apt-get -y upgrade
-
-RUN           \
-              DEBIAN_FRONTEND=noninteractive && \
+              apt-get -y update && \
+              apt-get -y upgrade  && \
               apt-get -y -q install nano && \
-              apt-get -y -q install supervisor
-
-RUN           \
-              NODE_ENV=production \
-              npm install --silent -g pm2-web grunt-cli mocha should --unsafe-perm
+              apt-get -y -q install supervisor && \
+              NODE_ENV=production npm install --silent -g pm2-web grunt-cli mocha should --unsafe-perm
 
 ADD           bin                                   /usr/local/src/docker-proxy/bin
 ADD           lib                                   /usr/local/src/docker-proxy/lib
-ADD           static                                /usr/local/src/docker-proxy/static
-ADD           gruntfile.js                          /usr/local/src/docker-proxy/gruntfile.js
+ADD           static/etc                            /usr/local/src/docker-proxy/static/etc
+ADD           static/public                         /usr/local/src/docker-proxy/static/public
 ADD           package.json                          /usr/local/src/docker-proxy/package.json
 ADD           readme.md                             /usr/local/src/docker-proxy/readme.md
 
@@ -56,15 +51,14 @@ RUN           \
               mkdir -p /var/log/docker-proxy && \
               mkdir -p /var/cache/docker-proxy && \
               mkdir -p /var/run/docker-proxy && \
-              NODE_ENV=production \
-              npm link /usr/local/src/docker-proxy
-
-RUN           \
-              chgrp docker-proxy /var/log/docker-proxy && \
+              mkdir -p /var/run/supervisor && \
+              mkdir -p /var/log/supervisor && \
               chgrp docker-proxy /var/lib/docker-proxy && \
+              chgrp docker-proxy /var/log/docker-proxy && \
               chgrp docker-proxy /var/run/docker-proxy && \
               chgrp docker-proxy /var/cache/docker-proxy && \
-              chgrp docker-proxy /tmp
+              chgrp docker-proxy /tmp && \
+              NODE_ENV=production npm link /usr/local/src/docker-proxy
 
 RUN           \
               npm cache clean && apt-get autoremove && apt-get autoclean && apt-get clean && \

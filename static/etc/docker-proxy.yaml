@@ -1,6 +1,16 @@
-routes:
-  asdf: 'sdf'
+services:
+  daemon:
+    cluster: false
 
-images:
+  api:
+    cluster: false
 
-containers:
+  router:
+    cluster: true
+
+  varnish:
+    cluster: false
+
+  static:
+    cluster: true
+

@@ -21,7 +21,9 @@ commander.command( 'start' )
   .option( '-s, --silent [silent]', 'silence worker logs', process.env.DOCKER_PROXY_WORKER_SILENT == 'false' ? false : true )
   .option( '--ssl-path', 'Path to SSL certificates.', process.env.DOCKER_PROXY_SSL_PATH ? process.env.DOCKER_PROXY_SSL_PATH : '/etc/ssl' )
   .option( '--pid-path', 'Path to PID file to use.', process.env.DOCKER_PROXY_PID_PATH ? process.env.DOCKER_PROXY_PID_PATH : '/var/run/docker-proxy.pid' )
-  .action( startService );
+  .action( function startService() {
+    require( '../lib/services/daemon' ).startService();
+  } );
 
 commander.command( 'install' )
   .action( require( '../lib/tasks/install' ) );
@@ -32,7 +34,5 @@ if( process.argv.length === 2 ) {
 
 commander.parse( process.argv );
 
-function startService() {
-  require( '../lib/services/daemon' ).startService();
-}
+
 
