@@ -3,10 +3,10 @@
 #
 ##
 
-ORGANIZATION		= usabilitydynamics
-REPOSITORY		  = docker-proxy
-VERSION					= 0.1.2
-BRANCH		      = $(git rev-parse --abbrev-ref HEAD)
+BUILD_ORGANIZATION		= usabilitydynamics
+BUILD_REPOSITORY		  = docker-proxy
+BUILD_VERSION					= 0.1.2
+BUILD_BRANCH		      = $(git branch | sed -n '/\* /s///p')
 
 RUN_NAME			  = docker-proxy.internal
 RUN_HOSTNAME	  = docker-proxy.internal
@@ -15,7 +15,7 @@ RUN_ENTRYPOINT	= /usr/local/bin/docker-proxy.entrypoint.sh
 default: image
 
 image:
-	docker build -t $(ORGANIZATION)/$(REPOSITORY):$(VERSION) --rm .
+	docker build -t $(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION) --rm .
 
 restart:
 	docker restart docker-proxy
@@ -31,10 +31,10 @@ run:
 	docker run -itd \
 		--name=${RUN_NAME} \
 		--hostname={RUN_HOSTNAME} \
+		--entrypoint=${RUN_ENTRYPOINT} \
 		--expose=22 \
 		--publish=80:80 \
 		--publish=443:443 \
-		--entrypoint=${RUN_ENTRYPOINT} \
 		--volume=/var/log \
 		--volume=/var/run \
 		--env=HOME=/home/docker-proxy \
@@ -42,7 +42,7 @@ run:
 		--env=DOCKER_PROXY_HOSTNAME=${DOCKER_PROXY_HOSTNAME:-docker-proxy.internal} \
 		--env=DOCKER_PROXY_WORKER_LIMIT=${DOCKER_PROXY_WORKER_LIMIT:-8} \
 		--env=DOCKER_HOST=${DOCKER_HOST:-172.17.42.1:2375} \
-		$(ORGANIZATION)/$(REPOSITORY):$(VERSION) /bin/bash
+		$(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION) /bin/bash
 
 release:
 	docker push $(REPOSITORY)
