@@ -86,6 +86,9 @@ startExpress www.usabilitydynamics.com
 startExpress sites.usabilitydynamics.com
 startExpress api.usabilitydynamics.com
 
+startExpress proxy.internal
+startExpress proxy.localhost
+
 startExpress www.site1.com
 startExpress www.site2.com
 startExpress www.site3.com
