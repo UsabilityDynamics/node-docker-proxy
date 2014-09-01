@@ -10,9 +10,14 @@ FROM          dockerfile/nodejs
 MAINTAINER    Usability Dynamics, Inc. "http://usabilitydynamics.com"
 USER          root
 
+ONBUILD       rm -rf /tmp/**
+ONBUILD       rm -rf /var/log/**
+ONBUILD       rm -rf /var/cache/**
+ONBUILD       rm -rf /var/lib/docker-proxy/**
+ONBUILD       rm -rf /var/run/docker-proxy/**
+
 VOLUME        /tmp
 VOLUME        /var/log
-VOLUME        /var/lib
 VOLUME        /var/cache
 
 RUN           \
@@ -26,7 +31,7 @@ RUN           \
               apt-get -y update && \
               apt-get -y upgrade && \
               apt-get -y -q install supervisor nano && \
-              npm install --silent -g pm2 forever --unsafe-perm
+              npm install --silent -g pm2 forever
 
 ADD           bin                                   /usr/local/src/docker-proxy/bin
 ADD           lib                                   /usr/local/src/docker-proxy/lib
@@ -62,6 +67,7 @@ RUN           \
 
 EXPOSE        80
 EXPOSE        443
+EXPOSE        16000
 
 ENV           DOCKER_PROXY_CONFIG_PATH        /etc/docker-proxy
 ENV           DOCKER_PROXY_ADDRESS            0.0.0.0

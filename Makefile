@@ -29,13 +29,13 @@ image:
 	docker build -t $(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION) .
 
 restart:
-	docker restart docker-proxy
+	@docker restart docker-proxy
 
 stop:
-	docker stop docker-proxy
+	@docker stop docker-proxy
 
 start:
-	docker rm -f docker-proxy
+	@docker rm -f docker-proxy
 	run
 
 tests:
@@ -52,13 +52,10 @@ run:
 		--hostname=${RUN_HOSTNAME} \
 		--entrypoint=${RUN_ENTRYPOINT} \
 		--publish=80 \
-		--expose=16000 \
-		--volume=/var/log \
-		--volume=/var/run \
 		--volume=${DOCKER_SOCK_PATH}:${DOCKER_SOCK_PATH} \
 		--env=HOME=/home/docker-proxy \
 		--env=NODE_ENV=staging \
-		--env=CI=true \
+		--env=CI=${CI} \
 		--env=DOCKER_PROXY_PORT=${DOCKER_PROXY_PORT} \
 		--env=DOCKER_PROXY_HOSTNAME=${DOCKER_PROXY_HOSTNAME} \
 		--env=DOCKER_PROXY_ADDRESS=${DOCKER_PROXY_ADDRESS} \

@@ -6,12 +6,14 @@ machine:
 
 dependencies:
   override:
+    - docker login --username=${DOCKER_HUB_USERNAME} --email=${DOCKER_HUB_EMAIL} --password=${DOCKER_HUB_PASSWORD}
     - docker pull andypotanin/express:latest
     - NODE_ENV=development npm install
 
 test:
   override:
     - sudo chown ubuntu /etc/hosts
+    - echo "127.0.0.1 docker-proxy.internal" >> /etc/hosts
     - echo "127.0.0.1 site1.com" >> /etc/hosts
     - echo "127.0.0.1 api.site1.com" >> /etc/hosts
     - echo "127.0.0.1 cdn.site1.com" >> /etc/hosts
@@ -25,8 +27,8 @@ test:
     - echo "127.0.0.1 cdn.site3.com" >> /etc/hosts
     - echo "127.0.0.1 www.site3.com" >> /etc/hosts
     - sudo chown root /etc/hosts
-    - git config --global user.email "andy@udx.io"
-    - git config --global user.name "andypotanin"
+    - git config --global user.email ${GITHUB_EMAIL}
+    - git config --global user.name ${GITHUB_USERNAME}
     - git config --global push.default simple
     - mocha test/unit
     - mocha test/functional
@@ -39,6 +41,5 @@ deployment:
   hub:
     branch: master
     commands:
-      - docker login --username=${DOCKER_HUB_USERNAME} --email=${DOCKER_HUB_EMAIL} --password=${DOCKER_HUB_PASSWORD}
       - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" < .dockercfg.template > ~/.dockercfg
       - docker push usabilitydynamics/docker-proxy:latest
