@@ -1,5 +1,18 @@
 Docker Proxy is a Node.js module that attempts to simplify traffic routing to multiple Docker Containers running on a host.
+The simplification is mostly due to our use of container "hostnames", which we use to determine the requests a particular container may accept.
 In most cases Docker Proxy would be bound to port 80/443 on a public IP address and serve as the primary point-of-entry for all web traffic on a host.
+
+***
+[![Issues - Bug](https://badge.waffle.io/usabilitydynamics/node-docker-proxy.png?label=bug&title=Bugs)](http://waffle.io/usabilitydynamics/node-docker-proxy)
+[![Issues - Backlog](https://badge.waffle.io/usabilitydynamics/node-docker-proxy.png?label=backlog&title=Backlog)](http://waffle.io/usabilitydynamics/node-docker-proxy/)
+[![Issues - Active](https://badge.waffle.io/usabilitydynamics/node-docker-proxy.png?label=in progress&title=Active)](http://waffle.io/usabilitydynamics/node-docker-proxy/)
+***
+[![Dependency Status](https://gemnasium.com/UsabilityDynamics/node-docker-proxy.svg)](https://gemnasium.com/UsabilityDynamics/node-docker-proxy)
+[![CodeClimate](http://img.shields.io/codeclimate/github/UsabilityDynamics/node-docker-proxy.svg)](https://codeclimate.com/github/UsabilityDynamics/node-docker-proxy)
+[![CodeClimate Coverage](http://img.shields.io/codeclimate/coverage/github/UsabilityDynamics/node-docker-proxy.svg)](https://codeclimate.com/github/UsabilityDynamics/node-docker-proxy)
+[![NPM Version](http://img.shields.io/npm/v/object-settings.svg)](https://www.npmjs.org/package/object-settings)
+[![CircleCI](https://circleci.com/gh/UsabilityDynamics/node-docker-proxy.png?circle-token=822abc09fd13abaf818fdb0623f3185185599ca5)](https://circleci.com/gh/UsabilityDynamics/node-docker-proxy)
+***
 
 ### What Docker Proxy Does
 
@@ -13,6 +26,12 @@ In most cases Docker Proxy would be bound to port 80/443 on a public IP address 
 * Wildcard routes are "memorized" for quicker routing on future requests.
 * Routes are associated with Containers, and if a Container goes offline, a static error/notice template will be displayed.
 * Monitors for changes made to the /etc/dproxy.yml configuration, and changes will be applied if configuration file appears to validate.
+
+### API Example
+
+* http://localhost:16000/service/balancer/start
+* http://localhost:16000/service/balancer/stop
+* http://localhost:16000/service/balancer/resize?size=30
 
 ### What Docker Proxy Does Not Do
 
@@ -68,20 +87,7 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 * lru-cache - Caching routes in-memory.
 * hipache & http-proxy - Certain routing logic.
 
-
-### Userful Docker Commands
-
-* docker restart $(docker ps -q)
-
-### Methods
-
-* proxy.listen
-* proxy.debug
-* proxy.log
-
-
 ### Port Fowarding
-
 On a mac, create a ~/etc/pf.conf with following contents:
 
     rdr on lo0 proto tcp from any to any port 80 -> 127.0.0.1 port 8080
@@ -92,6 +98,9 @@ Then run:
     sudo pfctl -ef ~/etc/pf.conf
 
 ### Starting Docker Container
+
+    make image
+    make run
 
 
 

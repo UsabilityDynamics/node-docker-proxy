@@ -12,13 +12,13 @@
 # Author: Arnaud Cornet <acornet@debian.org>
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-PIDFILE=/var/run/docker-proxy.pid
+PIDFILE=/var/run/docker-proxy/docker-proxy.pid
 CONFIG=/etc/docker-proxy/docker-proxy.yaml
-HAPROXY=/usr/sbin/docker-proxy
-RUNDIR=/run/docker-proxy
+DOCKERPROXY=/usr/local/bin/docker-proxy
+RUNDIR=/var/run/docker-proxy
 EXTRAOPTS=
 
-test -x $HAPROXY || exit 0
+test -x DOCKERPROXY || exit 0
 
 if [ -e /etc/default/docker-proxy ]; then
 	. /etc/default/docker-proxy
@@ -32,7 +32,7 @@ test -f "$CONFIG" || exit 0
 
 check_docker-proxy_config()
 {
-	$HAPROXY -c -f "$CONFIG" >/dev/null
+	DOCKERPROXY -c -f "$CONFIG" >/dev/null
 	if [ $? -eq 1 ]; then
 		log_end_msg 1
 		exit 1
@@ -48,8 +48,7 @@ docker-proxy_start()
 	check_docker-proxy_config
 
 	start-stop-daemon --quiet --oknodo --start --pidfile "$PIDFILE" \
-		--exec $HAPROXY -- -f "$CONFIG" -D -p "$PIDFILE" \
-		$EXTRAOPTS || return 2
+		--exec DOCKERPROXY -- -f "$CONFIG" -D -p "$PIDFILE" $EXTRAOPTS || return 2
 	return 0
 }
 
@@ -70,7 +69,7 @@ docker-proxy_reload()
 {
 	check_docker-proxy_config
 
-	$HAPROXY -f "$CONFIG" -p $PIDFILE -D $EXTRAOPTS -sf $(cat $PIDFILE) \
+	DOCKERPROXY -f "$CONFIG" -p $PIDFILE -D $EXTRAOPTS -sf $(cat $PIDFILE) \
 		|| return 2
 	return 0
 }

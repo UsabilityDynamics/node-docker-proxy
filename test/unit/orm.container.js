@@ -1,5 +1,5 @@
 /**
- * Test Shared Veneer.io Service APIs
+ * Test Shared Docker.io Service APIs
  *
  *
  * mocha test/unit/orm.js
@@ -32,7 +32,7 @@ module.exports = {
     };
 
     module.Waterline = require( 'waterline' );
-    module.orm = module.Waterline();
+    module.orm = new module.Waterline();
 
     module.waterlineConfig = {
       adapters: {
@@ -40,9 +40,9 @@ module.exports = {
         disk: require( 'sails-disk' )
       },
       collections: {
-        image: require( '../../lib/models/image' ),
-        container: require( '../../lib/models/container' ),
-        backend: require( '../../lib/models/backend' ),
+        image: require( 'waterline' ).Collection.extend(require( '../../lib/models/image' )),
+        container: require( 'waterline' ).Collection.extend(require( '../../lib/models/container' )),
+        backend: require( 'waterline' ).Collection.extend(require( '../../lib/models/backend' )),
       },
       connections: {
         memory: {
@@ -96,12 +96,13 @@ module.exports = {
       Container.should.have.property( 'meta' );
       Container.should.have.property( 'syncable' );
       Container.should.have.property( 'adapterDictionary' );
-      Container.should.have.property( 'primaryKey', 'Name' );
+      //Container.should.have.property( 'primaryKey', 'Name' );
       Container.should.have.property( 'migrate', 'safe' );
       Container.should.have.property( 'hasSchema', true );
       Container.should.have.property( 'defaults' );
       Container.should.have.property( 'adapter' );
       Container.should.have.property( 'waterline' );
+      Container.should.have.property( 'findOrCreateEach' );
 
       // Adapter Methods. (standard)
       Container.adapterDictionary.should.have.property( 'identity' );
@@ -114,7 +115,8 @@ module.exports = {
       Container.adapterDictionary.should.have.property( 'createEach' );
 
       // Custom Methods.
-      Container.should.have.property( 'changeEvent' );
+      Container.should.have.property( 'stateChange' );
+      Container.should.have.property( 'fetchUpstream' );
       Container.should.have.property( 'remove' );
       Container.should.have.property( 'insert' );
 
@@ -174,9 +176,19 @@ module.exports = {
       module.models.container.createEach( module.dummyData.containers, done );
     },
 
+    'can find all objects': function ( done ) {
+
+      module.models.container.find( function eachFound( error, containers ) {
+        // @todo Add check for array count.
+        done();
+
+      });
+
+    },
+
     'can find api.site1.com': function ( done ) {
 
-      module.models.container.findOne({ Name: "temp.site2.com" }, function searchCallback( error, result ) {
+      module.models.container.findOne({ Name: "/temp.site1.com" }, function searchCallback( error, result ) {
 
         result.should.have.property( 'Id' );
         result.should.have.property( 'NetworkSettings' );
@@ -217,6 +229,11 @@ module.exports = {
 
     },
 
+    'can add several new containers': function( done ) {
+
+      module.models.container.findOrCreateEach( [ 'Name' ], module.dummyData.containers, done );
+
+    },
 
     'can destroy stored Container collection': function( done ) {
 
@@ -256,6 +273,12 @@ module.exports = {
 
     },
 
+    'can fetchUpstream': function( done ) {
+
+      module.models.container.fetchUpstream( null, done );
+
+    },
+
     'change events': {
 
       'asdf': function() {
@@ -267,6 +290,6 @@ module.exports = {
 
     }
 
-    }
+  }
 
 };

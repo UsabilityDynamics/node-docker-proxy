@@ -1,0 +1,26 @@
+machine:
+  node:
+    version: v0.11.13
+  services:
+    - docker
+
+dependencies:
+  override:
+    - NODE_ENV=development npm install
+
+test:
+  override:
+    - nohup docker -H tcp://localhost:2375 -H unix:///var/run/docker.sock -d &
+    - mocha test/unit
+    - mocha test/functional
+    - mocha test/integration
+    - make image; sleep 5
+    - make run; sleep 5
+    - mocha test/acceptance
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" < .dockercfg.template > ~/.dockercfg
+      - docker push usabilitydynamics/docker-proxy:latest

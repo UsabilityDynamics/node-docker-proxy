@@ -3,7 +3,7 @@
 ##
 ## docker build -t usabilitydynamics/docker-proxy --rm .
 ##
-## @ver 0.1.1
+## @ver 0.1.3
 ## @author potanin@UD
 #################################################################
 
@@ -14,6 +14,7 @@ USER          root
 VOLUME        /tmp
 VOLUME        /var/log
 VOLUME        /var/run
+VOLUME        /var/lib
 VOLUME        /var/cache
 
 ONBUILD       rm -rf /tmp/**
@@ -26,23 +27,14 @@ RUN           \
 
 RUN           \
               DEBIAN_FRONTEND=noninteractive && \
-              apt-get install --reinstall ca-certificates apt-transport-https && \
-              apt-get install -y python-software-properties && \
-              apt-get -y update && apt-get -y upgrade
-
-RUN           \
-              DEBIAN_FRONTEND=noninteractive && \
               apt-get -y -q install nano && \
-              apt-get -y -q install supervisor
-
-RUN           \
-              NODE_ENV=production \
-              npm install --silent -g pm2-web --unsafe-perm
+              apt-get -y -q install supervisor && \
+              NODE_ENV=production npm install --silent -g pm2-web grunt-cli mocha should --unsafe-perm
 
 ADD           bin                                   /usr/local/src/docker-proxy/bin
 ADD           lib                                   /usr/local/src/docker-proxy/lib
-ADD           static                                /usr/local/src/docker-proxy/static
-ADD           gruntfile.js                          /usr/local/src/docker-proxy/gruntfile.js
+ADD           static/etc                            /usr/local/src/docker-proxy/static/etc
+ADD           static/public                         /usr/local/src/docker-proxy/static/public
 ADD           package.json                          /usr/local/src/docker-proxy/package.json
 ADD           readme.md                             /usr/local/src/docker-proxy/readme.md
 
@@ -51,21 +43,24 @@ ADD           static/etc/init.d/docker-proxy.sh     /etc/init.d/docker-proxy
 ADD           static/etc/supervisord.conf           /etc/supervisor/supervisord.conf
 
 RUN           \
-              mkdir -p /home/docker-proxy && \
               mkdir -p /etc/docker-proxy && \
               mkdir -p /var/lib/docker-proxy && \
               mkdir -p /var/log/docker-proxy && \
-              npm link /usr/local/src/docker-proxy
+              mkdir -p /var/cache/docker-proxy && \
+              mkdir -p /var/run/docker-proxy && \
+              mkdir -p /var/run/supervisor && \
+              mkdir -p /var/log/supervisor && \
+              chgrp docker-proxy /var/lib/docker-proxy && \
+              chgrp docker-proxy /var/log/docker-proxy && \
+              chgrp docker-proxy /var/run/docker-proxy && \
+              chgrp docker-proxy /var/cache/docker-proxy && \
+              chgrp docker-proxy /tmp && \
+              NODE_ENV=production npm link /usr/local/src/docker-proxy
 
 RUN           \
-              chgrp docker-proxy /var/log && \
-              chgrp docker-proxy /var/lib && \
-              chgrp docker-proxy /var/cache && \
-              chgrp docker-proxy /tmp
-
-RUN           npm cache clean && apt-get autoremove && apt-get autoclean && apt-get clean
-RUN           rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN           chmod +x /etc/init.d/**
+              npm cache clean && apt-get autoremove && apt-get autoclean && apt-get clean && \
+              rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+              chmod +x /etc/init.d/**
 
 EXPOSE        80
 

@@ -1,5 +1,5 @@
 /**
- * Test Shared Veneer.io Service APIs
+ * Test Shared Docker.io Service APIs
  *
  */
 module.exports = {
@@ -24,14 +24,6 @@ module.exports = {
         done();
       }
 
-    }
-
-  },
-
-  "Veneer Proxy APIs": {
-
-    'test': function( done ) {
-      done();
     }
 
   }

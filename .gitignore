@@ -26,3 +26,7 @@ ssl
 *~
 nbproject
 .waterline
+logs
+pids
+examples/third-party
+test/concepts

@@ -1,11 +1,12 @@
 [
   {
-    "name"             : "docker-proxy",
+    "name"             : "docker-proxy-daemon",
     "script"           : "bin/docker-proxy.js",
+    "args"             : "['start']",
     "log_date_format"  : "YYYY-MM-DD HH:mm Z",
     "error_file"       : "/var/log/docker-proxy/docker-proxy.error.log",
-    "out_file"         : "/var/log/docker-proxy/router.log",
-    "pid_file"         : "/var/run/docker-proxy/docker-proxy.pid",
+    "out_file"         : "/var/log/docker-proxy/daemon.log",
+    "pid_file"         : "/var/run/docker-proxy/daemon.pid",
     "instances"        : 3,
     "watch"            : false,
     "merge_logs"       : "true",
