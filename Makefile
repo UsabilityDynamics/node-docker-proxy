@@ -52,7 +52,6 @@ run:
 		--hostname=${RUN_HOSTNAME} \
 		--entrypoint=${RUN_ENTRYPOINT} \
 		--publish=80 \
-		--volume=${DOCKER_SOCK_PATH}:${DOCKER_SOCK_PATH} \
 		--env=HOME=/home/docker-proxy \
 		--env=NODE_ENV=staging \
 		--env=CI=${CI} \
