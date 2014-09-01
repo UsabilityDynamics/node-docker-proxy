@@ -27,9 +27,6 @@ RUN           \
 
 RUN           \
               DEBIAN_FRONTEND=noninteractive && \
-              apt-get install --reinstall ca-certificates apt-transport-https && \
-              apt-get -y update && \
-              apt-get -y upgrade  && \
               apt-get -y -q install nano && \
               apt-get -y -q install supervisor && \
               NODE_ENV=production npm install --silent -g pm2-web grunt-cli mocha should --unsafe-perm

@@ -3,18 +3,18 @@
 # $(git branch | sed -n '/\* /s///p')
 ##
 
-BUILD_ORGANIZATION		?=usabilitydynamics
-BUILD_REPOSITORY		  ?=docker-proxy
-BUILD_VERSION					?=0.1.4
-BUILD_BRANCH		      ?=master
+BUILD_ORGANIZATION	       	?=usabilitydynamics
+BUILD_REPOSITORY		        ?=docker-proxy
+BUILD_VERSION				       	?=0.1.4
+BUILD_BRANCH		            ?=master
 
-RUN_NAME			        ?=docker-proxy.internal
-RUN_HOSTNAME	        ?=docker-proxy.internal
-RUN_ENTRYPOINT	      ?=/usr/local/bin/docker-proxy.entrypoint
+RUN_NAME			              ?=docker-proxy.internal
+RUN_HOSTNAME	              ?=docker-proxy.internal
+RUN_ENTRYPOINT	            ?=/usr/local/bin/docker-proxy.entrypoint
 
-DOCKER_PROXY_PORT	    ?=80
-DOCKER_PROXY_HOSTNAME	?=docker-proxy.internal
-DOCKER_PROXY_WORKER_LIMIT	?=docker-proxy.internal
+DOCKER_PROXY_PORT	          ?=80
+DOCKER_PROXY_HOSTNAME	      ?=docker-proxy.internal
+DOCKER_PROXY_WORKER_LIMIT	  ?=docker-proxy.internal
 
 default: image
 

@@ -26,14 +26,6 @@ module.exports = {
 
     }
 
-  },
-
-  "Docker Proxy APIs": {
-
-    'test': function( done ) {
-      done();
-    }
-
   }
 
 };

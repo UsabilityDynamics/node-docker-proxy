@@ -22,11 +22,23 @@ module.exports = {
         service.settings.should.have.properties( 'emit' );
         service.settings.should.have.properties( 'off' );
 
+        module.service = service;
+
         done( error );
 
       });
 
+    },
+
+    'has an event emitter that supports wild cards.': function( done ) {
+
+      module.service.broker.on( 'test.*', console.log);
+      module.service.broker.emit( 'test.one', 'asdfsd' );
+
+      done();
+
     }
+
 
   }
 
