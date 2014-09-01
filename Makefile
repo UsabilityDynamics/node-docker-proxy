@@ -5,7 +5,7 @@
 
 BUILD_ORGANIZATION		?=usabilitydynamics
 BUILD_REPOSITORY		  ?=docker-proxy
-BUILD_VERSION					?=0.1.3
+BUILD_VERSION					?=0.1.4
 BUILD_BRANCH		      ?=master
 
 RUN_NAME			        ?=docker-proxy.internal
@@ -33,7 +33,7 @@ start:
 
 run:
 	@echo "Running ${RUN_NAME}."
-	@echo "Checking for previous runtime. $(shell docker rm -f ${RUN_NAME} 2>/dev/null; true)"
+	@echo "Checking and dumping previous runtime. $(shell docker rm -f ${RUN_NAME} 2>/dev/null; true)"
 	@docker run -itd \
 		--name=${RUN_NAME} \
 		--hostname=${RUN_HOSTNAME} \
@@ -52,4 +52,4 @@ run:
 		$(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION)
 
 release:
-	docker push $(REPOSITORY)
+	docker push $(BUILD_REPOSITORY):$(BUILD_VERSION)

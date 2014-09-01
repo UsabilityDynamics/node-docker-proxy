@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - npm install
+    - NODE_ENV=development npm install
 
 test:
   override:

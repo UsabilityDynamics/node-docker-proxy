@@ -12,6 +12,7 @@
 ## Run SupervisorD
 if [ -f "/etc/supervisor/supervisord.conf" ]; then
   mkdir -p /var/log/supervisor 2>/dev/null;
+  mkdir -p /var/run/supervisor 2>/dev/null;
   supervisord -c /etc/supervisor/supervisord.conf -u root
 else
   echo "- Missing Supervisor configuration file."

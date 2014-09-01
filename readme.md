@@ -1,4 +1,5 @@
 Docker Proxy is a Node.js module that attempts to simplify traffic routing to multiple Docker Containers running on a host.
+The simplification is mostly due to our use of container "hostnames", which we use to determine the requests a particular container may accept.
 In most cases Docker Proxy would be bound to port 80/443 on a public IP address and serve as the primary point-of-entry for all web traffic on a host.
 
 ***
@@ -86,20 +87,7 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 * lru-cache - Caching routes in-memory.
 * hipache & http-proxy - Certain routing logic.
 
-
-### Userful Docker Commands
-
-* docker restart $(docker ps -q)
-
-### Methods
-
-* proxy.listen
-* proxy.debug
-* proxy.log
-
-
 ### Port Fowarding
-
 On a mac, create a ~/etc/pf.conf with following contents:
 
     rdr on lo0 proto tcp from any to any port 80 -> 127.0.0.1 port 8080
@@ -110,6 +98,9 @@ Then run:
     sudo pfctl -ef ~/etc/pf.conf
 
 ### Starting Docker Container
+
+    make image
+    make run
 
 
 
