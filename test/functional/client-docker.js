@@ -16,11 +16,22 @@ module.exports = {
 
       module.DockerClient.should.have.property( 'create' );
 
-      module._docker = module.DockerClient.create({
-        //socketPath: process.env.DOCKER_SOCKET || '/var/run/docker.sock',
-        host: process.env.DOCKER_HOSTNAME,
-        port: process.env.DOCKER_PORT
-      });
+      var _sockFile = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
+
+      if( require( 'fs' ).existsSync( _sockFile ) ) {
+
+        module._docker = module.DockerClient.create({
+          socketPath: _sockFile
+        });
+
+      } else {
+
+        module._docker = module.DockerClient.create({
+          host: process.env.DOCKER_HOSTNAME,
+          port: process.env.DOCKER_PORT
+        });
+
+      }
 
       module._docker.on( 'ready', done );
 
