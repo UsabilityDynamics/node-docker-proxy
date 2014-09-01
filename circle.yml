@@ -6,7 +6,6 @@ machine:
 
 dependencies:
   override:
-    - docker login --username=${DOCKER_HUB_USERNAME} --email=${DOCKER_HUB_EMAIL} --password=${DOCKER_HUB_PASSWORD}
     - docker pull andypotanin/express:latest
     - NODE_ENV=development npm install
 
@@ -40,5 +39,6 @@ deployment:
   hub:
     branch: master
     commands:
+      - docker login --username=${DOCKER_HUB_USERNAME} --email=${DOCKER_HUB_EMAIL} --password=${DOCKER_HUB_PASSWORD}
       - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" < .dockercfg.template > ~/.dockercfg
       - docker push usabilitydynamics/docker-proxy:latest
