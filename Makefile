@@ -11,7 +11,7 @@
 BUILD_ORGANIZATION	       	?=usabilitydynamics
 BUILD_REPOSITORY		        ?=docker-proxy
 BUILD_VERSION				       	?=0.2.0
-BUILD_BRANCH		            ?=master
+BUILD_BRANCH		            ?=$(shell git branch | sed -n '/\* /s///p')
 
 RUN_NAME			              ?=docker-proxy.internal
 RUN_HOSTNAME	              ?=docker-proxy.internal
@@ -39,7 +39,7 @@ start:
 	run
 
 tests:
-	@echo ${DOCKER_PROXY_HOSTNAME}
+	@echo "Testing Docker Proxy <${BUILD_BRANCH}> branch."
 	@mocha test/unit
 	@mocha test/functional
 	@mocha test/integration
