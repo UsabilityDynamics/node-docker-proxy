@@ -14,18 +14,19 @@ module.exports = {
 
     'can instantiate and emit a :ready event.': function( done ) {
 
-
       module.DockerClient.should.have.property( 'create' );
 
-      var _docker = module.DockerClient.create({
-        socketPath: process.env.DOCKER_SOCKET || '/var/run/docker.sock',
+      module._docker = module.DockerClient.create({
+        //socketPath: process.env.DOCKER_SOCKET || '/var/run/docker.sock',
         host: process.env.DOCKER_HOSTNAME,
         port: process.env.DOCKER_PORT
-      }).on( 'ready', done );
+      });
 
-      _docker.should.have.properties( 'on', 'off', 'emit', 'docker' );
+      module._docker.on( 'ready', done );
 
-      _docker.docker.should.have.properties(
+      module._docker.should.have.properties( 'on', 'off', 'emit', 'docker' );
+
+      module._docker.docker.should.have.properties(
         'getContainer',
         'listContainers',
         'searchImages',
@@ -37,7 +38,7 @@ module.exports = {
       );
 
       // Streamable Methods.
-      _docker.docker.should.have.properties(
+      module._docker.docker.should.have.properties(
         'getEvents',
         'buildImage',
         'createImage'
@@ -49,23 +50,13 @@ module.exports = {
 
       this.timeout( 50000 );
 
-      var _docker = module.DockerClient.create({
-        socketPath: process.env.DOCKER_SOCKET || '/var/run/docker.sock',
-        host: process.env.DOCKER_HOSTNAME,
-        port: process.env.DOCKER_PORT
-      });
-
-      //_docker.getContainer( '604a6d14677d' ).attach({stream: true, stdout: true, stderr: true}, function (err, stream) {
-      //  stream.pipe(process.stdout);
-      //});
-
-      _docker.listContainers(function (err, containers) {
+      module._docker.listContainers(function (err, containers) {
 
         var _detail = [];
 
         containers.forEach(function (containerInfo) {
 
-          _docker.getContainer(containerInfo.Id).inspect(function( error, detail ) {
+          module._docker.getContainer(containerInfo.Id).inspect(function( error, detail ) {
             _detail.push( detail );
           });
 

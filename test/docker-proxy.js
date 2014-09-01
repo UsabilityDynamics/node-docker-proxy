@@ -9,5 +9,5 @@ module.exports = {
   Backend: require( './unit/orm.backend' ),
   Image: require( './unit/orm.image' ),
   Server: require( './unit/orm.backend' ),
-  Service: require( './functional/controller.service' )
+  Service: require( './functional/docker-proxy' )
 };

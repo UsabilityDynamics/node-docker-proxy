@@ -35,7 +35,8 @@ In most cases Docker Proxy would be bound to port 80/443 on a public IP address 
 
 ### What Docker Proxy Does Not Do
 
-* In attempts to keep things simple this module avoids some "intelligent" routing logic available in some other Node.js modules. We focus on getting public traffic to a Docker container, your middleware is expected to handle more advanced routing decisions.
+* In attempts to keep things simple this module avoids some "intelligent" routing logic available in some other Node.js modules.
+* We focus on getting public traffic to a Docker container, your middleware is expected to handle more advanced routing decisions.
 * Although Docker Proxy caches known routes, it does no other forms of caching, we'll leave that up to Varnish.
 
 ### Assumptions

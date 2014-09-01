@@ -5,7 +5,7 @@
 
 BUILD_ORGANIZATION	       	?=usabilitydynamics
 BUILD_REPOSITORY		        ?=docker-proxy
-BUILD_VERSION				       	?=0.1.4
+BUILD_VERSION				       	?=0.2.0
 BUILD_BRANCH		            ?=master
 
 RUN_NAME			              ?=docker-proxy.internal
@@ -19,7 +19,7 @@ DOCKER_PROXY_WORKER_LIMIT	  ?=docker-proxy.internal
 default: image
 
 image:
-	docker build -t $(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION) --rm .
+	docker build -t $(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION) .
 
 restart:
 	docker restart docker-proxy
