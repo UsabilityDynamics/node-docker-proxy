@@ -1,14 +1,17 @@
 machine:
-  node.version: v0.11.13
+  node:
+    version: v0.11.13
   services:
     - docker
 
-dependencies.override:
+dependencies:
+  override:
     - docker pull andypotanin/express:latest
     - docker pull andypotanin/hhvm:latest
     - NODE_ENV=development npm install
 
-test.override:
+test:
+  override:
     - git config --global user.email "andy@udx.io"
     - git config --global user.name "andypotanin"
     - git config --global push.default simple
