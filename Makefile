@@ -47,7 +47,7 @@ tests:
 run:
 	@echo "Running ${RUN_NAME}."
 	@echo "Checking and dumping previous runtime. $(shell docker rm -f ${RUN_NAME} 2>/dev/null; true)"
-	@docker run -itd \
+	@sudo docker run -itd \
 		--name=${RUN_NAME} \
 		--hostname=${RUN_HOSTNAME} \
 		--entrypoint=${RUN_ENTRYPOINT} \
@@ -60,8 +60,8 @@ run:
 		--env=DOCKER_PROXY_ADDRESS=${DOCKER_PROXY_ADDRESS} \
 		--env=DOCKER_PROXY_WORKER_LIMIT=${DOCKER_PROXY_WORKER_LIMIT} \
 		--env=DOCKER_HOST=${DOCKER_HOST} \
-		--env=DOCKER_SOCK_PATH=${DOCKER_SOCK_PATH} \
 		$(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION)
+	@docker logs ${RUN_NAME}
 
 release:
 	docker push $(BUILD_REPOSITORY):$(BUILD_VERSION)

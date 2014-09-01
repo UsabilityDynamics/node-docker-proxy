@@ -19,6 +19,7 @@ ONBUILD       rm -rf /var/run/docker-proxy/**
 VOLUME        /tmp
 VOLUME        /var/log
 VOLUME        /var/cache
+VOLUME        /etc/docker-proxy
 
 RUN           \
               groupadd --gid 500 docker-proxy && \
@@ -69,7 +70,8 @@ EXPOSE        80
 EXPOSE        443
 EXPOSE        16000
 
-ENV           DOCKER_PROXY_CONFIG_PATH        /etc/docker-proxy
+ENV           DOCKER_PROXY_CONFIG_PATH        /usr/local/lib/node_modules/docker-proxy/static/etc/docker-proxy.yaml
+ENV           DOCKER_PROXY_SSL_PATH           /usr/local/lib/node_modules/docker-proxy/static/etc/ssl
 ENV           DOCKER_PROXY_ADDRESS            0.0.0.0
 ENV           DOCKER_PROXY_HOSTNAME           docker-proxy.internal
 ENV           DOCKER_PROXY_PORT               8080
