@@ -16,7 +16,7 @@ module.exports = {
 
       module.DockerClient.should.have.property( 'create' );
 
-      var _sockFile = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
+      var _sockFile = process.env.DOCKER_SOCK_PATH || '/var/run/docker.sock';
 
       if( require( 'fs' ).existsSync( _sockFile ) ) {
 

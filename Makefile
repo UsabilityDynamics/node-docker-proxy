@@ -1,6 +1,11 @@
 ##
 #
 # $(git branch | sed -n '/\* /s///p')
+#
+#
+# ### Running
+# * We volume-mount that docker unix sock file using the DOCKER_SOCK_PATH environment variable, which we set to /var/run/docker.sock by default.
+#
 ##
 
 BUILD_ORGANIZATION	       	?=usabilitydynamics
@@ -12,6 +17,7 @@ RUN_NAME			              ?=docker-proxy.internal
 RUN_HOSTNAME	              ?=docker-proxy.internal
 RUN_ENTRYPOINT	            ?=/usr/local/bin/docker-proxy.entrypoint
 
+DOCKER_SOCK_PATH	          ?=/var/run/docker.sock
 DOCKER_PROXY_PORT	          ?=80
 DOCKER_PROXY_HOSTNAME	      ?=docker-proxy.internal
 DOCKER_PROXY_WORKER_LIMIT	  ?=docker-proxy.internal
@@ -39,16 +45,17 @@ run:
 		--hostname=${RUN_HOSTNAME} \
 		--entrypoint=${RUN_ENTRYPOINT} \
 		--publish=80 \
-		--publish=443 \
-		--expose=22 \
+		--expose=16000 \
 		--volume=/var/log \
 		--volume=/var/run \
+		--volume=${DOCKER_SOCK_PATH}:${DOCKER_SOCK_PATH} \
 		--env=HOME=/home/docker-proxy \
 		--env=NODE_ENV=staging \
 		--env=DOCKER_PROXY_PORT=${DOCKER_PROXY_PORT} \
 		--env=DOCKER_PROXY_HOSTNAME=${DOCKER_PROXY_HOSTNAME} \
 		--env=DOCKER_PROXY_WORKER_LIMIT=${DOCKER_PROXY_WORKER_LIMIT} \
 		--env=DOCKER_HOST=${DOCKER_HOST} \
+		--env=DOCKER_SOCK_PATH=${DOCKER_SOCK_PATH} \
 		$(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION)
 
 release:
