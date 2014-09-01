@@ -1,6 +1,7 @@
 #################################################################
 ## Docker Proxy Container
 ##
+##
 ## @ver 0.2.0
 ## @author potanin@UD
 #################################################################
@@ -11,7 +12,6 @@ USER          root
 
 VOLUME        /tmp
 VOLUME        /var/log
-VOLUME        /var/run
 VOLUME        /var/lib
 VOLUME        /var/cache
 
@@ -64,7 +64,8 @@ EXPOSE        80
 EXPOSE        443
 
 ENV           DOCKER_PROXY_CONFIG_PATH        /etc/docker-proxy
-ENV           DOCKER_PROXY_HOSTNAME           0.0.0.0
+ENV           DOCKER_PROXY_ADDRESS            0.0.0.0
+ENV           DOCKER_PROXY_HOSTNAME           docker-proxy.internal
 ENV           DOCKER_PROXY_PORT               8080
 ENV           NODE_ENV                        production
 

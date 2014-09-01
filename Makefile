@@ -19,8 +19,9 @@ RUN_ENTRYPOINT	            ?=/usr/local/bin/docker-proxy.entrypoint
 
 DOCKER_SOCK_PATH	          ?=/var/run/docker.sock
 DOCKER_PROXY_PORT	          ?=80
-DOCKER_PROXY_HOSTNAME	      ?=docker-proxy.internal
-DOCKER_PROXY_WORKER_LIMIT	  ?=docker-proxy.internal
+DOCKER_PROXY_HOSTNAME	      ?=$(shell hostname -f)
+DOCKER_PROXY_ADDRESS	      ?=0.0.0.0
+DOCKER_PROXY_WORKER_LIMIT	  ?=2
 
 default: image
 
@@ -37,6 +38,12 @@ start:
 	docker rm -f docker-proxy
 	run
 
+tests:
+	@echo ${DOCKER_PROXY_HOSTNAME}
+	@mocha test/unit
+	@mocha test/functional
+	@mocha test/integration
+
 run:
 	@echo "Running ${RUN_NAME}."
 	@echo "Checking and dumping previous runtime. $(shell docker rm -f ${RUN_NAME} 2>/dev/null; true)"
@@ -51,8 +58,10 @@ run:
 		--volume=${DOCKER_SOCK_PATH}:${DOCKER_SOCK_PATH} \
 		--env=HOME=/home/docker-proxy \
 		--env=NODE_ENV=staging \
+		--env=CI=true \
 		--env=DOCKER_PROXY_PORT=${DOCKER_PROXY_PORT} \
 		--env=DOCKER_PROXY_HOSTNAME=${DOCKER_PROXY_HOSTNAME} \
+		--env=DOCKER_PROXY_ADDRESS=${DOCKER_PROXY_ADDRESS} \
 		--env=DOCKER_PROXY_WORKER_LIMIT=${DOCKER_PROXY_WORKER_LIMIT} \
 		--env=DOCKER_HOST=${DOCKER_HOST} \
 		--env=DOCKER_SOCK_PATH=${DOCKER_SOCK_PATH} \
