@@ -8,7 +8,7 @@ module.exports = {
 
     'allows .create() to be used to mount clusterable services.': function( done ) {
 
-      require( '../../../docker-proxy' ).create( function serviceHandler( error, service ) {
+      require( process.cwd() + '/lib/docker-proxy' ).create( function serviceHandler( error, service ) {
 
         service.should.have.properties( 'settings', 'app', 'debug', 'log' );
         service.should.have.properties( 'on', 'off', 'emit', 'once' );
