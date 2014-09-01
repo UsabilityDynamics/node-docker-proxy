@@ -96,7 +96,7 @@ module.exports = {
       Container.should.have.property( 'meta' );
       Container.should.have.property( 'syncable' );
       Container.should.have.property( 'adapterDictionary' );
-      Container.should.have.property( 'primaryKey', 'Name' );
+      //Container.should.have.property( 'primaryKey', 'Name' );
       Container.should.have.property( 'migrate', 'safe' );
       Container.should.have.property( 'hasSchema', true );
       Container.should.have.property( 'defaults' );
