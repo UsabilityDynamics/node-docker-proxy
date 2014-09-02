@@ -65,7 +65,7 @@ Docker Proxy attempts to mimic HAProxy when possible and the following request h
 * DOCKER_PROXY_WORKER_LIMIT - Will default to number of CPUs.
 * DOCKER_PROXY_WORKER_SILENT - Will not include worker log output into master logs.
 * DOCKER_PROXY_PID_PATH - Path to PID file.
-* DOCKER_PROXY_SSL_PATH - Path to SSL certificate files.
+* DOCKER_PROXY_SSL_DIR - Path to SSL certificate files.
 * DOCKER_HOST - TCP address of Docker Daemon.
 * DOCKER_SOCK_PATH - Pat to Docker Unix Sock file.
 

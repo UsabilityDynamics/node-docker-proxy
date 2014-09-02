@@ -32,10 +32,12 @@ module.exports = {
     };
 
     module.Waterline = require( 'waterline' );
+
     module.orm = module.Waterline();
 
     module.waterlineConfig = {
       adapters: {
+        docker: require( require( 'path' ).join( process.cwd(), 'lib/adapters/docker/adapter' ) ),
         memory: require( 'sails-memory' ),
         disk: require( 'sails-disk' )
       },
@@ -45,6 +47,11 @@ module.exports = {
         backend: require( 'waterline' ).Collection.extend(require( '../../lib/models/backend' )),
       },
       connections: {
+        docker: {
+          adapter: 'docker',
+          schema: true,
+          host: process.env.DOCKER_HOST
+        },
         memory: {
           adapter: 'memory'
         },

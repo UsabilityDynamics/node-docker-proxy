@@ -7,17 +7,13 @@ service:
     name: api
     cluster: false
 
-  router:
-    name: router
+  proxy:
+    name: proxy
     cluster: true
-    frontend: "bind 127.0.0.1:8081"
+    options:
+      httpKeepAlive: true
+      maxSockets: 100
 
   static:
     name: static
     cluster: true
-
-  dockerDiscovery:
-    name: dockerDiscovery
-    port: 16320
-    hosts:
-      - localhost:2375

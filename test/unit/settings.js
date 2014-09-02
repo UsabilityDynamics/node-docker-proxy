@@ -22,7 +22,7 @@ module.exports = {
 
       module.service.get( 'service' ).should.have.property( 'daemon' );
       module.service.get( 'service' ).should.have.property( 'api' );
-      module.service.get( 'service' ).should.have.property( 'router' );
+      module.service.get( 'service' ).should.have.property( 'proxy' );
 
     },
 

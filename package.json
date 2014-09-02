@@ -57,6 +57,9 @@
     "watch": "^0.11.0",
     "watchr": "^2.4.11",
     "waterline": "^0.10.9",
+    "waterline-criteria": "^0.10.7",
+    "waterline-cursor": "0.0.5",
+    "waterline-errors": "^0.9.1",
     "winston": "^0.7.3"
   },
   "optionalDependencies": {
@@ -64,6 +67,7 @@
     "cadvisor": "^0.1.2"
   },
   "devDependencies": {
+    "fs-extra": "^0.11.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-less": "~0.8.1",

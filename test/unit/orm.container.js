@@ -36,6 +36,7 @@ module.exports = {
 
     module.waterlineConfig = {
       adapters: {
+        docker: require( require( 'path' ).join( process.cwd(), 'lib/adapters/docker/adapter' ) ),
         memory: require( 'sails-memory' ),
         disk: require( 'sails-disk' )
       },
@@ -45,6 +46,9 @@ module.exports = {
         backend: require( 'waterline' ).Collection.extend(require( '../../lib/models/backend' )),
       },
       connections: {
+        docker: {
+          adapter: 'docker'
+        },
         memory: {
           adapter: 'memory'
         },
@@ -276,17 +280,6 @@ module.exports = {
     'can fetchUpstream': function( done ) {
 
       module.models.container.fetchUpstream( null, done );
-
-    },
-
-    'change events': {
-
-      'asdf': function() {
-
-        // Container.changeEvent({});
-
-
-      }
 
     }
 

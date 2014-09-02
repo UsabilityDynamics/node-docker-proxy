@@ -19,9 +19,12 @@ machine:
 
 dependencies:
   pre:
+    - "export DOCKER_ADDRESS=$(ifconfig docker0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
+    - echo "DOCKER_OPTS='--host=tcp://${DOCKER_ADDRESS}:2380 --host=unix:///var/run/docker.sock -s btrfs -e lxc'" | sudo tee --append /etc/default/docker > /dev/null
+    - sudo service docker restart
     - docker login --username=${DOCKER_HUB_USERNAME} --email=${DOCKER_HUB_EMAIL} --password=${DOCKER_HUB_PASSWORD}
     - docker pull andypotanin/express:latest
-    - NODE_ENV=development npm install
+    - NODE_ENV=development npm link
 
 test:
   pre:

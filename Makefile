@@ -8,20 +8,19 @@
 #
 ##
 
-BUILD_ORGANIZATION	       	?=usabilitydynamics
-BUILD_REPOSITORY		        ?=docker-proxy
-BUILD_VERSION				       	?=0.2.0
-BUILD_BRANCH		            ?=$(shell git branch | sed -n '/\* /s///p')
+BUILD_ORGANIZATION	          ?=usabilitydynamics
+BUILD_REPOSITORY		          ?=docker-proxy
+BUILD_VERSION				          ?=0.2.0
+BUILD_BRANCH		              ?=$(shell git branch | sed -n '/\* /s///p')
 
-RUN_NAME			              ?=docker-proxy.internal
-RUN_HOSTNAME	              ?=docker-proxy.internal
-RUN_ENTRYPOINT	            ?=/usr/local/bin/docker-proxy.entrypoint
+CONTAINER_NAME			          ?=docker-proxy.internal
+CONTAINER_HOSTNAME	          ?=docker-proxy.internal
+CONTAINER_ENTRYPOINT	        ?=/usr/local/bin/docker-proxy.entrypoint
 
-DOCKER_SOCK_PATH	          ?=/var/run/docker.sock
-DOCKER_PROXY_PORT	          ?=80
-DOCKER_PROXY_HOSTNAME	      ?=$(shell hostname -f)
-DOCKER_PROXY_ADDRESS	      ?=0.0.0.0
-DOCKER_PROXY_WORKER_LIMIT	  ?=2
+DOCKER_PROXY_PORT	            ?=80
+DOCKER_PROXY_ADDRESS	        ?=0.0.0.0
+DOCKER_PROXY_API_PORT	        ?=16000
+DOCKER_PROXY_API_ADDRESS	    ?=$(shell hostname -f)
 
 default: image
 
@@ -45,23 +44,24 @@ tests:
 	@mocha test/integration
 
 run:
-	@echo "Running ${RUN_NAME}."
-	@echo "Checking and dumping previous runtime. $(shell docker rm -f ${RUN_NAME} 2>/dev/null; true)"
+	@echo "Running ${CONTAINER_NAME}."
+	@echo "Checking and dumping previous runtime. $(shell docker rm -f ${CONTAINER_NAME} 2>/dev/null; true)"
 	@sudo docker run -itd \
-		--name=${RUN_NAME} \
-		--hostname=${RUN_HOSTNAME} \
-		--entrypoint=${RUN_ENTRYPOINT} \
+		--name=${CONTAINER_NAME} \
+		--hostname=${CONTAINER_HOSTNAME} \
+		--entrypoint=${CONTAINER_ENTRYPOINT} \
 		--publish=80 \
+		--expose=16000 \
 		--env=HOME=/home/docker-proxy \
 		--env=NODE_ENV=staging \
 		--env=CI=${CI} \
 		--env=DOCKER_PROXY_PORT=${DOCKER_PROXY_PORT} \
-		--env=DOCKER_PROXY_HOSTNAME=${DOCKER_PROXY_HOSTNAME} \
 		--env=DOCKER_PROXY_ADDRESS=${DOCKER_PROXY_ADDRESS} \
-		--env=DOCKER_PROXY_WORKER_LIMIT=${DOCKER_PROXY_WORKER_LIMIT} \
+		--env=DOCKER_PROXY_API_PORT=${DOCKER_PROXY_API_PORT} \
+		--env=DOCKER_PROXY_API_ADDRESS=${DOCKER_PROXY_API_ADDRESS} \
 		--env=DOCKER_HOST=${DOCKER_HOST} \
 		$(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION)
-	@docker logs ${RUN_NAME}
+	@docker logs ${CONTAINER_NAME}
 
 release:
 	docker push $(BUILD_REPOSITORY):$(BUILD_VERSION)
