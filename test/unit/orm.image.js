@@ -37,7 +37,7 @@ module.exports = {
 
     module.waterlineConfig = {
       adapters: {
-        docker: require( require( 'path' ).join( process.cwd(), 'lib/adapters/docker/adapter' ) ),
+        docker: require( 'waterline-docker' ),
         memory: require( 'sails-memory' ),
         disk: require( 'sails-disk' )
       },

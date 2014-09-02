@@ -57,9 +57,8 @@
     "watch": "^0.11.0",
     "watchr": "^2.4.11",
     "waterline": "^0.10.9",
-    "waterline-criteria": "^0.10.7",
-    "waterline-cursor": "0.0.5",
-    "waterline-errors": "^0.9.1",
+    "waterline-docker": "git://github.com/UsabilityDynamics/node-waterline-docker",
+    "waterline-stream": "git://github.com/UsabilityDynamics/node-waterline-stream",
     "winston": "^0.7.3"
   },
   "optionalDependencies": {
