@@ -1,0 +1,90 @@
+[
+  {
+    "Architecture": "amd64",
+    "Author": "",
+    "Comment": "",
+    "Config": {
+      "AttachStderr": false,
+      "AttachStdin": false,
+      "AttachStdout": false,
+      "Cmd": [
+        "/bin/bash"
+      ],
+      "CpuShares": 0,
+      "Cpuset": "",
+      "Domainname": "",
+      "Entrypoint": [
+        "/usr/local/bin/startServer"
+      ],
+      "Env": [
+        "NODE_ENV=production",
+        "HOME=/root",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "ExposedPorts": {
+        "80/tcp": {}
+      },
+      "Hostname": "",
+      "Image": "",
+      "Memory": 0,
+      "MemorySwap": 0,
+      "NetworkDisabled": false,
+      "OnBuild": null,
+      "OpenStdin": false,
+      "PortSpecs": null,
+      "StdinOnce": false,
+      "Tty": false,
+      "User": "",
+      "Volumes": {
+        "/data": {},
+        "/var/log": {}
+      },
+      "WorkingDir": "/root/express-server"
+    },
+    "Container": "e228c93cc007aefa48db2930e7910cbcc5f4067096e1651ebdba3387fdac0e31",
+    "ContainerConfig": {
+      "AttachStderr": true,
+      "AttachStdin": true,
+      "AttachStdout": true,
+      "Cmd": [
+        "/bin/bash"
+      ],
+      "CpuShares": 0,
+      "Cpuset": "",
+      "Domainname": "sample.com",
+      "Entrypoint": [
+        "/usr/local/bin/startServer"
+      ],
+      "Env": [
+        "NODE_ENV=production",
+        "HOME=/root",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "ExposedPorts": {
+        "80/tcp": {}
+      },
+      "Hostname": "express",
+      "Image": "andypotanin/express",
+      "Memory": 0,
+      "MemorySwap": 0,
+      "NetworkDisabled": false,
+      "OnBuild": null,
+      "OpenStdin": true,
+      "PortSpecs": null,
+      "StdinOnce": true,
+      "Tty": true,
+      "User": "",
+      "Volumes": {
+        "/data": {},
+        "/var/log": {}
+      },
+      "WorkingDir": "/root/express-server"
+    },
+    "Created": "2014-08-23T20:56:58.021292903Z",
+    "DockerVersion": "1.0.1",
+    "Id": "761473236b7a46c41e9801db8a9af85b613de76d15af9f12010c58722bff8a41",
+    "Os": "linux",
+    "Parent": "78dc4a35fba16ff204b586c9056e3591ad057819381536734c5dc66fe6efd796",
+    "Size": 7308780
+  }
+]

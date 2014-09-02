@@ -53,13 +53,13 @@ run:
 		--publish=80 \
 		--expose=16000 \
 		--env=HOME=/home/docker-proxy \
-		--env=NODE_ENV=staging \
+		--env=NODE_ENV=${NODE_ENV} \
 		--env=CI=${CI} \
+		--env=DOCKER_HOST=${DOCKER_HOST} \
 		--env=DOCKER_PROXY_PORT=${DOCKER_PROXY_PORT} \
 		--env=DOCKER_PROXY_ADDRESS=${DOCKER_PROXY_ADDRESS} \
 		--env=DOCKER_PROXY_API_PORT=${DOCKER_PROXY_API_PORT} \
 		--env=DOCKER_PROXY_API_ADDRESS=${DOCKER_PROXY_API_ADDRESS} \
-		--env=DOCKER_HOST=${DOCKER_HOST} \
 		$(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION)
 	@docker logs ${CONTAINER_NAME}
 
