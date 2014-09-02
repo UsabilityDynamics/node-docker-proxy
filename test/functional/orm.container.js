@@ -96,54 +96,12 @@ module.exports = {
 
     },
 
-    "can call class methods.": function () {
-
-      var Container = module.models.container;
-
-      // Default Properties.
-      Container.should.have.property( 'meta' );
-      Container.should.have.property( 'syncable' );
-      Container.should.have.property( 'adapterDictionary' );
-      Container.should.have.property( 'migrate', 'safe' );
-      Container.should.have.property( 'hasSchema', true );
-      Container.should.have.property( 'defaults' );
-      Container.should.have.property( 'adapter' );
-      Container.should.have.property( 'waterline' );
-      Container.should.have.property( 'findOrCreateEach' );
-
-      // Adapter Methods. (standard)
-      Container.adapterDictionary.should.have.property( 'identity' );
-      Container.adapterDictionary.should.have.property( 'registerConnection' );
-      Container.adapterDictionary.should.have.property( 'define' );
-      Container.adapterDictionary.should.have.property( 'describe' );
-      Container.adapterDictionary.should.have.property( 'destroy' );
-      Container.adapterDictionary.should.have.property( 'create' );
-
-      // EventEmitter added by Docker adapter.
-      Container.adapterDictionary.should.have.property( 'emit' );
-      Container.adapterDictionary.should.have.property( 'on' );
-      Container.adapterDictionary.should.have.property( 'once' );
-      Container.adapterDictionary.should.have.property( 'off' );
-      Container.should.have.property( 'emit' );
-      Container.should.have.property( 'on' );
-      Container.should.have.property( 'once' );
-      Container.should.have.property( 'off' );
-
-      // Custom Methods.
-      Container.should.have.property( 'stateChange' );
-      Container.should.have.property( 'fetchUpstream' );
-      Container.should.have.property( 'remove' );
-      Container.should.have.property( 'insert' );
-      Container.should.have.property( 'createEach' );
-
-    },
-
     "can emit events.": function ( done ) {
       module.models.container.once( 'test:*', done );
       module.models.container.emit( 'test:one', null, 'data1', 'data2' );;
     },
 
-    'can add multiple Container objects from JSON file via createEach': function ( done ) {
+    'can add multiple objects from JSON file via createEach': function ( done ) {
       module.models.container.createEach( module.dummyData.containers, done );
     },
 
@@ -155,6 +113,7 @@ module.exports = {
       });
 
     },
+
     'can drop a single objects using destroy().': function ( done ) {
 
       module.models.container.findOne( 'b603aa42bfd20fcd7ea74d963def989ceb263590e164fe563c50395940a2e90a', function eachFound( error, image ) {
@@ -184,6 +143,12 @@ module.exports = {
         containers[0].should.have.property( '_backends' );
         done();
       });
+
+    },
+
+    'can fetchUpstream': function( done ) {
+
+      module.models.container.fetchUpstream( done );
 
     }
 

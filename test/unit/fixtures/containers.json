@@ -1,11 +1,455 @@
 [
   {
+
+    "Args": [
+      "/bin/bash"
+    ],
+    "Config": {
+      "AttachStderr": false,
+      "AttachStdin": false,
+      "AttachStdout": false,
+      "Cmd": [
+        "/bin/bash"
+      ],
+      "CpuShares": 0,
+      "Cpuset": "",
+      "Domainname": "com",
+      "Entrypoint": [
+        "/usr/local/bin/startServer"
+      ],
+      "Env": [
+        "NODE_ENV=production",
+        "DOCKER_CONTAINER=true",
+        "DOCKER_CONTAINER_NAME=site1.com",
+        "DOCKER_CONTAINER_HOSTNAME=site1.com",
+        "HOME=/root",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "ExposedPorts": {
+        "80/tcp": {}
+      },
+      "Hostname": "site1",
+      "Image": "andypotanin/express",
+      "Memory": 0,
+      "MemorySwap": 0,
+      "NetworkDisabled": false,
+      "OnBuild": null,
+      "OpenStdin": true,
+      "PortSpecs": null,
+      "StdinOnce": false,
+      "Tty": true,
+      "User": "",
+      "Volumes": {
+        "/data": {},
+        "/var/log": {}
+      },
+      "WorkingDir": "/root/express-server"
+    },
+    "Created": "2014-09-02T05:45:34.196903096Z",
+    "Driver": "btrfs",
+    "ExecDriver": "native-0.2",
+    "HostConfig": {
+      "Binds": null,
+      "ContainerIDFile": "",
+      "Dns": null,
+      "DnsSearch": null,
+      "Links": null,
+      "LxcConf": [],
+      "NetworkMode": "bridge",
+      "PortBindings": {
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "49153"
+          }
+        ]
+      },
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "VolumesFrom": null
+    },
+    "HostnamePath": "/var/lib/docker/containers/bf2a016be50089941cfa35ec02a1bf29f8f0d994ddd844b48c80cae5f49fd619/hostname",
+    "HostsPath": "/var/lib/docker/containers/bf2a016be50089941cfa35ec02a1bf29f8f0d994ddd844b48c80cae5f49fd619/hosts",
+    "Id": "bf2a016be50089941cfa35ec02a1bf29f8f0d994ddd844b48c80cae5f49fd619",
+    "Image": "761473236b7a46c41e9801db8a9af85b613de76d15af9f12010c58722bff8a41",
+    "MountLabel": "",
+    "Name": "/site1.com",
+    "NetworkSettings": {
+      "Bridge": "docker0",
+      "Gateway": "172.17.42.1",
+      "IPAddress": "172.17.1.168",
+      "IPPrefixLen": 16,
+      "PortMapping": null,
+      "Ports": {
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "49153"
+          }
+        ]
+      }
+    },
+    "Path": "/usr/local/bin/startServer",
+    "ProcessLabel": "",
+    "ResolvConfPath": "/etc/resolv.conf",
+    "State": {
+      "ExitCode": 0,
+      "FinishedAt": "0001-01-01T00:00:00Z",
+      "Paused": false,
+      "Pid": 6720,
+      "Running": true,
+      "StartedAt": "2014-09-02T05:45:34.551108328Z"
+    },
+    "Volumes": {
+      "/data": "/var/lib/docker/vfs/dir/76f8001e72599ca2f1fee24191f8c639725071a20d3ce0d9fc7ef8557b6867a5",
+      "/var/log": "/var/lib/docker/vfs/dir/21f0a858e23002d94feebeaa878e05b542f6a2f1496cfd6a8586a8f23412437d"
+    },
+    "VolumesRW": {
+      "/data": true,
+      "/var/log": true
+    }
+  },
+  {
+    "Args": [
+      "/bin/bash"
+    ],
+    "Config": {
+      "AttachStderr": false,
+      "AttachStdin": false,
+      "AttachStdout": false,
+      "Cmd": [
+        "/bin/bash"
+      ],
+      "CpuShares": 0,
+      "Cpuset": "",
+      "Domainname": "site1.com",
+      "Entrypoint": [
+        "/usr/local/bin/startServer"
+      ],
+      "Env": [
+        "NODE_ENV=production",
+        "DOCKER_CONTAINER=true",
+        "DOCKER_CONTAINER_NAME=www.site1.com",
+        "DOCKER_CONTAINER_HOSTNAME=www.site1.com",
+        "HOME=/root",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "ExposedPorts": {
+        "80/tcp": {}
+      },
+      "Hostname": "www",
+      "Image": "andypotanin/express",
+      "Memory": 0,
+      "MemorySwap": 0,
+      "NetworkDisabled": false,
+      "OnBuild": null,
+      "OpenStdin": true,
+      "PortSpecs": null,
+      "StdinOnce": false,
+      "Tty": true,
+      "User": "",
+      "Volumes": {
+        "/data": {},
+        "/var/log": {}
+      },
+      "WorkingDir": "/root/express-server"
+    },
+    "Created": "2014-09-02T05:45:45.090075468Z",
+    "Driver": "btrfs",
+    "ExecDriver": "native-0.2",
+    "HostConfig": {
+      "Binds": null,
+      "ContainerIDFile": "",
+      "Dns": null,
+      "DnsSearch": null,
+      "Links": null,
+      "LxcConf": [],
+      "NetworkMode": "bridge",
+      "PortBindings": {
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "49162"
+          }
+        ]
+      },
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "VolumesFrom": null
+    },
+    "HostnamePath": "/var/lib/docker/containers/b603aa42bfd20fcd7ea74d963def989ceb263590e164fe563c50395940a2e90a/hostname",
+    "HostsPath": "/var/lib/docker/containers/b603aa42bfd20fcd7ea74d963def989ceb263590e164fe563c50395940a2e90a/hosts",
+    "Id": "b603aa42bfd20fcd7ea74d963def989ceb263590e164fe563c50395940a2e90a",
+    "Image": "761473236b7a46c41e9801db8a9af85b613de76d15af9f12010c58722bff8a41",
+    "MountLabel": "",
+    "Name": "/www.site1.com",
+    "NetworkSettings": {
+      "Bridge": "docker0",
+      "Gateway": "172.17.42.1",
+      "IPAddress": "172.17.1.177",
+      "IPPrefixLen": 16,
+      "PortMapping": null,
+      "Ports": {
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "49162"
+          }
+        ]
+      }
+    },
+    "Path": "/usr/local/bin/startServer",
+    "ProcessLabel": "",
+    "ResolvConfPath": "/etc/resolv.conf",
+    "State": {
+      "ExitCode": 0,
+      "FinishedAt": "0001-01-01T00:00:00Z",
+      "Paused": false,
+      "Pid": 7262,
+      "Running": true,
+      "StartedAt": "2014-09-02T05:45:46.319173905Z"
+    },
+    "Volumes": {
+      "/data": "/var/lib/docker/vfs/dir/3404b3b3e44c4c6417b71992fffa4bbb64b1288ca8228cb5b00a5fece6a2c4c4",
+      "/var/log": "/var/lib/docker/vfs/dir/9056a579bc0a929eb649ac50bf5c977571f25b394b1adc8d220424b10bc2c09a"
+    },
+    "VolumesRW": {
+      "/data": true,
+      "/var/log": true
+    }
+  },
+  {
+    "Args": [
+      "/bin/bash"
+    ],
+    "Config": {
+      "AttachStderr": false,
+      "AttachStdin": false,
+      "AttachStdout": false,
+      "Cmd": [
+        "/bin/bash"
+      ],
+      "CpuShares": 0,
+      "Cpuset": "",
+      "Domainname": "com",
+      "Entrypoint": [
+        "/usr/local/bin/startServer"
+      ],
+      "Env": [
+        "NODE_ENV=production",
+        "DOCKER_CONTAINER=true",
+        "DOCKER_CONTAINER_NAME=site2.com",
+        "DOCKER_CONTAINER_HOSTNAME=site2.com",
+        "HOME=/root",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "ExposedPorts": {
+        "80/tcp": {}
+      },
+      "Hostname": "site2",
+      "Image": "andypotanin/express",
+      "Memory": 0,
+      "MemorySwap": 0,
+      "NetworkDisabled": false,
+      "OnBuild": null,
+      "OpenStdin": true,
+      "PortSpecs": null,
+      "StdinOnce": false,
+      "Tty": true,
+      "User": "",
+      "Volumes": {
+        "/data": {},
+        "/var/log": {}
+      },
+      "WorkingDir": "/root/express-server"
+    },
+    "Created": "2014-09-02T05:45:34.703322774Z",
+    "Driver": "btrfs",
+    "ExecDriver": "native-0.2",
+    "HostConfig": {
+      "Binds": null,
+      "ContainerIDFile": "",
+      "Dns": null,
+      "DnsSearch": null,
+      "Links": null,
+      "LxcConf": [],
+      "NetworkMode": "bridge",
+      "PortBindings": {
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "49154"
+          }
+        ]
+      },
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "VolumesFrom": null
+    },
+    "HostnamePath": "/var/lib/docker/containers/ace54204d394abf95c80414f618e9d9a7a58168f4eb074ce7811fa47c79f3c6a/hostname",
+    "HostsPath": "/var/lib/docker/containers/ace54204d394abf95c80414f618e9d9a7a58168f4eb074ce7811fa47c79f3c6a/hosts",
+    "Id": "ace54204d394abf95c80414f618e9d9a7a58168f4eb074ce7811fa47c79f3c6a",
+    "Image": "761473236b7a46c41e9801db8a9af85b613de76d15af9f12010c58722bff8a41",
+    "MountLabel": "",
+    "Name": "/site2.com",
+    "NetworkSettings": {
+      "Bridge": "docker0",
+      "Gateway": "172.17.42.1",
+      "IPAddress": "172.17.1.169",
+      "IPPrefixLen": 16,
+      "PortMapping": null,
+      "Ports": {
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "49154"
+          }
+        ]
+      }
+    },
+    "Path": "/usr/local/bin/startServer",
+    "ProcessLabel": "",
+    "ResolvConfPath": "/etc/resolv.conf",
+    "State": {
+      "ExitCode": 0,
+      "FinishedAt": "0001-01-01T00:00:00Z",
+      "Paused": false,
+      "Pid": 6740,
+      "Running": true,
+      "StartedAt": "2014-09-02T05:45:35.774985844Z"
+    },
+    "Volumes": {
+      "/data": "/var/lib/docker/vfs/dir/2c58f4de5088e60aa1ebf041b0e8cb25d7565d8678cc675dc2b0ade98e2407e2",
+      "/var/log": "/var/lib/docker/vfs/dir/515a7278a5e7dc5d992662d702f7f07bc45d5bf9b3c1fcee6ea1e456f4bfa290"
+    },
+    "VolumesRW": {
+      "/data": true,
+      "/var/log": true
+    }
+  },
+  {
+    "Args": [
+      "/bin/bash"
+    ],
+    "Config": {
+      "AttachStderr": false,
+      "AttachStdin": false,
+      "AttachStdout": false,
+      "Cmd": [
+        "/bin/bash"
+      ],
+      "CpuShares": 0,
+      "Cpuset": "",
+      "Domainname": "site3.com",
+      "Entrypoint": [
+        "/usr/local/bin/startServer"
+      ],
+      "Env": [
+        "NODE_ENV=production",
+        "DOCKER_CONTAINER=true",
+        "DOCKER_CONTAINER_NAME=site3.com",
+        "DOCKER_CONTAINER_HOSTNAME=*.site3.com",
+        "HOME=/root",
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ],
+      "ExposedPorts": {
+        "80/tcp": {}
+      },
+      "Hostname": "*",
+      "Image": "andypotanin/express",
+      "Memory": 0,
+      "MemorySwap": 0,
+      "NetworkDisabled": false,
+      "OnBuild": null,
+      "OpenStdin": true,
+      "PortSpecs": null,
+      "StdinOnce": false,
+      "Tty": true,
+      "User": "",
+      "Volumes": {
+        "/data": {},
+        "/var/log": {}
+      },
+      "WorkingDir": "/root/express-server"
+    },
+    "Created": "2014-09-02T05:45:35.994183845Z",
+    "Driver": "btrfs",
+    "ExecDriver": "native-0.2",
+    "HostConfig": {
+      "Binds": null,
+      "ContainerIDFile": "",
+      "Dns": null,
+      "DnsSearch": null,
+      "Links": null,
+      "LxcConf": [],
+      "NetworkMode": "bridge",
+      "PortBindings": {
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "49155"
+          }
+        ]
+      },
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "VolumesFrom": null
+    },
+    "HostnamePath": "/var/lib/docker/containers/439b8391f29c8cfb4af4ede40bebf5b043bd28e4d3e90f83e39f68c0ba46512b/hostname",
+    "HostsPath": "/var/lib/docker/containers/439b8391f29c8cfb4af4ede40bebf5b043bd28e4d3e90f83e39f68c0ba46512b/hosts",
+    "Id": "439b8391f29c8cfb4af4ede40bebf5b043bd28e4d3e90f83e39f68c0ba46512b",
+    "Image": "761473236b7a46c41e9801db8a9af85b613de76d15af9f12010c58722bff8a41",
+    "MountLabel": "",
+    "Name": "/site3.com",
+    "NetworkSettings": {
+      "Bridge": "docker0",
+      "Gateway": "172.17.42.1",
+      "IPAddress": "172.17.1.170",
+      "IPPrefixLen": 16,
+      "PortMapping": null,
+      "Ports": {
+        "80/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "49155"
+          }
+        ]
+      }
+    },
+    "Path": "/usr/local/bin/startServer",
+    "ProcessLabel": "",
+    "ResolvConfPath": "/etc/resolv.conf",
+    "State": {
+      "ExitCode": 0,
+      "FinishedAt": "0001-01-01T00:00:00Z",
+      "Paused": false,
+      "Pid": 6780,
+      "Running": true,
+      "StartedAt": "2014-09-02T05:45:36.855038233Z"
+    },
+    "Volumes": {
+      "/data": "/var/lib/docker/vfs/dir/e8fbcab327aebda120b7b8b5dea19aef51f372e328db5b4f978b2ebce0a0a4a5",
+      "/var/log": "/var/lib/docker/vfs/dir/df5fd0f6d270ebb8e4b793ae8256aa500d12665a04e9536972972bcad39bd276"
+    },
+    "VolumesRW": {
+      "/data": true,
+      "/var/log": true
+    }
+  },
+  {
     "Command": "/etc/entrypoints/hhvm /bin/bash",
     "Created": 1408739811,
     "Id": "4c570efc36731373f7c17ad439e26a6d604ab81b9831126d565c71b3a51dfaff",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/temp.site3.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49166, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49166,
+        "Type": "tcp"
+      }
+    ],
     "HostConfig": {
       "Binds": null,
       "ContainerIDFile": "",
@@ -34,7 +478,14 @@
     "Id": "447882dcfb0a9458b54682716fdc6e9ec7a5ea2a78aab56ab71d2a19d29bf4b7",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/temp.site2.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49165, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49165,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 5 seconds"
   },
   {
@@ -43,7 +494,14 @@
     "Id": "e0a99c4df731adfaec606a7fbd11f94bda246934d937832cac87d8f0941176a5",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/temp.site1.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49164, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49164,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 6 seconds"
   },
   {
@@ -52,7 +510,14 @@
     "Id": "db6c5e6ab61a35f253f6038390493b0a2f15797bc949bae803243a8a8eab0ea9",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/cdn.site3.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49163, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49163,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 9 seconds"
   },
   {
@@ -61,7 +526,14 @@
     "Id": "91585c6c328c8805581e6d58c88dcaea36e1ffed4bb5e74d877148f86e607d8f",
     "Image": "andypotanin/express:latest",
     "Names": ["/api.site1.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49162, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49162,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 11 seconds"
   },
   {
@@ -70,7 +542,14 @@
     "Id": "9bb6aa7a4ff27d882d02c6b7345f339b15be09ade871f31729cb3697c24c3cae",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/cdn.site1.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49161, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49161,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 12 seconds"
   },
   {
@@ -79,7 +558,14 @@
     "Id": "0c5f69ba63f440ab25c4c04519708d74e2c98f53a8fbccc69e987987b725b047",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/api.site3.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49160, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49160,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 13 seconds"
   },
   {
@@ -88,7 +574,14 @@
     "Id": "86495dcb5fe260665595ef4a7f9b4e10078e4dbe800b862d0c519fefb23b7fc8",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/api.site2.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49159, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49159,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 15 seconds"
   },
   {
@@ -97,7 +590,14 @@
     "Id": "1be8f653ccda33a70fb9e7d8ef81fe662e00116db7a5fc11064067e47f9dad4e",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/site5.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49157, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49157,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 18 seconds"
   },
   {
@@ -106,7 +606,14 @@
     "Id": "ae44d901183c45a5b37beb5a8c6772273510d5a28ce1e7b4d159e96208432e41",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/site4.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49156, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49156,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 19 seconds"
   },
   {
@@ -115,7 +622,14 @@
     "Id": "2b815ff856d830299a7bb79f53c459bcb270b5ac54b6b055e4b7045d4fd909b3",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/site3.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49155, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49155,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 21 seconds"
   },
   {
@@ -124,7 +638,14 @@
     "Id": "7344833403aa048b2a1675663cde876e44b41107bcd8b49e9b9de2fb21b790ce",
     "Image": "andypotanin/hhvm:latest",
     "Names": ["/site2.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49154, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49154,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 22 seconds"
   },
   {
@@ -133,7 +654,14 @@
     "Id": "8e2c65b2d7c7e77bb67a19ab4442d0e17b073729d01e60ab20caed11595cfab1",
     "Image": "andypotanin/express:latest",
     "Names": ["/site1.com"],
-    "Ports": [{"IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49153, "Type": "tcp"}],
+    "Ports": [
+      {
+        "IP": "0.0.0.0",
+        "PrivatePort": 80,
+        "PublicPort": 49153,
+        "Type": "tcp"
+      }
+    ],
     "Status": "Up 24 seconds"
   }
 ]

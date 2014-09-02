@@ -19,6 +19,7 @@ commander.command( 'start' )
   .option( '-s, --silent [silent]', 'silence worker logs', process.env.DOCKER_PROXY_SILENT == 'false' ? false : true )
   .option( '-d, --docker-daemon [dockerDaemon]', 'Hostname or unix sock path to Docker Daemon.', process.env.DOCKER_PROXY_DOCKER_DAEMON || process.env.DOCKER_HOST || process.env.DOCKER_SOCK_PATH || '/var/run/docker.sock' )
   .option( '-c, --config-path [configPath]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_CONFIG_FILE_PATH || './static/etc/docker-proxy.yaml' )
+  .option( '--ssl-port [sslPort]', 'SSL port for proxy.', process.env.sslPort || 8443 )
   .option( '--api-port [apiPort]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_API_PORT || 16000 )
   .option( '--api-address [apiAddress]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_API_ADDRESS || '0.0.0.0' )
   .option( '--public-path [publicPath]', 'Path to static public files.', process.env.DOCKER_PROXY_PUBLIC_PATH ? process.env.DOCKER_PROXY_PUBLIC_PATH : './static/public' )
@@ -42,17 +43,18 @@ commander.parse( process.argv );
  */
 function startService( settings ) {
 
-  process.env.DOCKER_PROXY_CONFIG_FILE_PATH  = settings.configPath;
-  process.env.DOCKER_PROXY_DOCKER_DAEMON     = settings.dockerDaemon;
-  process.env.DOCKER_PROXY_SILENT            = settings.silent;
-  process.env.DOCKER_PROXY_PORT              = settings.port;
-  process.env.DOCKER_PROXY_ADDRESS           = settings.address;
-  process.env.DOCKER_PROXY_API_PORT          = settings.apiPort;
-  process.env.DOCKER_PROXY_API_ADDRESS       = settings.apiAddress;
-  process.env.DOCKER_PROXY_SSL_DIR          = settings.sslPath;
-  process.env.DOCKER_PROXY_PUBLIC_PATH       = settings.publicPath;
-  process.env.DOCKER_PROXY_PID_PATH          = settings.pidPath;
-  process.env.DOCKER_PROXY_SILENT            = settings.silent;
+  process.env.DOCKER_PROXY_CONFIG_FILE_PATH   = settings.configPath;
+  process.env.DOCKER_PROXY_DOCKER_DAEMON      = settings.dockerDaemon;
+  process.env.DOCKER_PROXY_SILENT             = settings.silent;
+  process.env.DOCKER_PROXY_PORT               = settings.port;
+  process.env.DOCKER_PROXY_SSL_PORT           = settings.sslPort;
+  process.env.DOCKER_PROXY_ADDRESS            = settings.address;
+  process.env.DOCKER_PROXY_API_PORT           = settings.apiPort;
+  process.env.DOCKER_PROXY_API_ADDRESS        = settings.apiAddress;
+  process.env.DOCKER_PROXY_SSL_DIR            = settings.sslPath;
+  process.env.DOCKER_PROXY_PUBLIC_PATH        = settings.publicPath;
+  process.env.DOCKER_PROXY_PID_PATH           = settings.pidPath;
+  process.env.DOCKER_PROXY_SILENT             = settings.silent;
 
   require( '../lib/services/daemon' ).startService();
 

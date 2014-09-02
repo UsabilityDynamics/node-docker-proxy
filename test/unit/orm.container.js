@@ -32,6 +32,7 @@ module.exports = {
     };
 
     module.Waterline = require( 'waterline' );
+
     module.orm = new module.Waterline();
 
     module.waterlineConfig = {
@@ -66,8 +67,9 @@ module.exports = {
 
   },
 
-  model: {
-    "can inititilize collection.": function ( done ) {
+  Container: {
+
+    "can inititilize via Waterline.": function ( done ) {
 
       module.orm.initialize( module.waterlineConfig, function ormReady( error, ormInstance ) {
         // console.log( 'ormReady', Model.container );
@@ -92,7 +94,7 @@ module.exports = {
 
     },
 
-    "can call class methods.": function ( done ) {
+    "has expected class methods.": function ( done ) {
 
       var Container = module.models.container;
 
@@ -100,7 +102,7 @@ module.exports = {
       Container.should.have.property( 'meta' );
       Container.should.have.property( 'syncable' );
       Container.should.have.property( 'adapterDictionary' );
-      //Container.should.have.property( 'primaryKey', 'Name' );
+      Container.should.have.property( 'primaryKey', 'Id' );
       Container.should.have.property( 'migrate', 'safe' );
       Container.should.have.property( 'hasSchema', true );
       Container.should.have.property( 'defaults' );
@@ -114,11 +116,15 @@ module.exports = {
       Container.adapterDictionary.should.have.property( 'define' );
       Container.adapterDictionary.should.have.property( 'describe' );
       Container.adapterDictionary.should.have.property( 'destroy' );
+      Container.adapterDictionary.should.have.property( 'create' );
 
-      // @note createEach does not exist for "memory".
-      // Container.adapterDictionary.should.have.property( 'createEach' );
+      // EventEmitter added by Docker adapter.
+      Container.should.have.property( 'emit' );
+      Container.should.have.property( 'on' );
+      Container.should.have.property( 'once' );
+      Container.should.have.property( 'off' );
 
-      // Custom Methods.
+      // Special / Adapter Methods Methods.
       Container.should.have.property( 'stateChange' );
       Container.should.have.property( 'fetchUpstream' );
       Container.should.have.property( 'remove' );
@@ -134,7 +140,7 @@ module.exports = {
           "Hostname": "api"
         },
         "Image": "andypotanin/express",
-        "Names": ["/cdn.site9.com"],
+        "Names": ["/www.site5.com"],
         "Ports": [
           { "IP": "0.0.0.0", "PrivatePort": 80, "PublicPort": 49169, "Type": "tcp" },
           { "IP": "0.0.0.0", "PrivatePort": 8080, "PublicPort": 49170, "Type": "tcp" },
@@ -183,6 +189,7 @@ module.exports = {
     'can find all objects': function ( done ) {
 
       module.models.container.find( function eachFound( error, containers ) {
+
         // @todo Add check for array count.
         done();
 
@@ -204,16 +211,14 @@ module.exports = {
 
     },
 
-    'can find /cdn.site9.com by Name.': function ( done ) {
+    'can find /www.site1.com by Name.': function ( done ) {
 
-      module.models.container.findOne().where( { Name: '/cdn.site9.com' } ).sort( 'updatedAt' ).exec( function ( error, container ) {
+      module.models.container.findOne().where( { Name: '/www.site1.com' } ).sort( 'updatedAt' ).exec( function ( error, container ) {
 
-        // console.log( require( 'util').inspect( container, { colors: true , depth:0, showHidden: false } ) );
-        //container.should.have.property( 'Id' );
-        //container.should.have.property( 'NetworkSettings' );
-        //container.should.have.property( 'Image' );
-
-        //container.should.have.property( '_backends' );
+        container.should.have.property( 'Id' );
+        container.should.have.property( 'NetworkSettings' );
+        container.should.have.property( 'Image' );
+        container.should.have.property( '_backends' );
 
         done();
 
@@ -221,16 +226,28 @@ module.exports = {
 
     },
 
+    'can find /www.site5.com by Name.': function ( done ) {
+
+      module.models.container.findOne().where( { Name: '/www.site5.com' } ).sort( 'updatedAt' ).exec( function ( error, container ) {
+        container.should.have.property( 'Id' );
+        container.should.have.property( 'NetworkSettings' );
+        container.should.have.property( 'Image' );
+        container.should.have.property( '_backends' );
+        done();
+      });
+
+    },
+
     'can NOT find /api.site19.com by Name.': function ( done ) {
 
-      module.models.container.findOne( { Name: '/api.site19.com' }, function ( error, result ) {
+      module.models.container.find( { Name: '/api.site19.com' }, function ( error, results ) {
 
-        (error === undefined).should.be.true;
-        (result === undefined).should.be.true;
+        //(!error).should.be.true;
+        //(results.length === 0).should.be.true;
 
         done();
 
-      } );
+      });
 
     },
 
@@ -240,7 +257,7 @@ module.exports = {
 
     },
 
-    'can destroy stored Container collection': function( done ) {
+    'can destroy entire stored collection': function( done ) {
 
       module.models.container.find( function eachFound( error, containers ) {
 
@@ -275,12 +292,6 @@ module.exports = {
         setTimeout( done, 500 );
 
       });
-
-    },
-
-    'can fetchUpstream': function( done ) {
-
-      module.models.container.fetchUpstream( null, done );
 
     }
 
