@@ -15,8 +15,7 @@ if [ -f "/etc/supervisor/supervisord.conf" ]; then
   mkdir -p /var/run/supervisor 2>/dev/null;
   supervisord -c /etc/supervisor/supervisord.conf -u root
   echo "Docker Proxy: Started supervisor."
-elsenode exec"TEST=true env"
-
+else
   echo "Docker Proxy: Missing Supervisor configuration file."
 fi
 

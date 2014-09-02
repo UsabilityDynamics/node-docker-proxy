@@ -13,7 +13,7 @@ BUILD_REPOSITORY		          ?=docker-proxy
 BUILD_VERSION				          ?=0.2.0
 BUILD_BRANCH		              ?=$(shell git branch | sed -n '/\* /s///p')
 
-CONTAINER_NAME			          ?=docker-proxy.internal
+CONTAINER_NAME			          ?=docker-proxy
 CONTAINER_HOSTNAME	          ?=docker-proxy.internal
 CONTAINER_ENTRYPOINT	        ?=/usr/local/bin/docker-proxy.entrypoint
 
