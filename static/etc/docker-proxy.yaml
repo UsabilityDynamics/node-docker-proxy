@@ -1,46 +1,23 @@
-services:
+service:
   daemon:
+    name: daemon
     cluster: false
 
   api:
+    name: api
     cluster: false
 
   router:
+    name: router
     cluster: true
-    shared_frontend: "bind 127.0.0.1:8081"
-    reload_command: "service haproxy reload"
-    config_file_path: "/etc/haproxy/haproxy.cfg"
-    socket_file_path: "/var/run/haproxy.sock"
-    global:
-     - "daemon"
-     - "user    haproxy"
-     - "group   haproxy"
-     - "maxconn 4096"
-     - "log     127.0.0.1 local2 notice"
-     - "stats   socket /var/run/haproxy.sock"
-    defaults:
-     - "log      global"
-     - "balance  roundrobin"
-
-
-  varnish:
-    cluster: false
+    frontend: "bind 127.0.0.1:8081"
 
   static:
+    name: static
     cluster: true
 
-  discovery:
-    method: "docker"
+  dockerDiscovery:
+    name: dockerDiscovery
     port: 16320
-    servers:
+    hosts:
       - localhost:2375
-
-    path:  "/nerve/services/service1"
-    hosts: "0.zookeeper.example.com:2181"
-
-  haproxy:
-    server_options: "check inter 2s rise 3 fall 2"
-    shared_frontend:
-    - "acl is_service1 hdr_dom(host) -i service1.lb.example.com"
-    - "use_backend service1 if is_service1"
-    backend: "mode http"

@@ -1,7 +1,7 @@
 /**
  * Docker Proxy default tests.
  *
- * DOCKER_HOST=http://fallujah DOCKER_PORT=16423 mocha --watch
+ * DOCKER_HOST=localhost DOCKER_PORT=2375 mocha --watch
  *
  */
 module.exports = {

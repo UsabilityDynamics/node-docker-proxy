@@ -27,8 +27,8 @@ module.exports = {
       } else {
 
         module._docker = module.DockerClient.create({
-          host: process.env.DOCKER_HOSTNAME,
-          port: process.env.DOCKER_PORT
+          host: process.env.DOCKER_HOSTNAME || 'localhost',
+          port: process.env.DOCKER_PORT || 2375
         });
 
       }
@@ -59,7 +59,7 @@ module.exports = {
 
     'can iterate through containers': function ( done ) {
 
-      this.timeout( 50000 );
+      this.timeout( 10000 );
 
       module._docker.listContainers(function (err, containers) {
 
@@ -75,7 +75,6 @@ module.exports = {
 
         // 200 ms seems enough to iterate
         setTimeout( function() {
-          // console.log( require( 'util').inspect( _detail, { colors: true , depth:1, showHidden: false } ) );
           done();
         }, 200 )
 
