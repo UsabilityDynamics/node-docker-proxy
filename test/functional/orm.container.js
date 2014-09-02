@@ -50,7 +50,8 @@ module.exports = {
       connections: {
         docker: {
           adapter: 'docker',
-          host: process.env.DOCKER_HOST || 'localhost:2875'
+          host: process.env.DOCKER_HOST || 'localhost:2875',
+          subscribe: true
         },
         memory: {
           adapter: 'memory'
@@ -116,20 +117,18 @@ module.exports = {
 
     'can drop a single objects using destroy().': function ( done ) {
 
-      module.models.container.findOne( 'b603aa42bfd20fcd7ea74d963def989ceb263590e164fe563c50395940a2e90a', function eachFound( error, image ) {
+      module.models.container.findOne( 'b603aa42bfd20fcd7ea74d963def989ceb263590e164fe563c50395940a2e90a', function eachFound( error, container ) {
+        container.should.have.property( 'Id' );
+        container.should.have.property( 'NetworkSettings' );
+        container.should.have.property( 'Image' );
+        container.should.have.property( '_id' );
+        container.should.have.property( '_backends' );
+        container.should.have.property( 'destroy' );
 
-        return done();
-
-        console.log( require( 'util').inspect( image, { colors: true , depth:0, showHidden: false } ) );
-
-        image.should.have.property( 'destroy' );
-
-        image.destroy( function( error, imageList ) {
-          // console.log( 'Destroyed %d items.', containerList.length );
+        container.destroy( function( error, containerList ) {
+          containerList.should.have.property( 'length', 1 );
+          done( null );
         });
-
-        // Not sure if there is a way to destroyEach with shared cb.
-        setTimeout( done, 500 );
 
       });
 
@@ -138,8 +137,10 @@ module.exports = {
     'can get single object using find().': function ( done ) {
 
       module.models.container.find( 'bf2a016be50089941cfa35ec02a1bf29f8f0d994ddd844b48c80cae5f49fd619', function eachFound( error, containers ) {
-        return done();
-
+        containers[0].should.have.property( 'Id' );
+        containers[0].should.have.property( 'NetworkSettings' );
+        containers[0].should.have.property( 'Image' );
+        containers[0].should.have.property( '_id' );
         containers[0].should.have.property( '_backends' );
         done();
       });
