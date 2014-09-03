@@ -48,3 +48,5 @@ test:
     - make run; sleep 5
     - mocha test/integration
     - mocha test/acceptance
+  post:
+    - make release

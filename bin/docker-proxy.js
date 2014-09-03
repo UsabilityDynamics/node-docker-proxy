@@ -6,6 +6,7 @@
 var dockerProxy = require( '../' );
 var commander  = require( 'commander' );
 var os = require( 'os' );
+var pid = require( '../lib/common/pid' );
 
 commander._name = require( '../package' ).name;
 
@@ -24,7 +25,7 @@ commander.command( 'start' )
   .option( '--api-address [apiAddress]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_API_ADDRESS || '0.0.0.0' )
   .option( '--public-path [publicPath]', 'Path to static public files.', process.env.DOCKER_PROXY_PUBLIC_PATH ? process.env.DOCKER_PROXY_PUBLIC_PATH : './static/public' )
   .option( '--ssl-path [sslPath]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_SSL_DIR ? process.env.DOCKER_PROXY_SSL_DIR : '/etc/ssl' )
-  .option( '--pid-path [pidPath]', 'Path to PID file to use.', process.env.DOCKER_PROXY_PID_PATH ? process.env.DOCKER_PROXY_PID_PATH : '/var/run/docker-proxy.pid' )
+  .option( '--pid-path [pidPath]', 'Path to PID file to use.', process.env.DOCKER_PROXY_PID_PATH ? process.env.DOCKER_PROXY_PID_PATH : require( 'path' ).join( process.env.TMPDIR || process.env.TEMP, 'docker-proxy.pid' ) )
   .action( startService )
 
 commander.command( 'status' )
@@ -60,6 +61,16 @@ function startService( settings ) {
   process.env.DOCKER_PROXY_PID_PATH           = settings.pidPath;
   process.env.DOCKER_PROXY_SILENT             = settings.silent;
 
+  try {
+
+    pid.create({
+      path : settings.pidPath,
+      errorOnExist: true,
+      deleteOnExit : true
+    });
+
+  } catch( error ) {}
+
   require( '../lib/services/daemon' ).startService();
 
 }
@@ -67,8 +78,24 @@ function startService( settings ) {
 /**
  * Show Status
  *
+ * @todo Get all active docker-proxy PIDs.
  * @param settings
  */
 function getStatus( settings ) {
   console.log( 'wip' );
+
+  var MonitorPid = require('monitor-pid');
+
+  var mapp = new MonitorPid(5253, { period: 5000 });
+
+  mapp.start();
+
+  mapp.on('monitored', function (pid, stats) {
+    console.error('monitored', pid, stats);
+  });
+
+  mapp.on('end', function (pid) {
+    console.error('end', pid);
+  });
+
 }
