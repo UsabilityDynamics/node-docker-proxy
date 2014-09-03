@@ -67,7 +67,7 @@ module.exports = {
 
   },
 
-  model: {
+  Image: {
 
     "can inititilize collection.": function ( done ) {
 

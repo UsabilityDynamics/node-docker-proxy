@@ -69,7 +69,8 @@ module.exports = {
 
   },
 
-  model: {
+  Backend: {
+
     "can inititilize collection.": function ( done ) {
 
       module.orm.initialize( module.waterlineConfig, function ormReady( error, ormInstance ) {

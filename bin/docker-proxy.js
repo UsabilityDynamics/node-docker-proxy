@@ -27,6 +27,10 @@ commander.command( 'start' )
   .option( '--pid-path [pidPath]', 'Path to PID file to use.', process.env.DOCKER_PROXY_PID_PATH ? process.env.DOCKER_PROXY_PID_PATH : '/var/run/docker-proxy.pid' )
   .action( startService )
 
+commander.command( 'status' )
+  .option( '-w, --watch', 'Watch for changes.' )
+  .action( getStatus );
+
 commander.command( 'install' )
   .action( require( '../lib/tasks/install' ) );
 
@@ -58,4 +62,13 @@ function startService( settings ) {
 
   require( '../lib/services/daemon' ).startService();
 
+}
+
+/**
+ * Show Status
+ *
+ * @param settings
+ */
+function getStatus( settings ) {
+  console.log( 'wip' );
 }

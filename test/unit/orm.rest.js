@@ -50,97 +50,102 @@ module.exports = {
 
   },
 
-  ORM: {
+  ORM: {}
 
-    'REST': function( done ) {
+};
 
-      return done();
+var _disabled = {
 
-      var modelling = require( 'modelling' );
+  'REST': function( done ) {
 
-      module.orm = new modelling( require( './fixtures/config' ).waterline, function( error, ormInstance ) {
+    return done();
 
-        if( error && error.message !== 'Connection is already registered' ) {
-          return done( error );
-        }
+    var modelling = require( 'modelling' );
 
-        if( error && error.message === 'Connection is already registered' ) {
+    module.config = {};
 
-          ormInstance = {
-            collections: module.models,
-            connections: module.connections
-          };
+    module.orm = new modelling( module.config, function( error, ormInstance ) {
 
-        }
+      if( error && error.message !== 'Connection is already registered' ) {
+        return done( error );
+      }
 
-        ormInstance.should.have.property( 'collections' );
-        ormInstance.should.have.property( 'connections' );
+      if( error && error.message === 'Connection is already registered' ) {
 
-        //console.log( require( 'util').inspect( ormInstance, { colors: true , depth:1, showHidden: false } ) );
+        ormInstance = {
+          collections: module.models,
+          connections: module.connections
+        };
 
-        module.models = ormInstance.collections;
-        module.connections = ormInstance.connections;
+      }
 
-        done();
+      ormInstance.should.have.property( 'collections' );
+      ormInstance.should.have.property( 'connections' );
 
-      });
+      //console.log( require( 'util').inspect( ormInstance, { colors: true , depth:1, showHidden: false } ) );
+
+      module.models = ormInstance.collections;
+      module.connections = ormInstance.connections;
+
+      done();
+
+    });
 
 
-    },
+  },
 
-    'can add multiple backend objects from JSON file.': function ( done ) {
+  'can add multiple backend objects from JSON file.': function ( done ) {
 
-      return done();
-      //console.log( require( 'util').inspect( module.models, { colors: true , depth:5, showHidden: false } ) );
-      module.models.backend.createEach( module.dummyData.backends, done );
+    return done();
+    //console.log( require( 'util').inspect( module.models, { colors: true , depth:5, showHidden: false } ) );
+    module.models.backend.createEach( module.dummyData.backends, done );
 
-    },
+  },
 
-    // @todo add actual requests to verify response of server.
-    'can start servers': function( done ) {
+  // @todo add actual requests to verify response of server.
+  'can start servers': function( done ) {
 
-      return done();
+    return done();
 
-      this.timeout( 600000 );
+    this.timeout( 600000 );
 
-      var app = require( 'express' ).call();
+    var app = require( 'express' ).call();
 
-      // http://localhost:58922/backend/tkgn-eskw-hqam-wpxz
-      app.get('/backend/:id', module.orm.use( ['backend', 'container'] ), function(req, res, next) {
+    // http://localhost:58922/backend/tkgn-eskw-hqam-wpxz
+    app.get('/backend/:id', module.orm.use( ['backend', 'container'] ), function(req, res, next) {
 
-        req.model.backend.find({ _id: req.param( 'id' )}, function(err, backends ){
+      req.model.backend.find({ _id: req.param( 'id' )}, function(err, backends ){
 
-          res.send({
-            ok: true,
-            data: backends
-          });
-
+        res.send({
+          ok: true,
+          data: backends
         });
 
       });
 
-      app.get('/container/', module.orm.use({
-        policies: {
-          doSomethingImportant: function(req, res, next) {
-            next();
-          }
-        },
-        models: 'container'
-      }), function(req, res, next) {
+    });
 
-        res.send( 'container!' );
+    app.get('/container/', module.orm.use({
+      policies: {
+        doSomethingImportant: function(req, res, next) {
+          next();
+        }
+      },
+      models: 'container'
+    }), function(req, res, next) {
 
-      });
+      res.send( 'container!' );
 
-      app.listen( 58922, null, function() {
+    });
 
-        console.log( this.address().address, this.address().port );
+    app.listen( 58922, null, function() {
 
-        done();
+      console.log( this.address().address, this.address().port );
 
-      })
+      done();
 
-    }
+    })
 
   }
-};
+
+}
