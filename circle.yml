@@ -40,16 +40,11 @@ dependencies:
     - NODE_ENV=development npm link
 
 test:
-  pre:
+  override:
     - mocha test/unit
     - mocha test/functional
-
-  override:
-    - docker pull andypotanin/express:latest
     - sh /home/ubuntu/node-docker-proxy/test/acceptance/fixtures/start-containers.sh
     - make image; sleep 5
     - make run; sleep 5
-
-  post:
     - mocha test/integration
     - mocha test/acceptance

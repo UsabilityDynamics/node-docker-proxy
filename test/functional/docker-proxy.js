@@ -25,6 +25,11 @@ module.exports = {
 
         module.service = service;
 
+        if( error && error.code === 'ECONNREFUSED' ) {
+          console.log( 'Can not connect to Docker Client...' );
+          return done( null );
+        }
+
         done( error );
 
       });

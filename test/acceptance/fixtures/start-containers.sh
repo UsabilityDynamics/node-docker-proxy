@@ -90,5 +90,5 @@ startExpress www.site1.com
 startExpress www.site2.com
 startExpress www.site3.com
 
-startElastic search.site1.com
-startElastic search.site2.com
+# startElastic search.site1.com
+# startElastic search.site2.com
