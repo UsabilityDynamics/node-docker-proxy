@@ -64,4 +64,4 @@ run:
 	@docker logs ${CONTAINER_NAME}
 
 release:
-	docker push $(BUILD_REPOSITORY):$(BUILD_VERSION)
+	docker push $(BUILD_ORGANIZATION)/$(BUILD_REPOSITORY):$(BUILD_VERSION)
