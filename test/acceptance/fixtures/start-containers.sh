@@ -57,6 +57,22 @@ startHHVM () {
 
 }
 
+##
+## Start Elasticsearch Server
+##
+startElastic() {
+
+  ID=$(docker run -d \
+    --name=$1 \
+    --hostname=${2-$1} \
+    --publish=9200 \
+    dockerfile/elasticsearch
+  )
+
+  echo "Starting Elasticsearch server $1 on ${2-$1}, ID $ID";
+
+}
+
 # Start Fake Servers
 startExpress site1.com
 startExpress site2.com
@@ -74,6 +90,5 @@ startExpress www.site1.com
 startExpress www.site2.com
 startExpress www.site3.com
 
-# startHHVM site1.com site1.com
-# startHHVM site2.com *.site2.com
-# startHHVM site3.com *.site3.com
+startElastic search.site1.com
+startElastic search.site2.com

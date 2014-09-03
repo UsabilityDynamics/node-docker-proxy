@@ -24,7 +24,7 @@ module.exports = {
    */
   before: function () {
 
-    module.debug = require( 'debug' )( 'docker-proxy:unit' );
+    module.debug = require( 'debug' )( 'docker-proxy:test:unit' );
 
     module.dummyData = {
       containers: require( './fixtures/containers' ),
@@ -48,7 +48,16 @@ module.exports = {
       },
       connections: {
         docker: {
-          adapter: 'docker'
+          adapter: 'docker',
+          subscribe: false
+        },
+        dockerImages: {
+          adapter: 'docker',
+          subscribe: false
+        },
+        dockerContainers: {
+          adapter: 'docker',
+          subscribe: false
         },
         memory: {
           adapter: 'memory'

@@ -72,7 +72,6 @@
     "watchr": "^2.4.11",
     "waterline": "^0.10.9",
     "waterline-docker": "git://github.com/UsabilityDynamics/node-waterline-docker",
-    "waterline-stream": "git://github.com/UsabilityDynamics/node-waterline-stream",
     "winston": "^0.7.3"
   },
   "optionalDependencies": {
@@ -80,7 +79,6 @@
     "cadvisor": "^0.1.2"
   },
   "devDependencies": {
-    "fs-extra": "^0.11.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-less": "~0.8.1",
@@ -96,7 +94,6 @@
     "hyperprox": "^2.2.0",
     "jscoverage": "~0.3.8",
     "mocha": "^1.21.4",
-    "sails-rest": "0.0.4",
     "should": "~2.1.1"
   },
   "readmeFilename": "readme.md",
