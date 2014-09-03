@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/services/cadvisor.js - docker-proxy</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://media.usabilitydynamics.com/logo.png" title="docker-proxy"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: lib/services/cadvisor.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * cadvisor API gateway
+ *
+ *  sudo docker run \
+ *    --volume=/var/run:/var/run:rw \
+ *    --volume=/sys:/sys:ro \
+ *    --volume=/var/lib/docker/:/var/lib/docker:ro \
+ *    --publish=8080 \
+ *    --detach=true \
+ *    --name=cadvisor \
+ *    google/cadvisor:latest
+ *
+ */
+require( &#x27;../docker-proxy&#x27; ).service( function serviceHandler( error, service ) {
+
+  service.set( &#x27;service.cadvisor&#x27;, {
+    cluster: false
+  });
+
+  var cadvisor = require(&#x27;cadvisor&#x27;)
+  var backend = cadvisor(&#x27;208.52.164.203:49156&#x27;)
+
+  // get machine information
+  backend.machine(function(err, data){
+    // console.log( require( &#x27;util&#x27;).inspect( data, { colors: true , depth:5, showHidden: false } ) );
+  })
+
+  // get top level
+  backend.container(&#x27;/&#x27;, function(err, data){
+    // console.log( require( &#x27;util&#x27;).inspect( data, { colors: true , depth:5, showHidden: false } ) );
+  })
+
+  // get docker containers
+  backend.container(&#x27;/system.slice&#x27;, function(err, data){
+    // console.log( require( &#x27;util&#x27;).inspect( data, { colors: true , depth:1, showHidden: false } ) );
+  })
+
+  // get a specific docker container information
+  backend.container(&#x27;/docker/mycontainer&#x27;, function(err, data){
+    //console.log( &#x27;machine.mycontainer&#x27;, err || data  );
+
+  })
+
+}, module );
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

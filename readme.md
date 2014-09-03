@@ -1,6 +1,4 @@
-Docker Proxy is a Node.js module that attempts to simplify traffic routing to multiple Docker Containers running on a host.
-The simplification is mostly due to our use of container "hostnames", which we use to determine the requests a particular container may accept.
-In most cases Docker Proxy would be bound to port 80/443 on a public IP address and serve as the primary point-of-entry for all web traffic on a host.
+Docker Proxy is a Node.js module that attempts to simplify traffic routing to multiple Docker containers running on a host.
 
 ***
 [![Issues - Bug](https://badge.waffle.io/usabilitydynamics/node-docker-proxy.png?label=bug&title=Bugs)](http://waffle.io/usabilitydynamics/node-docker-proxy)
@@ -14,12 +12,9 @@ In most cases Docker Proxy would be bound to port 80/443 on a public IP address 
 [![CircleCI](https://circleci.com/gh/UsabilityDynamics/node-docker-proxy.png?circle-token=822abc09fd13abaf818fdb0623f3185185599ca5)](https://circleci.com/gh/UsabilityDynamics/node-docker-proxy)
 ***
 
-### Starting Docker Container
-
-    make image
-    make run
-
 ### What Docker Proxy Does
+The simplification is mostly due to our use of container "hostnames", which we use to determine the requests a particular container may accept.
+In most cases Docker Proxy would be bound to port 80/443 on a public IP address and serve as the primary point-of-entry for all web traffic on a host.
 
 * Attempts to connect to a Docker Daemon either via TCP or Unix Socket.
 * Automatically creates a Container <-> Hostname (CH) map from running containers and their hostnames.
@@ -33,9 +28,10 @@ In most cases Docker Proxy would be bound to port 80/443 on a public IP address 
 * Monitors for changes made to the /etc/dproxy.yml configuration, and changes will be applied if configuration file appears to validate.
 * If you have multiple Containers that share the same hostname, we assume that requests should be load-balanced.
 
-### What Docker Proxy Does Not Do
+### Starting Docker Container
 
-* In attempts to keep things simple this module avoids some "intelligent" routing logic available in some other Node.js modules.
-* We focus on getting public traffic to a Docker container, your middleware is expected to handle more advanced routing decisions.
-* Although Docker Proxy caches known routes, it does no other forms of caching, we'll leave that up to Varnish.
-
+```
+# Building Docker image from source.
+make image
+make run
+```

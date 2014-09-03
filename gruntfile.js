@@ -89,30 +89,14 @@ module.exports = function( grunt ) {
       }
     },
 
-    clean: {
-      modules: [
-        "/tmp/docker-proxy"
-      ]
-    },
-
-    // Execute Shell Commands.
-    shell: {
-      install: {},
-      update: {}
-    }
-
   });
 
   // Load NPM Tasks.
   grunt.loadNpmTasks( 'grunt-markdown' );
   grunt.loadNpmTasks( 'grunt-mocha-cli' );
   grunt.loadNpmTasks( 'grunt-jscoverage' );
-  grunt.loadNpmTasks( 'grunt-contrib-symlink' );
   grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
   grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-shell' );
 
   // Load Custom Tasks.
   grunt.loadTasks( 'lib/tasks' );
