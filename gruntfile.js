@@ -10,7 +10,7 @@ module.exports = function( grunt ) {
   grunt.initConfig({
 
     // Load Package Data.
-    pkg: grunt.file.readJSON( 'package.json' ),
+    package: grunt.file.readJSON( 'package.json' ),
 
     // Run Mocha Tests.
     mochacli: {
@@ -25,10 +25,10 @@ module.exports = function( grunt ) {
     // Generate Static YUI Documentation
     yuidoc: {
       compile: {
-        name: '<%= pkg.name %>',
-        description: '<%= pkg.description %>',
-        version: '<%= pkg.version %>',
-        url: '<%= pkg.homepage %>',
+        name: '<%= package.name %>',
+        description: '<%= package.description %>',
+        version: '<%= package.version %>',
+        url: '<%= package.homepage %>',
         logo: 'http://media.usabilitydynamics.com/logo.png',
         options: {
           paths: [
@@ -87,7 +87,7 @@ module.exports = function( grunt ) {
           }
         }
       }
-    },
+    }
 
   });
 
