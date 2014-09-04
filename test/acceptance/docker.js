@@ -5,23 +5,42 @@
  */
 module.exports = {
 
-  "client/docker": {
+  before: function( done ) {
 
-    // @todo Implement!
-    'can accept messages from Docker Daemon.': function( done ) {
+
+    done();
+
+  },
+
+  "Docker Proxy": {
+
+    'is aware of running containers on start.': function( done ) {
 
       return done();
 
-      this.timeout( 10000 );
+    },
 
-      var DockerEvents = require( '../../lib/clients/docker.js' );
+    'monitors changes to containers as they start.': function( done ) {
 
-      DockerEvents.should.have.property( 'create' );
+      return done();
 
-      DockerEvents.create({
-        host: process.env.DOCKER_HOSTNAME || 'localhost',
-        port: process.env.DOCKER_PORT
-      }).on( '_message', done )
+    },
+
+    'monitors changes to containers as they restart.': function( done ) {
+
+      return done();
+
+    },
+
+    'monitors changes to containers as they stop.': function( done ) {
+
+      return done();
+
+    },
+
+    'monitors changes to containers as they die.': function( done ) {
+
+      return done();
 
     }
 

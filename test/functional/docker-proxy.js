@@ -4,7 +4,7 @@
  */
 module.exports = {
 
-  "dockerProxy controller": {
+  "Docker Proxy controller": {
 
     'allows .create() to be used to mount clusterable services.': function( done ) {
 
@@ -37,9 +37,15 @@ module.exports = {
     },
 
     'has an event emitter that supports wild cards.': function( done ) {
-      module.service.on( 'test:*', done );
+      module.service.once( 'test:*', done );
       module.service.emit( 'test:one', null, true );
-    }
+    },
+
+    'can connect to and monitor Docker Daemon over TCP': function() {},
+
+    'can connect to and monitor Docker Daemon via Unix Sock file.': function() {},
+
+    'can handle SSL connections.': function() {}
 
   }
 

@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "node --harmony bin/docker-proxy.js start",
-    "test": "mocha --ui exports --reporter list test"
+    "test": "mocha --ui exports --reporter list test/unit test/functional test"
   },
   "repository": {
     "url": "git@github.com:UsabilityDynamics/node-docker-proxy.git",
@@ -67,6 +67,7 @@
     "request": "^2.40.0",
     "sails-disk": "^0.10.3",
     "sails-memory": "^0.10.2",
+    "sails-rest": "0.0.4",
     "serve-static": "^1.5.3",
     "string": "^1.9.1",
     "through2": "^0.6.1",
