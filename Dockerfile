@@ -48,6 +48,7 @@ ADD           static/etc/supervisord.conf           /etc/supervisor/supervisord.
 RUN           \
               export NODE_ENV=production && \
               mkdir -p /etc/docker-proxy && \
+              mkdir -p /etc/docker-proxy/ssl && \
               mkdir -p /var/lib/docker-proxy && \
               mkdir -p /var/log/docker-proxy && \
               mkdir -p /var/cache/docker-proxy && \
