@@ -10,7 +10,7 @@
 
 BUILD_ORGANIZATION	          ?=usabilitydynamics
 BUILD_REPOSITORY		          ?=docker-proxy
-BUILD_VERSION				          ?=0.2.0
+BUILD_VERSION				          ?=0.2.1
 BUILD_BRANCH		              ?=$(shell git branch | sed -n '/\* /s///p')
 
 CONTAINER_NAME			          ?=docker-proxy

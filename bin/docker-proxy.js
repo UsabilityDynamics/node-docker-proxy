@@ -25,7 +25,7 @@ commander.command( 'start' )
   .option( '--api-address [apiAddress]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_API_ADDRESS || '0.0.0.0' )
   .option( '--public-path [publicPath]', 'Path to static public files.', process.env.DOCKER_PROXY_PUBLIC_PATH ? process.env.DOCKER_PROXY_PUBLIC_PATH : './static/public' )
   .option( '--ssl-path [sslPath]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_SSL_DIR ? process.env.DOCKER_PROXY_SSL_DIR : '/etc/ssl' )
-  .option( '--pid-path [pidPath]', 'Path to PID file to use.', process.env.DOCKER_PROXY_PID_PATH ? process.env.DOCKER_PROXY_PID_PATH : require( 'path' ).join( process.env.TMPDIR || process.env.TEMP, 'docker-proxy.pid' ) )
+  .option( '--pid-path [pidPath]', 'Path to PID file to use.', process.env.DOCKER_PROXY_PID_PATH ? process.env.DOCKER_PROXY_PID_PATH : require( 'path' ).join( process.env.TMPDIR || process.env.TEMP || __dirname, 'docker-proxy.pid' ) )
   .action( startService )
 
 commander.command( 'status' )
