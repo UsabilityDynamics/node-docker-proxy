@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/services/proxy.js - docker-proxy</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://media.usabilitydynamics.com/logo.png" title="docker-proxy"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: lib/services/proxy.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Start Docker Proxy
+ *
+ */
+require( &#x27;../docker-proxy&#x27; ).service( function serviceHandler( error, service ) {
+  service.debug( &#x27;serviceHandler&#x27;, &#x27;Proxy&#x27; );
+
+  service.once( &#x27;ready&#x27;, function() {
+    service.log.info( &#x27;Docker Proxy Router fully loaed.&#x27; );
+
+    var Redbird = require( &#x27;redbird&#x27; );
+    var Container = service._models.container;
+    var Backend = service._models.backend;
+
+    new Redbird({
+      port: service.get( &#x27;service.proxy.port&#x27; ),
+      hostname: service.get( &#x27;service.proxy.host&#x27; ),
+      __ssl: {
+        port: service.get( &#x27;service.proxy.sslPort&#x27; ),
+        key: require( &#x27;path&#x27; ).join( service.get( &#x27;service.proxy.sslPath&#x27; ), &#x27;dev-key.pem&#x27; ),
+        csr: require( &#x27;path&#x27; ).join( service.get( &#x27;service.proxy.sslPath&#x27; ), &#x27;dev-csr.pem&#x27; ),
+        cert: require( &#x27;path&#x27; ).join( service.get( &#x27;service.proxy.sslPath&#x27; ), &#x27;dev-cert.pem&#x27; )
+      }
+    }).once( &#x27;ready&#x27;, proxyReady );
+
+    // ORM Callbacks.
+    Container.on( &#x27;destroy&#x27;,  removeRoutes );
+    Container.on( &#x27;insert&#x27;,   registerRoutes );
+
+  });
+
+  /**
+   * Trverses through proxy.routing trying to find all routes that target a container/backend.
+   *
+   * @param query
+   * @returns {Array}
+   */
+  function reverseBackendQuery( query ) {
+    console.log( &#x27;reverseBackendQuery&#x27;, query );
+
+    var _ = require( &#x27;lodash&#x27; );
+
+    var _query = {
+      hostname: query.hostname || query.host || query.address, // &quot;208.52.164.213&quot;,
+      port: query.port // &quot;49165&quot;
+    }
+
+    var _matches = [];
+
+    _.each( proxy.routing, function( backends, key ) {
+
+      if( _.find( backends, _query ) ) {
+        _matches.push( key );
+      }
+
+    });
+
+    return _matches;
+
+  }
+
+  /**
+   * After a backend is removed we must remove any routes to it.
+   * 
+   * @param container
+   */
+  function removeRoutes( error, container ) {
+    console.log( &#x27;removeRoutes&#x27; );
+
+    console.log( require( &#x27;util&#x27;).inspect( proxy.routing, { colors: true , depth:5, showHidden: false } ) );
+
+    Object.keys( container._backends || {} ).forEach( function( key ) {
+
+      var _sources = reverseBackendQuery({
+        hostname: container._backends[ key ].target.hostname || container._backends[ key ].target.address,
+        port: container._backends[ key ].target.port
+      });
+
+      _sources.forEach( function( src ) {
+        proxy.unregister( src );
+      })
+
+    })
+
+    // console.log( require( &#x27;util&#x27;).inspect( proxy.routing, { colors: true , depth:5, showHidden: false } ) );
+
+    // console.log( &#x27;removeRoutes:after There are %d routes.&#x27;, proxy.routing );
+
+  }
+
+  /**
+   * Insert Route to Proxy
+   *
+   * @param container
+   */
+  function registerRoutes( error, container ) {
+    service.debug( &#x27;registerRoute&#x27;, container );
+    //console.log( &#x27;registerRoutes&#x27;, error, container );
+
+    Object.keys( container._backends || {} ).forEach( function( key ) {
+
+      try {
+
+        var _backend = container._backends[ key ];
+
+        service.log.info( &#x27;proxy.register&#x27;, key, _backend.target.target );
+
+        proxy.register( key, _backend.target.target, _backend.options );
+
+      } catch( error ) {
+        console.error( error.message, container._backends[ key ] );
+      }
+
+    })
+
+  }
+
+  /**
+   * Server Listen Callback
+   *
+   * @param error
+   * @param server
+   */
+  function proxyReady( error, server ) {
+    service.log.info( &#x27;Load balancer web server started on %s:%s.&#x27;, server.address().address, server.address().port );
+
+    // server.proxy.on( &#x27;error&#x27;, proxyError );
+    // server.proxy.on( &#x27;proxyReq&#x27;, proxyRequest );
+    // server.proxy.on( &#x27;proxyRes&#x27;, proxyResponse );
+
+  }
+
+  /**
+   * Proxy Routing Error.
+   *
+   * @param error
+   * @param req
+   * @param res
+   * @param data
+   */
+  function proxyError( error, req, res, data ) {
+
+    res.send({
+      ok: false,
+      message: [ &#x27;Backend is not reachable.&#x27; ],
+      errors: [ error ],
+      data: process.env.NODE_ENV === &#x27;development&#x27; ? data : null
+    });
+
+  }
+
+  /**
+   * Proxy Routing Response.
+   *
+   * @param proxyRes
+   * @param req
+   * @param res
+   */
+  function proxyResponse(proxyRes, req, res) {
+    // self.debug( &#x27;proxyResponse [headers: %d]&#x27;, Object.keys( res.headers ).length );
+  }
+
+  /**
+   * Proxy Routing Request.
+   *
+   * @param proxyReq
+   * @param req
+   * @param res
+   * @param options
+   */
+  function proxyRequest(proxyReq, req, res, options) {
+    // self.debug( &#x27;proxyRequest [headers: %d]&#x27;, Object.keys( req.headers ).length );
+  }
+
+}, module );
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

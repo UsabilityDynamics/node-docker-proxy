@@ -37,6 +37,7 @@ module.exports = {
 
     module.waterlineConfig = {
       adapters: {
+        docker: require( 'waterline-docker' ),
         memory: require( 'sails-memory' ),
         disk: require( 'sails-disk' )
       },
@@ -46,6 +47,9 @@ module.exports = {
         backend: require( '../../lib/models/backend' ),
       },
       connections: {
+        docker: {
+          adapter: 'docker'
+        },
         memory: {
           adapter: 'memory'
         },
@@ -63,6 +67,6 @@ module.exports = {
 
   },
 
-  model: {}
+  Server: {}
 
 };

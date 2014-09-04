@@ -3,24 +3,50 @@ machine:
     version: v0.11.13
   services:
     - docker
+  hosts:
+    site1.com: 127.0.0.1
+    api.site1.com: 127.0.0.1
+    cdn.site1.com: 127.0.0.1
+    www.site1.com: 127.0.0.1
+    site2.com: 127.0.0.1
+    api.site2.com: 127.0.0.1
+    cdn.site2.com: 127.0.0.1
+    www.site2.com: 127.0.0.1
+    site3.com: 127.0.0.1
+    api.site3.com: 127.0.0.1
+    cdn.site3.com: 127.0.0.1
+    www.site3.com: 127.0.0.1
+    site4.com: 127.0.0.1
+    api.site4.com: 127.0.0.1
+    cdn.site4.com: 127.0.0.1
+    www.site4.com: 127.0.0.1
+    site5.com: 127.0.0.1
+    api.site5.com: 127.0.0.1
+    cdn.site5.com: 127.0.0.1
+    www.site5.com: 127.0.0.1
 
 dependencies:
-  override:
-    - NODE_ENV=development npm install
+  pre:
+    - git config --global user.email ${GITHUB_EMAIL}
+    - git config --global user.name ${GITHUB_USERNAME}
+    - git config --global push.default simple
+    - "export DOCKER_ADDRESS=$(ifconfig docker0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
+    - echo "DOCKER_OPTS='--host=tcp://172.17.42.1:2875 --host=unix:///var/run/docker.sock -s btrfs -e lxc'" | sudo tee --append /etc/default/docker > /dev/null
+    - echo "DOCKER_PORT=2875" | sudo tee --append /etc/environment > /dev/null
+    - echo "DOCKER_ADDRESS=172.17.42.1" | sudo tee --append /etc/environment > /dev/null
+    - echo "DOCKER_HOST='172.17.42.1:2875'" | sudo tee --append /etc/environment > /dev/null
+    - sudo service docker restart
+    - docker login --username=${DOCKER_HUB_USERNAME} --email=${DOCKER_HUB_EMAIL} --password=${DOCKER_HUB_PASSWORD}
+    - NODE_ENV=development npm link
 
 test:
   override:
-    - nohup docker -H tcp://localhost:2375 -H unix:///var/run/docker.sock -d &
     - mocha test/unit
     - mocha test/functional
-    - mocha test/integration
+    - sh /home/ubuntu/node-docker-proxy/test/acceptance/fixtures/start-containers.sh
     - make image; sleep 5
     - make run; sleep 5
+    - mocha test/integration
     - mocha test/acceptance
-
-deployment:
-  hub:
-    branch: master
-    commands:
-      - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" < .dockercfg.template > ~/.dockercfg
-      - docker push usabilitydynamics/docker-proxy:latest
+  post:
+    - make release

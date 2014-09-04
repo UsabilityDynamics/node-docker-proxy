@@ -1,0 +1,1389 @@
+{
+    "project": {
+        "name": "docker-proxy",
+        "description": "Docker Proxy.",
+        "version": "0.2.0",
+        "url": "",
+        "logo": "http://media.usabilitydynamics.com/logo.png"
+    },
+    "files": {
+        "lib/common/broker-client.js": {
+            "name": "lib/common/broker-client.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/common/broker.js": {
+            "name": "lib/common/broker.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/common/utility.js": {
+            "name": "lib/common/utility.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/middleware/api.js": {
+            "name": "lib/middleware/api.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/middleware/router.js": {
+            "name": "lib/middleware/router.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/middleware/static.js": {
+            "name": "lib/middleware/static.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/middleware/status.js": {
+            "name": "lib/middleware/status.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/models/backend.js": {
+            "name": "lib/models/backend.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/models/container.js": {
+            "name": "lib/models/container.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/models/image.js": {
+            "name": "lib/models/image.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/models/server.js": {
+            "name": "lib/models/server.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/services/api.js": {
+            "name": "lib/services/api.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/services/cadvisor.js": {
+            "name": "lib/services/cadvisor.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/services/daemon.js": {
+            "name": "lib/services/daemon.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/services/proxy.js": {
+            "name": "lib/services/proxy.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/services/static.js": {
+            "name": "lib/services/static.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/services/store.js": {
+            "name": "lib/services/store.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/services/tcp.js": {
+            "name": "lib/services/tcp.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/services/varnish.js": {
+            "name": "lib/services/varnish.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/docker-proxy.js": {
+            "name": "lib/docker-proxy.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "bin/docker-proxy.js": {
+            "name": "bin/docker-proxy.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {},
+    "classitems": [
+        {
+            "file": "lib/common/broker-client.js",
+            "line": 1,
+            "description": "Client for vBroker.\n\n- clearSubscriptions\n- hasSubscriptions\n- unsubscribe",
+            "class": ""
+        },
+        {
+            "file": "lib/common/broker.js",
+            "line": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/common/broker.js",
+            "line": 67,
+            "params": [
+                {
+                    "name": "error",
+                    "description": ""
+                },
+                {
+                    "name": "body",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/common/broker.js",
+            "line": 113,
+            "description": "Emit Settings Change",
+            "params": [
+                {
+                    "name": "error",
+                    "description": ""
+                },
+                {
+                    "name": "data",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/common/broker.js",
+            "line": 128,
+            "description": "Check Backend ElasticSearch Server.",
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/common/utility.js",
+            "line": 3,
+            "params": [
+                {
+                    "name": "error",
+                    "description": ""
+                },
+                {
+                    "name": "state",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/common/utility.js",
+            "line": 32,
+            "description": "Task Completion Callback.",
+            "params": [
+                {
+                    "name": "error",
+                    "description": ""
+                },
+                {
+                    "name": "state",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/common/utility.js",
+            "line": 152,
+            "description": "Task Completion Callback.",
+            "params": [
+                {
+                    "name": "error",
+                    "description": ""
+                },
+                {
+                    "name": "state",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/common/utility.js",
+            "line": 172,
+            "description": "Task Completion Callback.",
+            "params": [
+                {
+                    "name": "error",
+                    "description": ""
+                },
+                {
+                    "name": "state",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/common/utility.js",
+            "line": 281,
+            "description": "Find by _id Key",
+            "params": [
+                {
+                    "name": "collection",
+                    "description": ""
+                },
+                {
+                    "name": "_id",
+                    "description": ""
+                },
+                {
+                    "name": "cb",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/middleware/api.js",
+            "line": 1,
+            "description": "Middleware Handler.\n\nInitialized in-context of dockerProxy so has access to this.debug(), this.settings(), etc.",
+            "params": [
+                {
+                    "name": "app",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/middleware/api.js",
+            "line": 84,
+            "class": ""
+        },
+        {
+            "file": "lib/middleware/router.js",
+            "line": 1,
+            "description": "Middleware Handler.\n\n\nhttps://github.com/isaacs/error-page",
+            "params": [
+                {
+                    "name": "app",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/middleware/router.js",
+            "line": 66,
+            "params": [
+                {
+                    "name": "req",
+                    "description": ""
+                },
+                {
+                    "name": "callback",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Null"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/middleware/router.js",
+            "line": 146,
+            "class": ""
+        },
+        {
+            "file": "lib/middleware/static.js",
+            "line": 1,
+            "description": "Middleware Handler.\n\nInitialized in-context of dockerProxy so has access to this.debug(), this.settings(), etc.",
+            "params": [
+                {
+                    "name": "app",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/middleware/static.js",
+            "line": 33,
+            "params": [
+                {
+                    "name": "req",
+                    "description": ""
+                },
+                {
+                    "name": "callback",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/middleware/static.js",
+            "line": 44,
+            "class": ""
+        },
+        {
+            "file": "lib/middleware/status.js",
+            "line": 1,
+            "description": "Middleware Handler.",
+            "params": [
+                {
+                    "name": "app",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/models/backend.js",
+            "line": 1,
+            "description": "Creates Waterline Collection for Backends\n\n- Schema is enabled to keep the backend data stored in memory limited to only what we need.\n- Stored in Memory.\n\nbeforeValidate\nafterValidate\nbeforeUpdate\nafterUpdate\nbeforeCreate\nafterCreate\nbeforeDestroy\nafterDestroy",
+            "class": ""
+        },
+        {
+            "file": "lib/models/backend.js",
+            "line": 125,
+            "params": [
+                {
+                    "name": "data",
+                    "description": ""
+                },
+                {
+                    "name": "done",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/models/backend.js",
+            "line": 135,
+            "params": [
+                {
+                    "name": "data",
+                    "description": ""
+                },
+                {
+                    "name": "done",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/models/backend.js",
+            "line": 145,
+            "params": [
+                {
+                    "name": "data",
+                    "description": ""
+                },
+                {
+                    "name": "done",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/models/backend.js",
+            "line": 155,
+            "description": "Semantic-shim for create()",
+            "class": ""
+        },
+        {
+            "file": "lib/models/backend.js",
+            "line": 164,
+            "description": "Semantic-shim for destroy()",
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 1,
+            "description": "Creates Waterline Collection for Backends\n\n- Schema is enabled to keep the container data stored in memory limited to only what we need.\n- The \"memory,disk\" order does not write to disk but we inherit some of the methods such as createEach",
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 153,
+            "description": "Observe Entire Collection.\n\nThis should be added by Adapter, this is temporary.",
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 163,
+            "description": "Observe Entire Collection.\n\nThis should be added by Adapter, this is temporary.",
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 177,
+            "params": [
+                {
+                    "name": "data",
+                    "description": ""
+                },
+                {
+                    "name": "done",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "BeforeChange"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 194,
+            "description": "After State Change",
+            "params": [
+                {
+                    "name": "data",
+                    "description": ""
+                },
+                {
+                    "name": "done",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "AfterChange"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 212,
+            "params": [
+                {
+                    "name": "data",
+                    "description": ""
+                },
+                {
+                    "name": "done",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 222,
+            "description": "Afer Container is Removed\n\n- Flush all Backends.",
+            "params": [
+                {
+                    "name": "containers",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 243,
+            "params": [
+                {
+                    "name": "data",
+                    "description": ""
+                },
+                {
+                    "name": "done",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 257,
+            "params": [
+                {
+                    "name": "data",
+                    "description": ""
+                },
+                {
+                    "name": "done",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 389,
+            "description": "Semantic-shim for create()",
+            "class": ""
+        },
+        {
+            "file": "lib/models/container.js",
+            "line": 398,
+            "description": "Semantic-shim for destroy()",
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/models/image.js",
+            "line": 1,
+            "description": "Creates Waterline Collection for Backends\n\n- Stored in Memory.\n\nbeforeValidate\nafterValidate\nbeforeUpdate\nafterUpdate\nbeforeCreate\nafterCreate\nbeforeDestroy\nafterDestroy",
+            "class": ""
+        },
+        {
+            "file": "lib/models/server.js",
+            "line": 1,
+            "description": "DEBUG=connect-proxy-models:server mocha\n\n ### Lifescyle Callbacks\n - beforeValidate\n - afterValidate\n - afterCreate\n - beforeUpdate\n - afterUpdate\n - beforeDestroy\n - afterDestroy\n\n ### Instance Methods\n\n - start\n - stop\n - use",
+            "class": ""
+        },
+        {
+            "file": "lib/services/api.js",
+            "line": 1,
+            "description": "Start Docker Proxy\n\nnode bin/docker-proxy.js start\n\nsudo DEBUG=docker.proxy DOCKER_HOSTNAME=208.52.164.213 DOCKER_PORT=16423 supervisor -w ./ -- bin/docker-proxy.js start -p 80",
+            "todo": [
+                "It may be better to wait (and verify) for Docker Daemon connection to be stablished before starting."
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/services/cadvisor.js",
+            "line": 1,
+            "description": "cadvisor API gateway\n\n sudo docker run \\\n   --volume=/var/run:/var/run:rw \\\n   --volume=/sys:/sys:ro \\\n   --volume=/var/lib/docker/:/var/lib/docker:ro \\\n   --publish=8080 \\\n   --detach=true \\\n   --name=cadvisor \\\n   google/cadvisor:latest",
+            "class": ""
+        },
+        {
+            "file": "lib/services/daemon.js",
+            "line": 1,
+            "description": "Daemon Service\n\n- Should not be clustered.",
+            "class": ""
+        },
+        {
+            "file": "lib/services/proxy.js",
+            "line": 1,
+            "description": "Start Docker Proxy",
+            "class": ""
+        },
+        {
+            "file": "lib/services/proxy.js",
+            "line": 32,
+            "description": "Trverses through proxy.routing trying to find all routes that target a container/backend.",
+            "params": [
+                {
+                    "name": "query",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/services/proxy.js",
+            "line": 62,
+            "description": "After a backend is removed we must remove any routes to it.",
+            "params": [
+                {
+                    "name": "container",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/services/proxy.js",
+            "line": 91,
+            "description": "Insert Route to Proxy",
+            "params": [
+                {
+                    "name": "container",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/services/proxy.js",
+            "line": 118,
+            "description": "Server Listen Callback",
+            "params": [
+                {
+                    "name": "error",
+                    "description": ""
+                },
+                {
+                    "name": "server",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/services/proxy.js",
+            "line": 133,
+            "description": "Proxy Routing Error.",
+            "params": [
+                {
+                    "name": "error",
+                    "description": ""
+                },
+                {
+                    "name": "req",
+                    "description": ""
+                },
+                {
+                    "name": "res",
+                    "description": ""
+                },
+                {
+                    "name": "data",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/services/proxy.js",
+            "line": 152,
+            "description": "Proxy Routing Response.",
+            "params": [
+                {
+                    "name": "proxyRes",
+                    "description": ""
+                },
+                {
+                    "name": "req",
+                    "description": ""
+                },
+                {
+                    "name": "res",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/services/proxy.js",
+            "line": 163,
+            "description": "Proxy Routing Request.",
+            "params": [
+                {
+                    "name": "proxyReq",
+                    "description": ""
+                },
+                {
+                    "name": "req",
+                    "description": ""
+                },
+                {
+                    "name": "res",
+                    "description": ""
+                },
+                {
+                    "name": "options",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/services/static.js",
+            "line": 1,
+            "description": "Start Docker Proxy\n\nnode bin/docker-proxy.js start\n\nsudo DEBUG=docker.proxy DOCKER_HOSTNAME=208.52.164.213 DOCKER_PORT=16423 supervisor -w ./ -- bin/docker-proxy.js start -p 80",
+            "todo": [
+                "It may be better to wait (and verify) for Docker Daemon connection to be stablished before starting."
+            ],
+            "params": [
+                {
+                    "name": "settings",
+                    "description": "",
+                    "props": [
+                        {
+                            "name": "port",
+                            "description": ""
+                        },
+                        {
+                            "name": "host",
+                            "description": ""
+                        },
+                        {
+                            "name": "limit",
+                            "description": ""
+                        }
+                    ]
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/services/store.js",
+            "line": 1,
+            "description": "Start Docker Proxy\n\nnode bin/docker-proxy.js start\n\nsudo DEBUG=docker.proxy DOCKER_HOSTNAME=208.52.164.213 DOCKER_PORT=16423 supervisor -w ./ -- bin/docker-proxy.js start -p 80",
+            "todo": [
+                "It may be better to wait (and verify) for Docker Daemon connection to be stablished before starting."
+            ],
+            "params": [
+                {
+                    "name": "settings",
+                    "description": "",
+                    "props": [
+                        {
+                            "name": "port",
+                            "description": ""
+                        },
+                        {
+                            "name": "host",
+                            "description": ""
+                        },
+                        {
+                            "name": "limit",
+                            "description": ""
+                        }
+                    ]
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/services/tcp.js",
+            "line": 1,
+            "description": "TCP Proxy",
+            "class": ""
+        },
+        {
+            "file": "lib/services/varnish.js",
+            "line": 1,
+            "description": "Varnish Service",
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 1,
+            "description": "Docker Proxy Middleware\n\n- pass\n- pipe\n- deliver",
+            "todo": [
+                "Add formatting for Docker settings",
+                "e.g. to break-up DOCKER_HOST environment variable into DOCKER_PORT and DOCKER_HOSTNAME.",
+                "Convert api and router middleware to use staticMiddleware format."
+            ],
+            "params": [
+                {
+                    "name": "handler",
+                    "description": ""
+                },
+                {
+                    "name": "serviceModule",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "author": "potanin@UD",
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 150,
+            "description": "dockerProxy Instance Properties.",
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 193,
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 207,
+            "description": "Used as a callback on things we don't really care about, yet a callback is required. (Waterline)",
+            "params": [
+                {
+                    "name": "error",
+                    "description": ""
+                },
+                {
+                    "name": "data",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 349,
+            "description": "Middleware Handler.",
+            "params": [
+                {
+                    "name": "app",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 361,
+            "description": "Middleware Handler.",
+            "params": [
+                {
+                    "name": "app",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 373,
+            "description": "Upstream Middleware.",
+            "params": [
+                {
+                    "name": "options",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 536,
+            "params": [
+                {
+                    "name": "options",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "*"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 613,
+            "description": "Start Server.",
+            "note": "The server object also has \"connection\" and \"clientError\" events.",
+            "params": [
+                {
+                    "name": "options",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 664,
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 673,
+            "description": "Triggered once dockerProxy is use()'d as middleware module.",
+            "params": [
+                {
+                    "name": "parent",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 689,
+            "description": "Handles Uncaught Errors",
+            "params": [
+                {
+                    "name": "err",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 713,
+            "description": "Constructor Properties.",
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 719,
+            "description": "New Instance.",
+            "params": [
+                {
+                    "name": "handler",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DockerProxy"
+            },
+            "class": ""
+        },
+        {
+            "file": "lib/docker-proxy.js",
+            "line": 734,
+            "description": "New Instance.",
+            "params": [
+                {
+                    "name": "handler",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "DockerProxy"
+            },
+            "class": ""
+        },
+        {
+            "file": "bin/docker-proxy.js",
+            "line": 39,
+            "description": "Start Service.",
+            "params": [
+                {
+                    "name": "settings",
+                    "description": ""
+                }
+            ],
+            "class": ""
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/common/broker.js:128"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/common/utility.js:3"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/common/utility.js:32"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/common/utility.js:152"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/common/utility.js:172"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/middleware/router.js:66"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/models/backend.js:164"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/models/container.js:177"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/models/container.js:194"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/models/container.js:398"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/services/proxy.js:32"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/docker-proxy.js:1"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/docker-proxy.js:536"
+        },
+        {
+            "message": "unknown tag: note",
+            "line": " lib/docker-proxy.js:613"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/docker-proxy.js:719"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/docker-proxy.js:734"
+        },
+        {
+            "message": "Missing item type\nClient for vBroker.\n\n- clearSubscriptions\n- hasSubscriptions\n- unsubscribe",
+            "line": " lib/common/broker-client.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/common/broker.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/common/broker.js:67"
+        },
+        {
+            "message": "Missing item type\nEmit Settings Change",
+            "line": " lib/common/broker.js:113"
+        },
+        {
+            "message": "Missing item type\nCheck Backend ElasticSearch Server.",
+            "line": " lib/common/broker.js:128"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/common/utility.js:3"
+        },
+        {
+            "message": "Missing item type\nTask Completion Callback.",
+            "line": " lib/common/utility.js:32"
+        },
+        {
+            "message": "Missing item type\nTask Completion Callback.",
+            "line": " lib/common/utility.js:152"
+        },
+        {
+            "message": "Missing item type\nTask Completion Callback.",
+            "line": " lib/common/utility.js:172"
+        },
+        {
+            "message": "Missing item type\nFind by _id Key",
+            "line": " lib/common/utility.js:281"
+        },
+        {
+            "message": "Missing item type\nMiddleware Handler.\n\nInitialized in-context of dockerProxy so has access to this.debug(), this.settings(), etc.",
+            "line": " lib/middleware/api.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/middleware/api.js:84"
+        },
+        {
+            "message": "Missing item type\nMiddleware Handler.\n\n\nhttps://github.com/isaacs/error-page",
+            "line": " lib/middleware/router.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/middleware/router.js:66"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/middleware/router.js:146"
+        },
+        {
+            "message": "Missing item type\nMiddleware Handler.\n\nInitialized in-context of dockerProxy so has access to this.debug(), this.settings(), etc.",
+            "line": " lib/middleware/static.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/middleware/static.js:33"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/middleware/static.js:44"
+        },
+        {
+            "message": "Missing item type\nMiddleware Handler.",
+            "line": " lib/middleware/status.js:1"
+        },
+        {
+            "message": "Missing item type\nCreates Waterline Collection for Backends\n\n- Schema is enabled to keep the backend data stored in memory limited to only what we need.\n- Stored in Memory.\n\nbeforeValidate\nafterValidate\nbeforeUpdate\nafterUpdate\nbeforeCreate\nafterCreate\nbeforeDestroy\nafterDestroy",
+            "line": " lib/models/backend.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/models/backend.js:125"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/models/backend.js:135"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/models/backend.js:145"
+        },
+        {
+            "message": "Missing item type\nSemantic-shim for create()",
+            "line": " lib/models/backend.js:155"
+        },
+        {
+            "message": "Missing item type\nSemantic-shim for destroy()",
+            "line": " lib/models/backend.js:164"
+        },
+        {
+            "message": "Missing item type\nCreates Waterline Collection for Backends\n\n- Schema is enabled to keep the container data stored in memory limited to only what we need.\n- The \"memory,disk\" order does not write to disk but we inherit some of the methods such as createEach",
+            "line": " lib/models/container.js:1"
+        },
+        {
+            "message": "Missing item type\nObserve Entire Collection.\n\nThis should be added by Adapter, this is temporary.",
+            "line": " lib/models/container.js:153"
+        },
+        {
+            "message": "Missing item type\nObserve Entire Collection.\n\nThis should be added by Adapter, this is temporary.",
+            "line": " lib/models/container.js:163"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/models/container.js:177"
+        },
+        {
+            "message": "Missing item type\nAfter State Change",
+            "line": " lib/models/container.js:194"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/models/container.js:212"
+        },
+        {
+            "message": "Missing item type\nAfer Container is Removed\n\n- Flush all Backends.",
+            "line": " lib/models/container.js:222"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/models/container.js:243"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/models/container.js:257"
+        },
+        {
+            "message": "Missing item type\nSemantic-shim for create()",
+            "line": " lib/models/container.js:389"
+        },
+        {
+            "message": "Missing item type\nSemantic-shim for destroy()",
+            "line": " lib/models/container.js:398"
+        },
+        {
+            "message": "Missing item type\nCreates Waterline Collection for Backends\n\n- Stored in Memory.\n\nbeforeValidate\nafterValidate\nbeforeUpdate\nafterUpdate\nbeforeCreate\nafterCreate\nbeforeDestroy\nafterDestroy",
+            "line": " lib/models/image.js:1"
+        },
+        {
+            "message": "Missing item type\nDEBUG=connect-proxy-models:server mocha\n\n ### Lifescyle Callbacks\n - beforeValidate\n - afterValidate\n - afterCreate\n - beforeUpdate\n - afterUpdate\n - beforeDestroy\n - afterDestroy\n\n ### Instance Methods\n\n - start\n - stop\n - use",
+            "line": " lib/models/server.js:1"
+        },
+        {
+            "message": "Missing item type\nStart Docker Proxy\n\nnode bin/docker-proxy.js start\n\nsudo DEBUG=docker.proxy DOCKER_HOSTNAME=208.52.164.213 DOCKER_PORT=16423 supervisor -w ./ -- bin/docker-proxy.js start -p 80",
+            "line": " lib/services/api.js:1"
+        },
+        {
+            "message": "Missing item type\ncadvisor API gateway\n\n sudo docker run \\\n   --volume=/var/run:/var/run:rw \\\n   --volume=/sys:/sys:ro \\\n   --volume=/var/lib/docker/:/var/lib/docker:ro \\\n   --publish=8080 \\\n   --detach=true \\\n   --name=cadvisor \\\n   google/cadvisor:latest",
+            "line": " lib/services/cadvisor.js:1"
+        },
+        {
+            "message": "Missing item type\nDaemon Service\n\n- Should not be clustered.",
+            "line": " lib/services/daemon.js:1"
+        },
+        {
+            "message": "Missing item type\nStart Docker Proxy",
+            "line": " lib/services/proxy.js:1"
+        },
+        {
+            "message": "Missing item type\nTrverses through proxy.routing trying to find all routes that target a container/backend.",
+            "line": " lib/services/proxy.js:32"
+        },
+        {
+            "message": "Missing item type\nAfter a backend is removed we must remove any routes to it.",
+            "line": " lib/services/proxy.js:62"
+        },
+        {
+            "message": "Missing item type\nInsert Route to Proxy",
+            "line": " lib/services/proxy.js:91"
+        },
+        {
+            "message": "Missing item type\nServer Listen Callback",
+            "line": " lib/services/proxy.js:118"
+        },
+        {
+            "message": "Missing item type\nProxy Routing Error.",
+            "line": " lib/services/proxy.js:133"
+        },
+        {
+            "message": "Missing item type\nProxy Routing Response.",
+            "line": " lib/services/proxy.js:152"
+        },
+        {
+            "message": "Missing item type\nProxy Routing Request.",
+            "line": " lib/services/proxy.js:163"
+        },
+        {
+            "message": "Missing item type\nStart Docker Proxy\n\nnode bin/docker-proxy.js start\n\nsudo DEBUG=docker.proxy DOCKER_HOSTNAME=208.52.164.213 DOCKER_PORT=16423 supervisor -w ./ -- bin/docker-proxy.js start -p 80",
+            "line": " lib/services/static.js:1"
+        },
+        {
+            "message": "Missing item type\nStart Docker Proxy\n\nnode bin/docker-proxy.js start\n\nsudo DEBUG=docker.proxy DOCKER_HOSTNAME=208.52.164.213 DOCKER_PORT=16423 supervisor -w ./ -- bin/docker-proxy.js start -p 80",
+            "line": " lib/services/store.js:1"
+        },
+        {
+            "message": "Missing item type\nTCP Proxy",
+            "line": " lib/services/tcp.js:1"
+        },
+        {
+            "message": "Missing item type\nVarnish Service",
+            "line": " lib/services/varnish.js:1"
+        },
+        {
+            "message": "Missing item type\nDocker Proxy Middleware\n\n- pass\n- pipe\n- deliver",
+            "line": " lib/docker-proxy.js:1"
+        },
+        {
+            "message": "Missing item type\ndockerProxy Instance Properties.",
+            "line": " lib/docker-proxy.js:150"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/docker-proxy.js:193"
+        },
+        {
+            "message": "Missing item type\nUsed as a callback on things we don't really care about, yet a callback is required. (Waterline)",
+            "line": " lib/docker-proxy.js:207"
+        },
+        {
+            "message": "Missing item type\nMiddleware Handler.",
+            "line": " lib/docker-proxy.js:349"
+        },
+        {
+            "message": "Missing item type\nMiddleware Handler.",
+            "line": " lib/docker-proxy.js:361"
+        },
+        {
+            "message": "Missing item type\nUpstream Middleware.",
+            "line": " lib/docker-proxy.js:373"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/docker-proxy.js:536"
+        },
+        {
+            "message": "Missing item type\nStart Server.",
+            "line": " lib/docker-proxy.js:613"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/docker-proxy.js:664"
+        },
+        {
+            "message": "Missing item type\nTriggered once dockerProxy is use()'d as middleware module.",
+            "line": " lib/docker-proxy.js:673"
+        },
+        {
+            "message": "Missing item type\nHandles Uncaught Errors",
+            "line": " lib/docker-proxy.js:689"
+        },
+        {
+            "message": "Missing item type\nConstructor Properties.",
+            "line": " lib/docker-proxy.js:713"
+        },
+        {
+            "message": "Missing item type\nNew Instance.",
+            "line": " lib/docker-proxy.js:719"
+        },
+        {
+            "message": "Missing item type\nNew Instance.",
+            "line": " lib/docker-proxy.js:734"
+        },
+        {
+            "message": "Missing item type\nStart Service.",
+            "line": " bin/docker-proxy.js:39"
+        }
+    ]
+}

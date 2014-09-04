@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>bin/docker-proxy.js - docker-proxy</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://media.usabilitydynamics.com/logo.png" title="docker-proxy"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: bin/docker-proxy.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+#!/usr/bin/env node
+//
+// sudo DEBUG=docker:proxy supervisor -w ./ -- ./bin/docker-proxy.js start
+// node ./bin/docker-proxy.js start
+
+var dockerProxy = require( &#x27;../&#x27; );
+var commander  = require( &#x27;commander&#x27; );
+var os = require( &#x27;os&#x27; );
+
+commander._name = require( &#x27;../package&#x27; ).name;
+
+commander
+  .version( require( &#x27;../package&#x27; ).version )
+  .option( &#x27;-q&#x27;, &#x27;quiet&#x27;, &#x27;Silence console output.&#x27; )
+
+commander.command( &#x27;start&#x27; )
+  .option( &#x27;-p, --port [port]&#x27;, &#x27;Which port use for public proxy.&#x27;, process.env.DOCKER_PROXY_API_PORT || process.env.PORT || 8080 )
+  .option( &#x27;-h, --address [address]&#x27;, &#x27;IP address for public proxy.&#x27;, process.env.DOCKER_PROXY_API_HOST || process.env.HOST || &#x27;0.0.0.0&#x27; )
+  .option( &#x27;-s, --silent [silent]&#x27;, &#x27;silence worker logs&#x27;, process.env.DOCKER_PROXY_SILENT == &#x27;false&#x27; ? false : true )
+  .option( &#x27;-d, --docker-daemon [dockerDaemon]&#x27;, &#x27;Hostname or unix sock path to Docker Daemon.&#x27;, process.env.DOCKER_PROXY_DOCKER_DAEMON || process.env.DOCKER_HOST || process.env.DOCKER_SOCK_PATH || &#x27;/var/run/docker.sock&#x27; )
+  .option( &#x27;-c, --config-path [configPath]&#x27;, &#x27;Path to SSL certificates.&#x27;, process.env.DOCKER_PROXY_CONFIG_FILE_PATH || &#x27;./static/etc/docker-proxy.yaml&#x27; )
+  .option( &#x27;--ssl-port [sslPort]&#x27;, &#x27;SSL port for proxy.&#x27;, process.env.sslPort || 8443 )
+  .option( &#x27;--api-port [apiPort]&#x27;, &#x27;Path to SSL certificates.&#x27;, process.env.DOCKER_PROXY_API_PORT || 16000 )
+  .option( &#x27;--api-address [apiAddress]&#x27;, &#x27;Path to SSL certificates.&#x27;, process.env.DOCKER_PROXY_API_ADDRESS || &#x27;0.0.0.0&#x27; )
+  .option( &#x27;--public-path [publicPath]&#x27;, &#x27;Path to static public files.&#x27;, process.env.DOCKER_PROXY_PUBLIC_PATH ? process.env.DOCKER_PROXY_PUBLIC_PATH : &#x27;./static/public&#x27; )
+  .option( &#x27;--ssl-path [sslPath]&#x27;, &#x27;Path to SSL certificates.&#x27;, process.env.DOCKER_PROXY_SSL_DIR ? process.env.DOCKER_PROXY_SSL_DIR : &#x27;/etc/ssl&#x27; )
+  .option( &#x27;--pid-path [pidPath]&#x27;, &#x27;Path to PID file to use.&#x27;, process.env.DOCKER_PROXY_PID_PATH ? process.env.DOCKER_PROXY_PID_PATH : &#x27;/var/run/docker-proxy.pid&#x27; )
+  .action( startService )
+
+commander.command( &#x27;install&#x27; )
+  .action( require( &#x27;../lib/tasks/install&#x27; ) );
+
+if( process.argv.length === 2 ) {
+  process.argv.push(&#x27;--help&#x27; );
+}
+
+commander.parse( process.argv );
+
+/**
+ * Start Service.
+ *
+ * @param settings
+ */
+function startService( settings ) {
+
+  process.env.DOCKER_PROXY_CONFIG_FILE_PATH   = settings.configPath;
+  process.env.DOCKER_PROXY_DOCKER_DAEMON      = settings.dockerDaemon;
+  process.env.DOCKER_PROXY_SILENT             = settings.silent;
+  process.env.DOCKER_PROXY_PORT               = settings.port;
+  process.env.DOCKER_PROXY_SSL_PORT           = settings.sslPort;
+  process.env.DOCKER_PROXY_ADDRESS            = settings.address;
+  process.env.DOCKER_PROXY_API_PORT           = settings.apiPort;
+  process.env.DOCKER_PROXY_API_ADDRESS        = settings.apiAddress;
+  process.env.DOCKER_PROXY_SSL_DIR            = settings.sslPath;
+  process.env.DOCKER_PROXY_PUBLIC_PATH        = settings.publicPath;
+  process.env.DOCKER_PROXY_PID_PATH           = settings.pidPath;
+  process.env.DOCKER_PROXY_SILENT             = settings.silent;
+
+  require( &#x27;../lib/services/daemon&#x27; ).startService();
+
+}
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

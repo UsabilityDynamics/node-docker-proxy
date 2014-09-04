@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/middleware/router.js - docker-proxy</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://media.usabilitydynamics.com/logo.png" title="docker-proxy"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: lib/middleware/router.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Middleware Handler.
+ *
+ *
+ * https://github.com/isaacs/error-page
+ * @param app
+ * @constructor
+ */
+function routerMiddleware( options ) {
+  this.debug( &#x27;routerMiddleware.&#x27;, options );
+
+  var redbird = require( &#x27;redbird&#x27; );
+  var ErrorPage = require( &#x27;error-page&#x27; );
+
+  function routerMiddleware( req, res, next ) {
+    this.debug( &#x27;routerMiddleware [%s%s].&#x27;, req.hostname, req.path );
+
+    function proxyToTarget( error, container ) {
+      this.debug( &#x27;routerMiddleware [%s%s], [target=%s:%d].&#x27;, req.hostname, req.path, container.target.host || &#x27;&#x27;, container.target.port || &#x27;&#x27; );
+
+      if( error || !container || !container.target ) {
+        return res.error(503, &quot;Can not find backend.&quot;)
+      }
+
+      return req.proxy.web( req, req.res, container );
+
+    }
+
+    res.error = ErrorPage(req, res, { // options
+      //404: the404HandlerFunction,
+      //5xx: handleAll500s,
+      403: &#x27;forbidden!&#x27;,
+      400: &#x27;that was bad&#x27;,
+      &quot;*&quot;: module.errorPage,
+      debug: false // show full stack traces, or just messages
+    });
+
+    require( &#x27;deep-extend&#x27; )( req.headers, {
+      &#x27;X-Real-Ip&#x27;: module.getRemoteAddress(req),
+      &#x27;X-Forwarded-For&#x27;: module.getRemoteAddress(req),
+      &#x27;X-Forwarded-Protocol&#x27;: req.connection.pair ? &#x27;https&#x27; : &#x27;http&#x27;,
+      &#x27;X-Forwarded-Proto&#x27;: req.connection.pair ? &#x27;https&#x27; : &#x27;http&#x27;,
+      &#x27;X-Forwarded-Port&#x27;: req.connection.pair ? &#x27;443&#x27; : &#x27;80&#x27;,
+      &#x27;X-Docker-Proxy-Version&#x27;: this.settings.get( &#x27;version&#x27; ),
+      &#x27;X-Backend-Id&#x27;: null
+    });
+
+    res.set( &#x27;X-Via&#x27;, &#x27;docker-proxy/v0.1.0&#x27; );
+
+    module.getRemoteTarget.call( this, req, proxyToTarget.bind( this ) );
+
+  }
+
+  return routerMiddleware.bind( this )
+
+}
+
+Object.defineProperties( module, {
+  exports: {
+    value: routerMiddleware,
+    enumerable: true,
+    configurable: false,
+    writable: true
+  },
+  getRemoteTarget: {
+    /**
+     *
+     * @param req
+     * @param callback
+     * @returns {null}
+     */
+    value: function getRemoteTarget( req, callback ) {
+      // this.debug( &#x27;getRemoteTarget [%s%s].&#x27;, req.hostname, req.path );
+
+      req.proxyQuery = {
+        Hostname: req.hostname
+      };
+
+      this._models.container.findOne( req.proxyQuery, targetResult.bind( this ) );
+
+      function targetResult( error, target ) {
+        // this.debug( &#x27;getRemoteTarget&#x27;, &#x27;haveResult&#x27;, error !== null, typeof target );
+
+        if( target &amp;&amp; target.Backend ) {
+          return callback( null, target.Backend, req );
+        }
+
+        // Always return an object
+        return callback( new Error( &#x27;No target found.&#x27; ), { target: {} }, req );
+
+      }
+
+      return null;
+
+    },
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  getRemoteAddress: {
+    value: function getRemoteAddress(req) {
+      var remoteAddr;
+
+      if (req.connection === undefined) {
+        return null;
+      }
+      if (req.connection.remoteAddress) {
+        remoteAddr =req.connection.remoteAddress;
+      }
+      if (req.connection.socket &amp;&amp; req.connection.socket.remoteAddress) {
+        remoteAddr =req.connection.socket.remoteAddress;
+      }
+
+      if (remoteAddr === null) {
+        return errorMessage(res, &#x27;Cannot read the remote address.&#x27;);
+      }
+
+      if (remoteAddr.slice(0, 2) !== &#x27;::&#x27;) {
+        remoteAddr = &#x27;::ffff:&#x27; + remoteAddr;
+      }
+
+      return remoteAddr;
+
+    },
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  proxy: {
+    value: require(&#x27;http-proxy&#x27;).createProxyServer(),
+    enumerable: true,
+    configurable: false,
+    writable: true
+  },
+  errorPage: {
+    value: function( req, res, next ) {
+
+      res.send( &#x27;this is the error page&#x27; );
+
+    },
+    enumerable: true,
+    configurable: false,
+    writable: true
+  },
+  debug: {
+    /**
+     *
+     */
+    value: require( &#x27;debug&#x27; )( &#x27;docker:proxy:router&#x27; ),
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  version: {
+    value: null,
+    enumerable: true,
+    configurable: false,
+    writable: true
+  }
+});
+
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

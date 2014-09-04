@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/docker-proxy.js - docker-proxy</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http://media.usabilitydynamics.com/logo.png" title="docker-proxy"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: lib/docker-proxy.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Docker Proxy Middleware
+ *
+ * - pass
+ * - pipe
+ * - deliver
+ *
+ * @todo Add formatting for Docker settings, e.g. to break-up DOCKER_HOST environment variable into DOCKER_PORT and DOCKER_HOSTNAME.
+ * @todo Convert api and router middleware to use staticMiddleware format.
+ *
+ * @param handler
+ * @param serviceModule
+ * @returns {*}
+ * @author potanin@UD
+ * @constructor
+ */
+function dockerProxy( handler, serviceModule ) {
+
+  if( module._instance ) {
+
+    if( module._instance._state ) {
+      module._instance.applyHandler( handler, serviceModule );
+    }
+
+    module._instance.emit( &#x27;ready:again&#x27;, null, module._instance, module._instance._state );
+    module._instance.emit( &#x27;ready&#x27;, null, module._instance, module._instance._state );
+
+    return module._instance;
+
+  }
+
+  // Force Proper Instance.
+  if ( !( this instanceof dockerProxy ) ) {
+    return dockerProxy.create( handler );
+  }
+
+  var self        = this;
+  var yaml        = require( &quot;js-yaml&quot; );
+  var findup      = require( &#x27;findup-sync&#x27; );
+  var joinPath    = require( &#x27;path&#x27; ).join;
+  var deepExtend  = require( &#x27;deep-extend&#x27; );
+
+  // Set Default Settings.
+  this.settings.set({
+    _id: require( &#x27;./common/utility&#x27; ).randomString( 24 ).toLowerCase(),
+    name: require( &#x27;../package&#x27; ).name,
+    version: require( &#x27;../package&#x27; ).version,
+    app: {
+      &#x27;trust proxy&#x27;: false,
+      &#x27;x-powered-by&#x27;: false
+    },
+    basePath: require( &#x27;path&#x27; ).join( __dirname, &#x27;../static/etc&#x27;  ),
+    pidPath: process.env.DOCKER_PROXY_PID_PATH || &#x27;/var/run/docker-proxy&#x27;,
+    configPath: process.env.DOCKER_PROXY_CONFIG_FILE_PATH || findup( &#x27;docker-proxy.yaml&#x27; ) || require( &#x27;path&#x27; ).join( __dirname, &#x27;../static/etc/docker-proxy.yaml&#x27; ),
+    adapters: {
+      docker: require( &#x27;waterline-docker&#x27; ),
+      memory: require( &#x27;sails-memory&#x27; ),
+      disk: require( &#x27;sails-disk&#x27; )
+    },
+    collections: {
+      server: require( &#x27;waterline&#x27; ).Collection.extend( require( &#x27;./models/server&#x27; ) ),
+      container: require( &#x27;waterline&#x27; ).Collection.extend( require( &#x27;./models/container&#x27; ) ),
+      backend: require( &#x27;waterline&#x27; ).Collection.extend( require( &#x27;./models/backend&#x27; ) ),
+      image: require( &#x27;waterline&#x27; ).Collection.extend( require( &#x27;./models/image&#x27; ) )
+    },
+    connections: {
+      docker: {
+        adapter: &#x27;docker&#x27;,
+        schema: true,
+        host: process.env.DOCKER_HOST,
+        subscribe: true
+      },
+      disk: {
+        adapter: &#x27;disk&#x27;,
+        schema: true,
+        filePath: &#x27;/tmp/docker-proxy&#x27; //joinPath( &#x27;../../../&#x27;, &#x27;.tmp&#x27; )
+      },
+      memory: {
+        adapter: &#x27;memory&#x27;,
+        schema: true
+      },
+      persistent: {
+        adapter: &#x27;memory&#x27; // @temp
+      }
+    },
+    currentModule: serviceModule ? serviceModule.id : null,
+    service: {
+      api: {
+        port: process.env.DOCKER_PROXY_API_PORT,
+        address: process.env.DOCKER_PROXY_API_ADDRESS,
+        docker: {
+          host: process.env.DOCKER_HOST || &#x27;localhost&#x27;
+        }
+      },
+      daemon: {
+        cluster: false
+      },
+      proxy: {
+        port: process.env.DOCKER_PROXY_PORT,
+        address: process.env.DOCKER_PROXY_ADDRESS,
+        sslPath: process.env.DOCKER_PROXY_SSL_DIR,
+        sslPort: process.env.DOCKER_PROXY_SSL_PORT
+      },
+      static: {
+        path: process.env.DOCKER_PROXY_STATIC_PATH
+      }
+    }
+  })
+
+  // Set YAML Configuration.
+  this.set( yaml.load( require( &#x27;fs&#x27; ).readFileSync( this.settings.get( &#x27;configPath&#x27; ) ) ) );
+
+  // Expose settings into app.
+  deepExtend( this.app.settings, this.settings.get( &#x27;app&#x27; ) );
+
+  this.applyHandler( handler, serviceModule );
+
+  this.auto({
+    orm:      [ this.startORM.bind( this ) ],
+    service:  [ &#x27;orm&#x27;, function serviceBoot( next, state ) {
+      // console.log( &#x27;serviceBoot&#x27; );
+
+      Object.defineProperties( self, {
+        _state: {
+          value: state,
+          enumerable: true,
+          configurable: false,
+          writable: true
+        }
+      });
+
+      self.emit( &#x27;ready&#x27;, null, self, state );
+
+    }]
+  });
+
+  // @return express instance to make mountable
+  this.app.once( &#x27;mount&#x27;, this.onMount.bind( module._instance = this ) );
+
+  // If there is no handler callback, or it&#x27;s an object, we assume that we are being invoked ad middleware.
+  if( &#x27;object&#x27; === typeof handler || !handler ) {
+    return this.app;
+  }
+
+  // @chainable.
+  return this;
+
+}
+
+/**
+ * dockerProxy Instance Properties.
+ *
+ */
+Object.defineProperties( dockerProxy.prototype, {
+  _events: {
+    get: function get() {
+      return this._broker._events
+    },
+    enumerable: false,
+    configurable: true
+  },
+  _state: {
+    value: undefined,
+    configurable: false,
+    enumerable: true,
+    writable: true
+  },
+  _models: {
+    value: {},
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  _connections: {
+    value: null,
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  _servers: {
+    value: [],
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  _workers: {
+    value: {},
+    configurable: false,
+    enumerable: true,
+    writable: true
+  },
+  _broker: {
+    /**
+     *
+     */
+    value: require(&#x27;object-emitter&#x27; ).create({
+      wildcard: true,
+      delimiter: &#x27;:&#x27;,
+      newListener: false,
+      maxListeners: 20
+    }),
+    enumerable: false,
+    configurable: true,
+    writable: true
+  },
+  ack: {
+    /**
+     * Used as a callback on things we don&#x27;t really care about, yet a callback is required. (Waterline)
+     *
+     * @param error
+     * @param data
+     */
+    value: function acknowledge( error, data ) {
+      dockerProxy.prototype.debug( &#x27;acknowledge&#x27;, error, data );
+    },
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  applyHandler: {
+    value: function applyHandler( handler, serviceModule ) {
+
+      // Invoke handler if its a function.
+      if( &#x27;function&#x27; === typeof handler ) {
+
+        if( serviceModule ) {
+          serviceModule.exports = this;
+        }
+
+        handler.call( this, null, this );
+
+      }
+
+      // Treat handler as settings if its an object.
+      if( &#x27;object&#x27; === typeof handler ) {
+        this.settings.set( handler );
+      }
+
+      return this;
+
+    },
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  get: {
+    value: function get() {
+      return this.settings.get.apply( this.settings, arguments );
+    },
+    configurable: true,
+    enumerable: true
+  },
+  set: {
+    value: function set() {
+      return this.settings.set.apply( this.settings, arguments );
+    },
+    configurable: true,
+    enumerable: true
+  },
+  on: {
+    value: function on() {
+      return this._broker.on.apply( this._broker, arguments );
+    },
+    configurable: true,
+    enumerable: true
+  },
+  once: {
+    value: function once() {
+      return this._broker.once.apply( this._broker, arguments );
+    },
+    configurable: true,
+    enumerable: true
+  },
+  emit: {
+    value: function emit() {
+      return this._broker.emit.apply( this._broker, arguments );
+    },
+    configurable: true,
+    enumerable: true
+  },
+  off: {
+    value: function off() {
+      return this._broker.off.apply( this._broker, arguments );
+    },
+    configurable: true,
+    enumerable: true
+  },
+  staticMiddleware: {
+    value: require( &#x27;./middleware/static&#x27; ),
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  routerMiddleware: {
+    value: require( &#x27;./middleware/router&#x27; ),
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  apiMiddleware: {
+    value: require( &#x27;./middleware/api&#x27; ),
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  startORM: {
+    value: function startORM( next, report ) {
+      // console.log( &#x27;startORM&#x27; );
+
+      var self = this;
+
+      var Waterline = require( &#x27;waterline&#x27; );
+
+      var _waterline = new Waterline().initialize({
+        collections:  this.settings.get( &#x27;collections&#x27; ),
+        adapters:     this.settings.get( &#x27;adapters&#x27; ),
+        connections:  this.settings.get( &#x27;connections&#x27; ),
+      }, waterlineReady );
+
+      function waterlineReady( error, models ) {
+
+        if( !error &amp;&amp; models ) {
+          self._models      = models.collections;
+          self._connections = models.connections;
+        }
+
+        if( error &amp;&amp; error.message === &#x27;Connection is already registered&#x27; &amp;&amp; module._instance ) {
+          models.models = module._instance._models;
+          models.connections = module._instance._connections;
+        }
+
+        self.emit( &#x27;orm:ready&#x27;, null, models );
+
+        if( !models ) {
+          self.emit( &#x27;orm:error&#x27;, error, models );
+        }
+
+        next( null, models );
+      }
+
+      return this;
+
+    },
+    configurable: true,
+    enumerable: true,
+    writable: true
+  },
+  app: {
+    /**
+     * Middleware Handler.
+     *
+     * @param app
+     * @constructor
+     */
+    value: require( &#x27;express&#x27; )(),
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  auto: {
+    /**
+     * Middleware Handler.
+     *
+     * @param app
+     * @constructor
+     */
+    value: require( &#x27;async&#x27; ).auto,
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  debug: {
+    /**
+     * Upstream Middleware.
+     *
+     * @param options
+     * @constructor
+     */
+    value: require( &#x27;debug&#x27; )( &#x27;docker:proxy&#x27; ),
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  log: {
+    value: new (require( &#x27;winston&#x27; ).Logger)({
+      transports: [
+        new (require( &#x27;winston&#x27; ).transports.Console)({
+          level: &#x27;info&#x27;,
+          colorize: true
+        })
+      ],
+      levels: {
+        &quot;info&quot;: 0,
+        &quot;event&quot;: 0,
+        &quot;error&quot;: 10
+      },
+      colors: {
+        &quot;info&quot;: &quot;red&quot;,
+        &quot;event&quot;: &quot;green&quot;,
+        &quot;error&quot;: &quot;red&quot;
+      }
+    }),
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  forkService: {
+    value: function forkService( serviceName ) {
+      this.debug( &#x27;forkService&#x27;, serviceName );
+
+      var child_process   = require( &#x27;child_process&#x27; );
+      var joinPath        = require( &#x27;path&#x27; ).join;
+      var self = this;
+
+      var _child = child_process.fork( joinPath( __dirname, serviceName ), process.args, {
+        cwd: process.cwd(),
+        env: process.env,
+        silent: false
+      });
+
+      _child.on( &#x27;listening&#x27;, function( message ) {
+        console.log( &#x27;spawn&#x27;, serviceName, &#x27;:listening&#x27; );
+      });
+
+      _child.on( &#x27;error&#x27;, function( message ) {
+        console.log( &#x27;spawn&#x27;, serviceName, &#x27;:error&#x27;, message );
+      });
+
+      _child.on( &#x27;exit&#x27;, function( message ) {
+        console.log( &#x27;spawn&#x27;, serviceName, &#x27;:exit&#x27; );
+      });
+
+      _child.on( &#x27;start&#x27;, function( message ) {
+        console.log( &#x27;spawn&#x27;, serviceName, &#x27;:start&#x27; );
+      });
+
+      _child.on( &#x27;message&#x27;, function( message ) {
+        console.log( process.pid, &#x27;Daemon has message&#x27;, message.cmd )
+
+        if( message.cmd === &#x27;stopService&#x27; ) {
+
+          if( !service._workers[ message.service ] ) {
+            console.log( &#x27;Unable to stop service %s, it does not exist.&#x27;, message.service )
+            return;
+          }
+
+          service._workers[ message.service ].send({
+            cmd: &#x27;shutdown&#x27;
+          });
+
+        }
+
+        if( message.cmd === &#x27;resizeService&#x27; ) {
+
+          if( !service._workers[ message.service ] ) {
+            console.log( &#x27;Unable to resize service %s, it does not exist.&#x27;, message.service )
+            return;
+          }
+
+          console.log( &#x27;resizeService&#x27;, message );
+
+          service._workers[ message.service ].send( message )
+
+        }
+
+        if( message.cmd === &#x27;startService&#x27; ) {
+
+          if( service._workers[ message.service ] ) {
+            console.log( &#x27;Refusing to spawn %s, it is already active with PID %d.&#x27;, message.service, service._workers[ message.service ].pid )
+            return;
+          }
+
+          function spawnService() {
+            console.log( &#x27;single:spawnService&#x27; );
+
+            service._workers[ message.service ] = child_process.fork( joinPath( __dirname, &quot;../services/&quot;, message.service ), process.args, {
+              cwd: process.cwd(),
+              env: process.env,
+              silent: false
+            });;
+
+            console.log( &#x27;spawned %s with pid %d&#x27;, message.service, service._workers[ message.service ].pid );
+
+            service._workers[ message.service ].on( &#x27;close&#x27;, function() {
+              //console.log( &#x27;close:&#x27;, message.service );
+            });
+
+            service._workers[ message.service ].on( &#x27;exit&#x27;, function( code, type ) {
+              console.log( &#x27;exit:&#x27;, message.service );
+              console.log( require( &#x27;util&#x27;).inspect( arguments, { colors: true , depth:5, showHidden: false } ) );
+
+              // @note - the terminal &quot;kill&quot; command sends code 143 but not type.
+              // @note - the terminal &quot;kill -9&quot; command sends code null and type SIGKILL.
+
+              // Somebody really wants us to go away, no respawn.
+              if( code === 0 || type === &#x27;SIGINT&#x27; || type === &#x27;SIGTERM&#x27; || type === &#x27;SIGKILL&#x27; ) {
+                return service._workers[ message.service ] = null;
+              }
+
+              // We should respawnn
+              if( type === &#x27;SIGHUP&#x27; || !type ) {
+                spawnService();
+                console.log( &#x27;RESPAWNED %s with pid %d&#x27;, message.service, service._workers[ message.service ].pid );
+              }
+
+            });
+
+            service._workers[ message.service ].on( &#x27;disconnect&#x27;, function() {
+              //console.log( &#x27;disconnected:&#x27;, message.service );
+            });
+
+
+          }
+
+          spawnService();
+
+        }
+
+      });
+
+      Object.defineProperty( self._workers, serviceName, {
+        value: self._workers[ serviceName ] || {},
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+
+      return self._workers[ serviceName ][ _child.pid ] = _child;
+
+    },
+    enumerable: true,
+    configurable: false,
+    writable: true
+  },
+  startService: {
+    /**
+     *
+     * @param options
+     * @returns {*}
+     */
+    value: function startService( options ) {
+
+      options = options || {};
+
+      // Ignore settings if name and options are passed.
+      if( &#x27;string&#x27; === typeof options || &#x27;object&#x27; === typeof arguments[1] ) {
+        return this.forkService( options, arguments[1] );
+      }
+
+      // Clustering is disabled...
+      if( !this.settings.get( &#x27;cluster&#x27; ) ) {
+        return this;
+      }
+
+      if( options &amp;&amp; options.size === 1 ) {
+        return this;
+      }
+
+      var clusterMaster = require(&quot;./common/cluster&quot;)
+
+      // Start Cluster.
+      clusterMaster({
+        exec: this.settings.get( &#x27;modulePath&#x27;, options.exec ),
+        size: options.size || 2,
+        env: process.env,
+        args: process.argv,
+        silent: options.silent || false,
+        repl: false,
+        signals: true
+      })
+
+      // Messages from Daemon Master
+      process.on( &#x27;message&#x27;, function processMessage(m, server) {
+        // console.log( require( &#x27;util&#x27;).inspect( m, { colors: true , depth:5, showHidden: false } ) );
+
+        if( m.cmd ) {
+
+          // graceful shutdown
+          if( m.cmd === &#x27;shutdown&#x27; ) {
+            clusterMaster.quit()
+          }
+
+          if( m.cmd === &#x27;resizeService&#x27; ) {
+            console.log( &#x27;LB:resizeService&#x27; );
+
+            clusterMaster.resize( m.size || 1, function() {
+              console.log( &#x27;resize cb&#x27;, arguments );
+            });
+
+          }
+
+          if( m.cmd === &#x27;restart&#x27; ) {
+            clusterMaster.restart()
+          }
+
+          if( m.cmd === &#x27;die&#x27; ) {
+            clusterMaster.quitHard()
+          }
+
+        }
+
+      });
+
+      // @chainable
+      return this;
+
+    },
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  startServer: {
+    /**
+     * Start Server.
+     *
+     * @note The server object also has &quot;connection&quot; and &quot;clientError&quot; events.
+     *
+     * @param options
+     * @constructor
+     */
+    value: function startServer() {
+
+      var self = this;
+      var originalArguments = arguments;
+
+      var _server = this.app.listen.apply( this.app, arguments );
+
+      _server.app = self.app;
+
+      _server.on( &#x27;listening&#x27;, function serverReady() {
+        self.debug( &#x27;startServer:serverReady&#x27; );
+        self._servers.push( _server );
+      });
+
+      _server.on( &#x27;error&#x27;, function serverError( error ) {
+        self.debug( &#x27;startServer:serverReady [error.message: %s]&#x27;, error.message );
+
+        switch( error.errno ) {
+
+          case &#x27;ENOTFOUND&#x27;:
+            console.log( &#x27;Could not bind server to the specified address/port combination.&#x27; );
+          break;
+
+          case &#x27;EADDRINUSE&#x27;:
+            console.log( &#x27;Address already in use, can not start servers.&#x27;, originalArguments );
+          break;
+
+          default:
+            console.log( &#x27;Error!&#x27;, error.message );
+          break;
+
+        }
+
+      });
+
+      return this;
+
+    },
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  settings: {
+    /**
+     *
+     */
+    value: require( &#x27;object-settings&#x27; ).mixin( require( &#x27;object-emitter&#x27; ).create({ delimiter: &#x27;:&#x27; }) ),
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  onMount: {
+    /**
+     * Triggered once dockerProxy is use()&#x27;d as middleware module.
+     *
+     * @param parent
+     */
+    value: function onMount( parent ) {
+      this.debug( &#x27;onMount&#x27; );
+
+      // parent.settings;
+
+    },
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  uncaughtException: {
+    /**
+     * Handles Uncaught Errors
+     *
+     * @param err
+     */
+    value: function uncaughtException(err) {
+
+      if(err.errno === &#x27;EADDRINUSE&#x27;) {
+        console.log( &#x27;Address already in use, can not start servers.&#x27; );
+      } else {
+        console.log( &#x27;Error!&#x27;, err.message, err.stack );
+
+        // re-fetch containers
+        // vProxy.getDockerContainers();
+
+      }
+
+    },
+    enumerable: true,
+    configurable: true,
+    writable: true
+  }
+});
+
+/**
+ * Constructor Properties.
+ *
+ */
+Object.defineProperties( module.exports = dockerProxy, {
+  create: {
+    /**
+     * New Instance.
+     *
+     * @param handler
+     * @returns {dockerProxy}
+     */
+    value: function create( handler, serviceModule ) {
+      dockerProxy.prototype.debug( &#x27;dockerProxy.create&#x27; );
+      return new dockerProxy( handler, serviceModule );
+    },
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+  service: {
+    /**
+     * New Instance.
+     *
+     * @param handler
+     * @returns {dockerProxy}
+     */
+    value: function service( handler, serviceModule ) {
+      dockerProxy.prototype.debug( &#x27;dockerProxy.service&#x27; );
+      return new dockerProxy( handler, serviceModule );
+    },
+    enumerable: true,
+    configurable: true,
+    writable: true
+  },
+});
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

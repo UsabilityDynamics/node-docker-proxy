@@ -1,9 +1,8 @@
 #################################################################
 ## Docker Proxy Container
 ##
-## docker build -t usabilitydynamics/docker-proxy --rm .
 ##
-## @ver 0.1.3
+## @ver 0.2.0
 ## @author potanin@UD
 #################################################################
 
@@ -11,14 +10,16 @@ FROM          dockerfile/nodejs
 MAINTAINER    Usability Dynamics, Inc. "http://usabilitydynamics.com"
 USER          root
 
+ONBUILD       rm -rf /tmp/**
+ONBUILD       rm -rf /var/log/**
+ONBUILD       rm -rf /var/cache/**
+ONBUILD       rm -rf /var/lib/docker-proxy/**
+ONBUILD       rm -rf /var/run/docker-proxy/**
+
 VOLUME        /tmp
 VOLUME        /var/log
-VOLUME        /var/run
-VOLUME        /var/lib
 VOLUME        /var/cache
-
-ONBUILD       rm -rf /tmp/**
-ONBUILD       rm -rf /mnt/**
+VOLUME        /etc/docker-proxy
 
 RUN           \
               groupadd --gid 500 docker-proxy && \
@@ -26,10 +27,12 @@ RUN           \
               mkdir /home/docker-proxy/.ssh
 
 RUN           \
-              DEBIAN_FRONTEND=noninteractive && \
-              apt-get -y -q install nano && \
-              apt-get -y -q install supervisor && \
-              NODE_ENV=production npm install --silent -g pm2-web grunt-cli mocha should --unsafe-perm
+              export DEBIAN_FRONTEND=noninteractive && \
+              export NODE_ENV=production && \
+              apt-get -y update && \
+              apt-get -y upgrade && \
+              apt-get -y -q install supervisor nano && \
+              npm install --silent -g pm2 forever
 
 ADD           bin                                   /usr/local/src/docker-proxy/bin
 ADD           lib                                   /usr/local/src/docker-proxy/lib
@@ -43,6 +46,7 @@ ADD           static/etc/init.d/docker-proxy.sh     /etc/init.d/docker-proxy
 ADD           static/etc/supervisord.conf           /etc/supervisor/supervisord.conf
 
 RUN           \
+              export NODE_ENV=production && \
               mkdir -p /etc/docker-proxy && \
               mkdir -p /var/lib/docker-proxy && \
               mkdir -p /var/log/docker-proxy && \
@@ -55,7 +59,7 @@ RUN           \
               chgrp docker-proxy /var/run/docker-proxy && \
               chgrp docker-proxy /var/cache/docker-proxy && \
               chgrp docker-proxy /tmp && \
-              NODE_ENV=production npm link /usr/local/src/docker-proxy
+              npm link /usr/local/src/docker-proxy
 
 RUN           \
               npm cache clean && apt-get autoremove && apt-get autoclean && apt-get clean && \
@@ -63,9 +67,13 @@ RUN           \
               chmod +x /etc/init.d/**
 
 EXPOSE        80
+EXPOSE        443
+EXPOSE        16000
 
-ENV           DOCKER_PROXY_CONFIG_PATH        /etc/docker-proxy
-ENV           DOCKER_PROXY_HOSTNAME           0.0.0.0
+ENV           DOCKER_PROXY_CONFIG_FILE_PATH   /usr/local/lib/node_modules/docker-proxy/static/etc/docker-proxy.yaml
+ENV           DOCKER_PROXY_SSL_DIR            /usr/local/lib/node_modules/docker-proxy/static/etc/ssl
+ENV           DOCKER_PROXY_ADDRESS            0.0.0.0
+ENV           DOCKER_PROXY_HOSTNAME           docker-proxy.internal
 ENV           DOCKER_PROXY_PORT               8080
 ENV           NODE_ENV                        production
 

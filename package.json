@@ -1,6 +1,6 @@
 {
   "name": "docker-proxy",
-  "version": "0.1.4",
+  "version": "0.2.1",
   "description": "Docker Proxy.",
   "main": "./lib/docker-proxy.js",
   "directories": {
@@ -22,6 +22,20 @@
     "url": "git@github.com:UsabilityDynamics/node-docker-proxy.git",
     "type": "git"
   },
+  "config": {
+    "log": {
+      "levels": {
+        "info": 0,
+        "event": 0,
+        "error": 10
+      },
+      "colors": {
+        "info": "red",
+        "event": "green",
+        "error": "red"
+      }
+    }
+  },
   "preferGlobal": true,
   "dependencies": {
     "async": "^0.9.0",
@@ -42,11 +56,13 @@
     "lodash": "^2.4.1",
     "lru-cache": "^2.5.0",
     "modelling": "0.0.1",
+    "monitor-pid": "^1.4.3",
     "node-noop": "0.0.1",
     "node-uuid": "^1.4.1",
     "object-emitter": "^0.1.3",
     "object-settings": "^0.2.0",
-    "redbird": "^0.2.3",
+    "pidusage": "^0.1.0",
+    "redbird": "git://github.com/UsabilityDynamics/node-redbird#develop",
     "request": "^2.40.0",
     "sails-disk": "^0.10.3",
     "sails-memory": "^0.10.2",
@@ -57,6 +73,7 @@
     "watch": "^0.11.0",
     "watchr": "^2.4.11",
     "waterline": "^0.10.9",
+    "waterline-docker": "git://github.com/UsabilityDynamics/node-waterline-docker",
     "winston": "^0.7.3"
   },
   "optionalDependencies": {
@@ -64,22 +81,17 @@
     "cadvisor": "^0.1.2"
   },
   "devDependencies": {
-    "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-less": "~0.8.1",
-    "grunt-contrib-symlink": "~0.2.0",
-    "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-yuidoc": "~0.5.0",
     "grunt-jscoverage": "~0.0.3",
     "grunt-markdown": "~0.4.0",
     "grunt-mocha-cli": "~1.3.0",
     "grunt-requirejs": "~0.4.0",
-    "grunt-shell": "~0.5.0",
     "hyperprox": "^2.2.0",
     "jscoverage": "~0.3.8",
     "mocha": "^1.21.4",
-    "sails-rest": "0.0.4",
     "should": "~2.1.1"
   },
   "readmeFilename": "readme.md",

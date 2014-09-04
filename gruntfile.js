@@ -10,7 +10,7 @@ module.exports = function( grunt ) {
   grunt.initConfig({
 
     // Load Package Data.
-    pkg: grunt.file.readJSON( 'package.json' ),
+    package: grunt.file.readJSON( 'package.json' ),
 
     // Run Mocha Tests.
     mochacli: {
@@ -25,10 +25,10 @@ module.exports = function( grunt ) {
     // Generate Static YUI Documentation
     yuidoc: {
       compile: {
-        name: '<%= pkg.name %>',
-        description: '<%= pkg.description %>',
-        version: '<%= pkg.version %>',
-        url: '<%= pkg.homepage %>',
+        name: '<%= package.name %>',
+        description: '<%= package.description %>',
+        version: '<%= package.version %>',
+        url: '<%= package.homepage %>',
         logo: 'http://media.usabilitydynamics.com/logo.png',
         options: {
           paths: [
@@ -87,18 +87,6 @@ module.exports = function( grunt ) {
           }
         }
       }
-    },
-
-    clean: {
-      modules: [
-        "/tmp/docker-proxy"
-      ]
-    },
-
-    // Execute Shell Commands.
-    shell: {
-      install: {},
-      update: {}
     }
 
   });
@@ -107,12 +95,8 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks( 'grunt-markdown' );
   grunt.loadNpmTasks( 'grunt-mocha-cli' );
   grunt.loadNpmTasks( 'grunt-jscoverage' );
-  grunt.loadNpmTasks( 'grunt-contrib-symlink' );
   grunt.loadNpmTasks( 'grunt-contrib-yuidoc' );
   grunt.loadNpmTasks( 'grunt-contrib-watch' );
-  grunt.loadNpmTasks( 'grunt-contrib-clean' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-  grunt.loadNpmTasks( 'grunt-shell' );
 
   // Load Custom Tasks.
   grunt.loadTasks( 'lib/tasks' );
