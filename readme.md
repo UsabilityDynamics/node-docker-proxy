@@ -35,3 +35,16 @@ In most cases Docker Proxy would be bound to port 80/443 on a public IP address 
 make image
 make run
 ```
+
+### Environment Variables
+
+* DOCKER_PROXY_DOCKER_ADDRESS - The routable IP address of the Docker Host. This is especially important if Docker Proxy is ran within a Docker container. e.g 10.0.42.1 instead of 0.0.0.0
+* DOCKER_PROXY_PORT - If not set, will check PORT, otherwise default to 8080.
+* DOCKER_PROXY_HOSTNAME - If not set will check HOST, otherwise default to 0.0.0.0
+* DOCKER_PROXY_CONFIG_PATH - Defaults to /etc/docker-proxy/docker-proxy.yaml
+* DOCKER_PROXY_WORKER_LIMIT - Will default to number of CPUs.
+* DOCKER_PROXY_WORKER_SILENT - Will not include worker log output into master logs.
+* DOCKER_PROXY_PID_PATH - Path to PID file.
+* DOCKER_PROXY_SSL_DIR - Path to SSL certificate files.
+* DOCKER_HOST - TCP address of Docker Daemon.
+* DOCKER_SOCK_PATH - Pat to Docker Unix Sock file.

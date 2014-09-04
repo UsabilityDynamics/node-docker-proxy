@@ -1,3 +1,4 @@
 --require should
 --ui exports
 --reporter list
+--timeout 1000

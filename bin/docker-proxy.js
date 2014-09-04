@@ -23,6 +23,7 @@ commander.command( 'start' )
   .option( '--ssl-port [sslPort]', 'SSL port for proxy.', process.env.sslPort || 8443 )
   .option( '--api-port [apiPort]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_API_PORT || 16000 )
   .option( '--api-address [apiAddress]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_API_ADDRESS || '0.0.0.0' )
+  .option( '--docker-address [dockerAddress]', 'IP address of Docker Host, used for routing.', process.env.DOCKER_PROXY_DOCKER_ADDRESS || '0.0.0.0' )
   .option( '--public-path [publicPath]', 'Path to static public files.', process.env.DOCKER_PROXY_PUBLIC_PATH ? process.env.DOCKER_PROXY_PUBLIC_PATH : './static/public' )
   .option( '--ssl-path [sslPath]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_SSL_DIR ? process.env.DOCKER_PROXY_SSL_DIR : '/etc/ssl' )
   .option( '--pid-path [pidPath]', 'Path to PID file to use.', process.env.DOCKER_PROXY_PID_PATH ? process.env.DOCKER_PROXY_PID_PATH : require( 'path' ).join( process.env.TMPDIR || process.env.TEMP || __dirname, 'docker-proxy.pid' ) )
@@ -31,6 +32,10 @@ commander.command( 'start' )
 commander.command( 'status' )
   .option( '-w, --watch', 'Watch for changes.' )
   .action( getStatus );
+
+commander.command( 'stop' )
+  .option( '-f, --force', 'Force stop.' )
+  .action( stopService );
 
 commander.command( 'install' )
   .action( require( '../lib/tasks/install' ) );
@@ -58,6 +63,7 @@ function startService( settings ) {
   process.env.DOCKER_PROXY_API_ADDRESS        = settings.apiAddress;
   process.env.DOCKER_PROXY_SSL_DIR            = settings.sslPath;
   process.env.DOCKER_PROXY_PUBLIC_PATH        = settings.publicPath;
+  process.env.DOCKER_PROXY_DOCKER_ADDRESS     = settings.dockerAddress;
   process.env.DOCKER_PROXY_PID_PATH           = settings.pidPath;
   process.env.DOCKER_PROXY_SILENT             = settings.silent;
 
@@ -98,4 +104,13 @@ function getStatus( settings ) {
     console.error('end', pid);
   });
 
+}
+
+/**
+ * Stop Service
+ *
+ * @param settings
+ */
+function stopService( settings ) {
+  console.log( 'Docker Proxy "stop" is not yet implemented.' );
 }
