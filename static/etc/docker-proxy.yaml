@@ -1,19 +1,23 @@
 service:
   daemon:
     name: daemon
-    cluster: false
+    restart: true
+    workers: 0
 
   api:
     name: api
-    cluster: false
+    restart: true
+    workers: 0
 
   proxy:
     name: proxy
-    cluster: true
+    restart: true
+    workers: 6
     options:
       httpKeepAlive: true
       maxSockets: 100
 
   static:
     name: static
-    cluster: true
+    restart: true
+    workers: 2

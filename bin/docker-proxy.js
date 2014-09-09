@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 //
-// sudo DEBUG=docker:proxy supervisor -w ./ -- ./bin/docker-proxy.js start
-// node ./bin/docker-proxy.js start
+// sudo DEBUG=docker:* supervisor -w ./ -- ./bin/docker-proxy.js start
+//
+// npm start
+// npm stop
+//
+//
 
 var dockerProxy = require( '../' );
 var commander  = require( 'commander' );
@@ -77,7 +81,7 @@ function startService( settings ) {
 
   } catch( error ) {}
 
-  require( '../lib/services/daemon' ).startService();
+  require( '../lib/services/daemon' );
 
 }
 
