@@ -31,7 +31,7 @@ commander.command( 'start' )
   .option( '--public-path [publicPath]', 'Path to static public files.', process.env.DOCKER_PROXY_PUBLIC_PATH ? process.env.DOCKER_PROXY_PUBLIC_PATH : './static/public' )
   .option( '--ssl-path [sslPath]', 'Path to SSL certificates.', process.env.DOCKER_PROXY_SSL_DIR ? process.env.DOCKER_PROXY_SSL_DIR : '/etc/ssl' )
   .option( '--pid-path [pidPath]', 'Path to PID file to use.', process.env.DOCKER_PROXY_PID_PATH ? process.env.DOCKER_PROXY_PID_PATH : require( 'path' ).join( process.env.TMPDIR || process.env.TEMP || __dirname, 'docker-proxy.pid' ) )
-  .action( startService )
+  .action( startService );
 
 commander.command( 'status' )
   .option( '-w, --watch', 'Watch for changes.' )
