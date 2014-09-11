@@ -27,9 +27,6 @@ machine:
 
 dependencies:
   pre:
-    - git config --global user.email ${GITHUB_EMAIL}
-    - git config --global user.name ${GITHUB_USERNAME}
-    - git config --global push.default simple
     - "export DOCKER_ADDRESS=$(ifconfig docker0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
     - echo "DOCKER_OPTS='--host=tcp://172.17.42.1:2875 --host=unix:///var/run/docker.sock -s btrfs -e lxc'" | sudo tee --append /etc/default/docker > /dev/null
     - echo "DOCKER_PORT=2875" | sudo tee --append /etc/environment > /dev/null
@@ -52,13 +49,13 @@ test:
     - mocha test/acceptance
 
 deployment:
-  develop:
-    branch: develop
+  production:
+    branch: [production,master,latest]
     commands:
       - make dockerRelease;
       - grunt deployment --branch=${CIRCLE_BRANCH} --version=$(docker-proxy -V);
-  master:
-    branch: master
+  staging:
+    branch: [staging,develop]
     commands:
       - make dockerRelease;
       - grunt deployment --branch=${CIRCLE_BRANCH} --version=$(docker-proxy -V);
