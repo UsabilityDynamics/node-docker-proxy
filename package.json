@@ -17,7 +17,7 @@
   "scripts": {
     "start": "node --harmony bin/docker-proxy.js start",
     "stop": "node --harmony bin/docker-proxy.js stop",
-    "test": "mocha --ui exports --reporter list test/unit test/functional"
+    "test": "mocha --ui exports --reporter list test/unit"
   },
   "repository": {
     "url": "git@github.com:UsabilityDynamics/node-docker-proxy.git",

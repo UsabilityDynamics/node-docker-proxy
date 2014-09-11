@@ -113,4 +113,10 @@ module.exports = function( grunt ) {
   // Developer Mode
   grunt.registerTask( 'dev', [ 'watch' ] );
 
+  grunt.registerTask( 'deployment', function() {
+    console.log( 'fake deployment' );
+
+
+  });
+
 };

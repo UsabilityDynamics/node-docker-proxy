@@ -37,16 +37,28 @@ dependencies:
     - echo "DOCKER_HOST='172.17.42.1:2875'" | sudo tee --append /etc/environment > /dev/null
     - sudo service docker restart
     - docker login --username=${DOCKER_HUB_USERNAME} --email=${DOCKER_HUB_EMAIL} --password=${DOCKER_HUB_PASSWORD}
-    - NODE_ENV=development npm link
+    - cd ~/${CIRCLE_PROJECT_REPONAME} && npm link
+  post:
+    - make dockerImage;
+    - make runTestContainer;
 
 test:
-  override:
-    - mocha test/unit
+  post:
     - mocha test/functional
     - sh /home/ubuntu/node-docker-proxy/test/acceptance/fixtures/start-containers.sh
-    - make image; sleep 5
-    - make run; sleep 5
+    - make dockerImage; sleep 5
+    - make runTestContainer; sleep 5
     - mocha test/integration
     - mocha test/acceptance
-  post:
-    - make release
+
+deployment:
+  develop:
+    branch: develop
+    commands:
+      - make dockerRelease;
+      - grunt deployment --branch=${CIRCLE_BRANCH} --version=$(docker-proxy -V);
+  master:
+    branch: master
+    commands:
+      - make dockerRelease;
+      - grunt deployment --branch=${CIRCLE_BRANCH} --version=$(docker-proxy -V);
